@@ -1,5 +1,5 @@
 class AppInfo {
-  static const String appTitle = "Cleanly";
+  static const String appTitle = "Tow Track Whiz";
 }
 
 class GetStorageKeys {

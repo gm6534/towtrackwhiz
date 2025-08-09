@@ -63,7 +63,7 @@ class AppTheme {
           color: Colors.white,
         ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(40.r),
+          borderRadius: BorderRadius.circular(10.r),
         ),
       ),
     ),
@@ -71,10 +71,18 @@ class AppTheme {
     // Outlined Button
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        side: BorderSide(color: Colors.blue),
-        textStyle: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
+        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 15.w),
+        backgroundColor: Colors.white,
+        surfaceTintColor: AppColors.primary,
+        foregroundColor: AppColors.primary,
+        textStyle: TextStyle(
+          fontSize: 18.sp,
+          fontWeight: FontWeight.w600,
+          color: AppColors.primary,
+        ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.r),
+          borderRadius: BorderRadius.circular(10.r),
+          side: BorderSide(color: AppColors.primary, width: 2.w),
         ),
       ),
     ),

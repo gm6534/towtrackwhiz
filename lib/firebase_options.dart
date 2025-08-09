@@ -50,19 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCRp709aCs3Rl9rP9SR-D5RHR9m_0AEgtk',
-    appId: '1:451113049395:android:d77b53d8bde4d640f4f246',
-    messagingSenderId: '451113049395',
-    projectId: 'cleaner-app-1311a',
-    storageBucket: 'cleaner-app-1311a.firebasestorage.app',
+    apiKey: 'AIzaSyBj2Nad_suLPnLbjU4EOzmKVbTBTetaxd4',
+    appId: '1:421783246913:android:84c42e0c1fcccd68d0cec0',
+    messagingSenderId: '421783246913',
+    projectId: 'towtrackwhiz-fb62f',
+    storageBucket: 'towtrackwhiz-fb62f.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyB5Uf5Z3crsItbx5hLhgAe-Eq4R9FRVsPM',
-    appId: '1:451113049395:ios:810bded61ec93b6cf4f246',
-    messagingSenderId: '451113049395',
-    projectId: 'cleaner-app-1311a',
-    storageBucket: 'cleaner-app-1311a.firebasestorage.app',
-    iosBundleId: 'com.example.cleanerApp',
+    apiKey: 'AIzaSyAzxwbb64pauDTWttf5yUciqtaCdrBa3q0',
+    appId: '1:421783246913:ios:f4c5d7ed4a0336b3d0cec0',
+    messagingSenderId: '421783246913',
+    projectId: 'towtrackwhiz-fb62f',
+    storageBucket: 'towtrackwhiz-fb62f.firebasestorage.app',
+    iosBundleId: 'com.gmprod.towtrackwhiz',
   );
 }

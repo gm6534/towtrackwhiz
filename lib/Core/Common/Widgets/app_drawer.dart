@@ -1,5 +1,4 @@
 import 'package:towtrackwhiz/Controller/dashboard_controller.dart';
-import 'package:towtrackwhiz/Core/Common/Widgets/locale_switcher.dart';
 import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

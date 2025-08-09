@@ -8,8 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../Core/Common/Widgets/locale_switcher.dart';
-
 class LoginScreen extends GetView<LoginController> {
   const LoginScreen({super.key});
 
@@ -122,11 +120,11 @@ class LoginScreen extends GetView<LoginController> {
                       height: 50.h,
                       child: AppButton(
                         onPressed: controller.login,
+                        isOutlined: true,
                         title: "sign_in".tr,
                       ),
                     ),
                     30.verticalSpace,
-                    LanguageSwitcher(),
 
                     // // Sign Up Text
                     // Row(

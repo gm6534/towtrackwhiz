@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "421783246913",
+    "project_id": "towtrackwhiz-fb62f",
+    "storage_bucket": "towtrackwhiz-fb62f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:421783246913:android:84c42e0c1fcccd68d0cec0",
+        "android_client_info": {
+          "package_name": "com.gmprod.towtrackwhiz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBj2Nad_suLPnLbjU4EOzmKVbTBTetaxd4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'Controller/Other/connectivity_controller.dart';
-import 'Controller/Other/locale_controller.dart';
 import 'app_config.dart';
 import 'core/Routes/app_pages.dart';
 import 'core/Routes/app_route.dart';
@@ -40,9 +39,6 @@ class MyApp extends StatelessWidget {
             ),
             theme: AppTheme.lightTheme,
             themeMode: ThemeMode.light,
-            translations: LocalizationService(),
-            locale: LocalizationService.locale,
-            fallbackLocale: LocalizationService.fallbackLocale,
           ),
     );
   }

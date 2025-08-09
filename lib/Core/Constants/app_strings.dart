@@ -13,10 +13,14 @@ class ApiEndPoints {}
 
 class ImgPath {
   static const String assets = "assets/";
-  static const String appLogo = "${assets}app_logo.png";
+  static const String png = "assets/png/";
+  static const String svg = "assets/svg/";
+  static const String appLogo = "${png}towTrackLogo.png";
+  static const String appLogoSvg = "${svg}towTrackLogo.svg";
 }
 
 class AppHeadings {}
+
 class Strings {
   static const String permissionRequired = "Permission Required";
   static const String openSettings = "Open Settings";

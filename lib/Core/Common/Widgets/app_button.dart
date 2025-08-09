@@ -9,6 +9,7 @@ class AppButton extends StatelessWidget {
   final double? height;
   final double? width;
   final double? cornerRadius;
+  final bool isOutlined;
 
   AppButton({
     super.key,
@@ -17,6 +18,7 @@ class AppButton extends StatelessWidget {
     this.height,
     this.width,
     this.cornerRadius,
+    this.isOutlined = true,
   });
 
   final ConnectionManagerController controller = Get.find();
@@ -27,17 +29,35 @@ class AppButton extends StatelessWidget {
       return SizedBox(
         height: height ?? 50.w,
         width: width ?? Get.width,
-        child: ElevatedButton(
-          onPressed: controller.isConnected.value ? onPressed : null,
-          style: Get.theme.elevatedButtonTheme.style?.copyWith(
-            shape: WidgetStatePropertyAll(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(cornerRadius ?? 40.r),
-              ),
-            ),
-          ),
-          child: FittedBox(child: Text(title)),
-        ),
+        child:
+            isOutlined
+                ? OutlinedButton(
+                  onPressed: controller.isConnected.value ? onPressed : null,
+                  style: Get.theme.outlinedButtonTheme.style?.copyWith(
+                    shape: WidgetStatePropertyAll(
+                      RoundedRectangleBorder(
+                        side: BorderSide(color: AppColors.primary, width: 2.w),
+                        borderRadius: BorderRadius.circular(
+                          cornerRadius ?? 10.r,
+                        ),
+                      ),
+                    ),
+                  ),
+                  child: FittedBox(child: Text(title)),
+                )
+                : ElevatedButton(
+                  onPressed: controller.isConnected.value ? onPressed : null,
+                  style: Get.theme.elevatedButtonTheme.style?.copyWith(
+                    shape: WidgetStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          cornerRadius ?? 10.r,
+                        ),
+                      ),
+                    ),
+                  ),
+                  child: FittedBox(child: Text(title)),
+                ),
       );
     });
   }

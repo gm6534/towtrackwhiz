@@ -12,19 +12,20 @@ class SplashScreen extends GetView<InitialController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.white,
         body: Center(
-          child: Column(
+          child: Row(
             mainAxisSize: MainAxisSize.min,
             spacing: 20.w,
             children: [
-              Icon(Icons.cleaning_services, size: 100.w, color: Colors.white),
-              Text(
-                controller.appName,
-                style: Get.textTheme.displayMedium?.copyWith(
-                  color: Colors.white,
-                ),
-              ),
+              Image.asset(controller.appLogo, width: 270.w,),
+              // Icon(Icons.fire_truck, size: 70.w, color: AppColors.primary),
+              // Text(
+              //   controller.appName,
+              //   style: Get.textTheme.displayMedium?.copyWith(
+              //     color: AppColors.primary,
+              //   ),
+              // ),
             ],
           ),
         ),

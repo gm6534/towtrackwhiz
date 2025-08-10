@@ -50,6 +50,7 @@ dependencies:
   firebase_messaging: ^16.0.0
   google_maps_flutter: ^2.12.3
   image_picker: ^1.1.2
+  smooth_page_indicator: ^1.1.0
 
 dev_dependencies:
   flutter_test:

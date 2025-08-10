@@ -14,16 +14,36 @@ class ApiEndPoints {}
 class ImgPath {
   static const String assets = "assets/";
   static const String appLogo = "${assets}app_logo.png";
+  static const String tow1 = "${assets}tow1.png";
+  static const String tow2 = "${assets}tow2.png";
+  static const String tow3 = "${assets}tow3.png";
+  static const String tow4 = "${assets}tow4.png";
 }
 
-class AppHeadings {}
+class AppHeadings {
+  static const signInTitle = "Welcome to TowTrackWhiz\nAssist users in locating towed vehicles";
+  static const signUpTitle = "Welcome to TowTrackWhiz\nEngaging with a Community-driven Alert system";
+  static const forgetPassTitle = "Forget Password";
+  static const forgetPassSubTitle = "Please enter your registered email to recover the account.";
+  static const otpTitle = "OTP Verification";
+  static const otpSubTitle = "We have sent OTP Code via email to john34@Gmail.com";
+  static const resetPassTitle = "Reset Password";
+  static const resetPassSubTitle = "Protect your account with a secure password. Try to use different";
+  static const beforeStart = "To find your towed Vehicle,You’ll Need the following information";
+}
 class Strings {
   static const String permissionRequired = "Permission Required";
   static const String openSettings = "Open Settings";
 }
 
 class ActionText {
-  static const String login = "Login";
+  static const String login = "Log In";
+  static const String singUp = "Sign Up";
+  static const String sendCode = "Send Code";
+  static const String submit = "Submit";
+  static const String save = "Save";
+  static const String resendCode = "Resend Code";
+
   static const String yes = "Yes";
   static const String no = "No";
   static const String cancel = "Cancel";

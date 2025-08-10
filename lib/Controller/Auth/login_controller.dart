@@ -1,4 +1,5 @@
 import 'package:towtrackwhiz/Controller/Auth/auth_controller.dart';
+import 'package:towtrackwhiz/Core/Routes/app_route.dart';
 import 'package:towtrackwhiz/Model/Login/login_response_model.dart';
 import 'package:towtrackwhiz/Repository/auth_repo.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -43,27 +44,39 @@ class LoginController extends GetxController {
     isRememberMe.value = value ?? false;
   }
 
-  Future<void> login() async {
-    if (loginFormKey.currentState!.validate()) {
-      final authController = Get.find<AuthController>();
-
-      final email = emailController.text.toString();
-      final password = passwordController.text.toString();
-      _deviceToken = await firebaseMessaging.getToken();
-      final loginResponse = await authController.login(
-        userName: email,
-        password: password,
-        deviceToken: _deviceToken ?? "",
-      );
-      if (loginResponse != null) {
-        if (isRememberMe.value) {
-          // await _storage!.write(GetStorageKeys.credentials,
-          //     email + AppInfo.splitSeparator + password);
-        } else {
-          await _storage!.write(GetStorageKeys.credentials, null);
-        }
-        await _storage!.write(GetStorageKeys.authInfo, loginResponse.toJson());
-      }
-    }
+  void signUp() {
+    Get.offAllNamed(AppRoute.signUpScreen);
   }
+
+  void forgetPassword() {
+    Get.offAllNamed(AppRoute.forgetPassScreen);
+  }
+
+  void login() {
+    Get.offAllNamed(AppRoute.dashboard);
+  }
+  
+  // Future<void> login() async {
+  //   if (loginFormKey.currentState!.validate()) {
+  //     final authController = Get.find<AuthController>();
+
+  //     final email = emailController.text.toString();
+  //     final password = passwordController.text.toString();
+  //     _deviceToken = await firebaseMessaging.getToken();
+  //     final loginResponse = await authController.login(
+  //       userName: email,
+  //       password: password,
+  //       deviceToken: _deviceToken ?? "",
+  //     );
+  //     if (loginResponse != null) {
+  //       if (isRememberMe.value) {
+  //         // await _storage!.write(GetStorageKeys.credentials,
+  //         //     email + AppInfo.splitSeparator + password);
+  //       } else {
+  //         await _storage!.write(GetStorageKeys.credentials, null);
+  //       }
+  //       await _storage!.write(GetStorageKeys.authInfo, loginResponse.toJson());
+  //     }
+  //   }
+  // }
 }

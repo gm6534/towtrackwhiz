@@ -14,9 +14,9 @@ class SplashScreen extends GetView<InitialController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.white,
         body: Center(
-          child: Column(
+          child: Row(
             mainAxisSize: MainAxisSize.min,
             spacing: 20.w,
             children: [

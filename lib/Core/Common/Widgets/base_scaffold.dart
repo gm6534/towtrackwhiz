@@ -10,13 +10,19 @@ class BaseScaffold extends StatelessWidget {
   final Widget body;
   final Widget? drawer;
   final List<Widget>? actions;
+  final Widget? floatingActionButton;
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
+  final BottomNavigationBar? bottomNavigationBar;
   BaseScaffold({
     super.key,
     this.appBarTitle = '',
     this.centerTitle = true,
     required this.body,
     this.actions,
-    this.drawer,
+    this.drawer, 
+    this.bottomNavigationBar,
+    this.floatingActionButton,
+    this.floatingActionButtonLocation,
   });
 
   final ConnectionManagerController controller = Get.find();
@@ -47,6 +53,9 @@ class BaseScaffold extends StatelessWidget {
           );
         }),
       ),
+      floatingActionButton: floatingActionButton,
+      floatingActionButtonLocation: floatingActionButtonLocation,
+      bottomNavigationBar: bottomNavigationBar,
     );
   }
 }

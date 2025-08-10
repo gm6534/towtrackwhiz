@@ -1,85 +1,66 @@
-import 'dart:io';
-
-import 'package:towtrackwhiz/Controller/dashboard_controller.dart';
-import 'package:towtrackwhiz/Core/Common/Widgets/app_drawer.dart';
-import 'package:towtrackwhiz/Core/Common/Widgets/base_scaffold.dart';
-import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
-import '../../Core/Common/Widgets/toasts.dart';
-import '../../Core/Constants/app_strings.dart';
+import 'package:towtrackwhiz/Controller/Other/Dashboard/dashboard_controller.dart';
+import 'package:towtrackwhiz/Core/Common/Widgets/base_scaffold.dart';
+import 'package:towtrackwhiz/Core/Common/Widgets/report_tow_activity.dart';
+import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
+import 'package:towtrackwhiz/View/Auth/profile_screen.dart';
+import 'package:towtrackwhiz/View/Dashboard/Alert/alert_screen.dart';
+import 'package:towtrackwhiz/View/Dashboard/Home/home_screen.dart';
+import 'package:towtrackwhiz/View/Dashboard/LookUp/lookup_screen.dart';
 
 class DashboardScreen extends GetView<DashboardController> {
-  const DashboardScreen({super.key});
+  DashboardScreen({super.key});
+  final pages = [
+    const HomeScreen(),
+    const AlertScreen(),
+    const LookupScreen(),
+    const ProfileScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, result) async {
-        if (didPop) return;
-        bool result = await ToastAndDialog.confirmation(
-          title: "Close App",
-          message: ToastMsg.closeAppConfirmation,
-        );
-        if (result) {
-          exit(0);
-        }
-      },
-      child: BaseScaffold(
-        appBarTitle: "dashboard".tr,
-        drawer: AppDrawer(),
-        body: Obx(() {
-          if (controller.isDashboardLoading.value) {
-            return Center(child: CircularProgressIndicator());
-          }
-
-          return Column(children: []);
-        }),
-      ),
-    );
-  }
-
-  Widget filterBar() {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 8.w),
-      child: Row(
-        children:
-            TaskFilter.values.map((filter) {
-              final isSelected = controller.selectedFilter.value == filter;
-              return Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 4.w),
-                  child: GestureDetector(
-                    onTap: () {
-                      controller.selectedFilter.value = filter;
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 10.h),
-                      decoration: BoxDecoration(
-                        color:
-                            isSelected
-                                ? AppColors.primary
-                                : AppColors.secondary.withValues(alpha: 0.4),
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      child: Center(
-                        child: Text(
-                          filterLabel(filter),
-                          style: TextStyle(
-                            fontSize: 13.sp,
-                            fontWeight: FontWeight.w600,
-                            color: isSelected ? Colors.white : Colors.black,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+    return Obx(
+      () => BaseScaffold(
+        body: pages[controller.currentIndex.value],
+        floatingActionButton: Transform.translate(
+          offset: const Offset(0, -40),
+          child: FloatingActionButton.extended(
+            backgroundColor: AppColors.primary,
+            icon: const Icon(Icons.report, color: AppColors.white),
+            label: Text(
+              "Report Tow",
+              style: Get.textTheme.headlineSmall?.copyWith(
+                color: AppColors.white,
+              ),
+            ),
+            onPressed: () {
+              Get.bottomSheet(
+                const ReportTowActivity(),
+                isScrollControlled: true,
+                backgroundColor: Colors.white,
               );
-            }).toList(),
+            },
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: controller.currentIndex.value,
+          onTap: controller.changeTab,
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: AppColors.primary,
+          unselectedItemColor: AppColors.greyColor,
+          backgroundColor: AppColors.white,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.notifications),
+              label: 'Alert',
+            ),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Look Up'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          ],
+        ),
       ),
     );
   }

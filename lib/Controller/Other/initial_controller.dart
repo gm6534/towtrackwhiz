@@ -6,6 +6,7 @@ import '../Auth/auth_controller.dart';
 
 class InitialController extends GetxController {
   String appName = AppInfo.appTitle;
+  // String appLogo = ImgPath.appLogo;
 
   @override
   void onInit() {
@@ -14,13 +15,14 @@ class InitialController extends GetxController {
   }
 
   Future<void> navigateToNext() async {
-    final authController = Get.find<AuthController>();
-    await 3.seconds.delay();
 
+    final authController = Get.find<AuthController>();
+    // await 3.seconds.delay();
+    await Future.delayed(Duration(seconds: 3));
     if (authController.isLoggedIn.value) {
       Get.offAllNamed(AppRoute.dashboard);
     } else {
-      Get.offAllNamed(AppRoute.loginScreen);
+      Get.offAllNamed(AppRoute.onboarding);
     }
   }
 }

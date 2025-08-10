@@ -17,7 +17,7 @@ class LoginScreen extends GetView<LoginController> {
     return SafeArea(
       child: Scaffold(
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.w),
+          padding: EdgeInsets.all(16.w),
           child: Form(
             key: controller.loginFormKey,
             child: Column(
@@ -25,7 +25,7 @@ class LoginScreen extends GetView<LoginController> {
 
               children: [
                 35.verticalSpace,
-                Image.asset(ImgPath.appLogo),
+                Image.asset(ImgPath.appLogo, width: 300.w),
                 10.verticalSpace,
                 // Align(
                 //   alignment: AlignmentDirectional.center,
@@ -50,14 +50,8 @@ class LoginScreen extends GetView<LoginController> {
                 Text(
                   AppHeadings.signInTitle,
                   textAlign: TextAlign.center,
-                  style: Get.textTheme.headlineSmall?.copyWith(
-                    color: AppColors.black,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  // const TextStyle(
-                  //   fontSize: 16,
-                  //   color: AppColors.black,
-                  // ),
+                  style: Get.textTheme.headlineSmall,
+
                 ),
 
                 50.verticalSpace,
@@ -91,169 +85,6 @@ class LoginScreen extends GetView<LoginController> {
                   );
                 }),
 
-                Wrap(
-                  alignment: WrapAlignment.spaceBetween,
-                  runAlignment: WrapAlignment.spaceBetween,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  spacing: 10.w,
-                  runSpacing: 10.w,
-                  children: [
-                    SizedBox(
-                      width: context.width * 0.45,
-                      child: Obx(() {
-                        return Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Checkbox(
-                              value: controller.isRememberMe.value,
-                              onChanged: controller.toggleRememberMe,
-                              activeColor: AppColors.primary,
-                            ),
-                            Text(
-                              "remember_me".tr,
-                              style: Get.textTheme.bodyMedium?.copyWith(
-                                color: AppColors.primary,
-                              ),
-                            ),
-                          ],
-                        );
-                      }),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        controller.forgetPassword();
-                        // Get.to(
-                        //   () => AppWebView(
-                        //     fileUrl:
-                        //         "https://cleanly.dynamicdev.tech/forgot-password",
-                        //     barTitle: "reset_pass".tr,
-                        //   ),
-                        // );
-                      },
-                      child: Text(
-                        "forgot_password".tr,
-                        style: Get.textTheme.bodyMedium?.copyWith(
-                          color: AppColors.primary,
-                        ),
-                      ),
-                    ),
-
-                    30.verticalSpace,
-                    AppTextField(
-                      controller: controller.emailController,
-                      prefix: Icon(Icons.email_outlined),
-                      hintText: "login_hint".tr,
-                      validator:
-                          (value) => ValidationHelper.validateEmail(value),
-                    ),
-
-                    Obx(() {
-                      return AppTextField(
-                        controller: controller.passwordController,
-                        obscureText: !controller.isPasswordVisible.value,
-                        prefix: Icon(Icons.lock_outline),
-                        suffix: IconButton(
-                          icon: Icon(
-                            controller.isPasswordVisible.value
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                          ),
-                          onPressed: controller.togglePasswordVisibility,
-                        ),
-                        hintText: "**********",
-                        validator:
-                            (value) => ValidationHelper.validatePassword(value),
-                      );
-                    }),
-
-                    Wrap(
-                      alignment: WrapAlignment.spaceBetween,
-                      runAlignment: WrapAlignment.spaceBetween,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      spacing: 10.w,
-                      runSpacing: 10.w,
-                      children: [
-                        SizedBox(
-                          width: context.width * 0.45,
-                          child: Obx(() {
-                            return Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Checkbox(
-                                  value: controller.isRememberMe.value,
-                                  onChanged: controller.toggleRememberMe,
-                                  activeColor: AppColors.primary,
-                                ),
-                                Text(
-                                  "remember_me".tr,
-                                  style: Get.textTheme.bodyMedium?.copyWith(
-                                    color: AppColors.black,
-                                  ),
-                                ),
-                              ],
-                            );
-                          }),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Get.to(
-                              () => AppWebView(
-                                fileUrl:
-                                    "https://cleanly.dynamicdev.tech/forgot-password",
-                                barTitle: "reset_pass".tr,
-                              ),
-                            );
-                          },
-                          child: Text(
-                            "forgot_password".tr,
-                            style: Get.textTheme.bodyMedium?.copyWith(
-                              color: AppColors.black,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    30.verticalSpace,
-                    // Sign In Button
-                    SizedBox(
-                      width: double.infinity,
-                      height: 50.h,
-                      child: AppButton(
-                        onPressed: controller.login,
-                        isOutlined: true,
-                        title: "sign_in".tr,
-                      ),
-                    ),
-                    30.verticalSpace,
-
-                    // // Sign Up Text
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     Text(
-                    //       "dont_have_account".tr,
-                    //       style: Get.textTheme.bodyMedium?.copyWith(
-                    //         color: AppColors.black,
-                    //       ),
-                    //     ),
-                    //     TextButton(
-                    //       onPressed: () {},
-                    //       child: Text(
-                    //         "sign_up".tr,
-                    //         style: Get.textTheme.bodyMedium?.copyWith(
-                    //           color: AppColors.primary,
-                    //           fontWeight: FontWeight.w600,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
-                  ],
-                ),
-
                 Spacer(),
                 // Sign In Button
                 SizedBox(
@@ -262,7 +93,6 @@ class LoginScreen extends GetView<LoginController> {
                   child: AppButton(
                     onPressed: controller.login,
                     title: ActionText.login,
-                    
                   ),
                 ),
                 15.verticalSpace,
@@ -279,30 +109,6 @@ class LoginScreen extends GetView<LoginController> {
                     ),
                   ],
                 ),
-                //LanguageSwitcher(),
-
-                // // Sign Up Text
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     Text(
-                //       "dont_have_account".tr,
-                //       style: Get.textTheme.bodyMedium?.copyWith(
-                //         color: AppColors.black,
-                //       ),
-                //     ),
-                //     TextButton(
-                //       onPressed: () {},
-                //       child: Text(
-                //         "sign_up".tr,
-                //         style: Get.textTheme.bodyMedium?.copyWith(
-                //           color: AppColors.primary,
-                //           fontWeight: FontWeight.w600,
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
               ],
             ),
           ),

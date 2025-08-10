@@ -15,23 +15,38 @@ class ImgPath {
   static const String assets = "assets/";
   static const String png = "assets/png/";
   static const String svg = "assets/svg/";
+
+  /////////////////<<<<<-- PNG IMAGES -->>>>///////////////////////
   static const String appLogo = "${png}towTrackLogo.png";
+  static const String tow1Png = "${png}tow1.png";
+  static const String tow2Png = "${png}tow2.png";
+  static const String tow3Png = "${png}tow3.png";
+
+  /////////////////<<<<<-- SVG IMAGES -->>>>///////////////////////
   static const String appLogoSvg = "${svg}towTrackLogo.svg";
+  // static const String tow1Svg = "${svg}tow1.svg";
+  // static const String tow2Svg = "${svg}tow2.svg";
+  // static const String tow3Svg = "${svg}tow3.svg";
 }
-
-
 
 class AppHeadings {
-  static const signInTitle = "Welcome to TowTrackWhiz\nAssist users in locating towed vehicles";
-  static const signUpTitle = "Welcome to TowTrackWhiz\nEngaging with a Community-driven Alert system";
+  static const signInTitle =
+      "Welcome to TowTrackWhiz\nAssist users in locating towed vehicles";
+  static const signUpTitle =
+      "Welcome to TowTrackWhiz\nEngaging with a Community-driven Alert system";
   static const forgetPassTitle = "Forget Password";
-  static const forgetPassSubTitle = "Please enter your registered email to recover the account.";
+  static const forgetPassSubTitle =
+      "Please enter your registered email to recover the account.";
   static const otpTitle = "OTP Verification";
-  static const otpSubTitle = "We have sent OTP Code via email to john34@Gmail.com";
+  static const otpSubTitle =
+      "We have sent OTP Code via email to john34@Gmail.com";
   static const resetPassTitle = "Reset Password";
-  static const resetPassSubTitle = "Protect your account with a secure password. Try to use different";
-  static const beforeStart = "To find your towed Vehicle,You’ll Need the following information";
+  static const resetPassSubTitle =
+      "Protect your account with a secure password. Try to use different";
+  static const beforeStart =
+      "To find your towed Vehicle,You’ll Need the following information";
 }
+
 class Strings {
   static const String permissionRequired = "Permission Required";
   static const String openSettings = "Open Settings";

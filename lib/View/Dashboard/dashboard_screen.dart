@@ -4,25 +4,15 @@ import 'package:towtrackwhiz/Controller/Other/Dashboard/dashboard_controller.dar
 import 'package:towtrackwhiz/Core/Common/Widgets/base_scaffold.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/report_tow_activity.dart';
 import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
-import 'package:towtrackwhiz/View/Auth/profile_screen.dart';
-import 'package:towtrackwhiz/View/Dashboard/Alert/alert_screen.dart';
-import 'package:towtrackwhiz/View/Dashboard/Home/home_screen.dart';
-import 'package:towtrackwhiz/View/Dashboard/LookUp/lookup_screen.dart';
 
 class DashboardScreen extends GetView<DashboardController> {
-  DashboardScreen({super.key});
-  final pages = [
-    const HomeScreen(),
-    const AlertScreen(),
-    const LookupScreen(),
-    const ProfileScreen(),
-  ];
+  const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => BaseScaffold(
-        body: pages[controller.currentIndex.value],
+        body: controller.pages[controller.currentIndex.value],
         floatingActionButton: Transform.translate(
           offset: const Offset(0, -40),
           child: FloatingActionButton.extended(

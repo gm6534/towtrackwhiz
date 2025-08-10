@@ -20,7 +20,7 @@ class AppButton extends StatelessWidget {
     this.height,
     this.width,
     this.cornerRadius,
-    this.isOutlined = true,
+    this.isOutlined = false,
   });
 
   final ConnectionManagerController controller = Get.find();
@@ -36,9 +36,11 @@ class AppButton extends StatelessWidget {
                 ? OutlinedButton(
                   onPressed: controller.isConnected.value ? onPressed : null,
                   style: Get.theme.outlinedButtonTheme.style?.copyWith(
+                    side: WidgetStatePropertyAll(
+                      BorderSide(color: AppColors.primary, width: 1.5.w),
+                    ),
                     shape: WidgetStatePropertyAll(
                       RoundedRectangleBorder(
-                        side: BorderSide(color: AppColors.primary, width: 2.w),
                         borderRadius: BorderRadius.circular(
                           cornerRadius ?? 10.r,
                         ),

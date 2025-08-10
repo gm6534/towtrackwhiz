@@ -1,8 +1,8 @@
+import 'package:get/get.dart';
 import 'package:towtrackwhiz/Core/Routes/app_route.dart';
 import 'package:towtrackwhiz/View/Auth/bindings/login_binding.dart';
 import 'package:towtrackwhiz/View/Auth/bindings/sign_up_binding.dart';
 import 'package:towtrackwhiz/View/Auth/login_screen.dart';
-import 'package:towtrackwhiz/View/Auth/profile_screen.dart';
 import 'package:towtrackwhiz/View/Auth/sign_up_screen.dart';
 import 'package:towtrackwhiz/View/Dashboard/bindings/dashboard_binding.dart';
 import 'package:towtrackwhiz/View/Dashboard/dashboard_screen.dart';
@@ -12,14 +12,12 @@ import 'package:towtrackwhiz/View/GetStarted/get_started_binding.dart';
 import 'package:towtrackwhiz/View/GetStarted/get_started_screen.dart';
 import 'package:towtrackwhiz/View/Initial/initial_binding.dart';
 import 'package:towtrackwhiz/View/Initial/splash_screen.dart';
-import 'package:get/get.dart';
 import 'package:towtrackwhiz/View/OTPVerification/otp_binding.dart';
 import 'package:towtrackwhiz/View/OTPVerification/otp_verification_screen.dart';
 import 'package:towtrackwhiz/View/Onboarding/onboarding_binding.dart';
 import 'package:towtrackwhiz/View/Onboarding/onboarding_screen.dart';
 import 'package:towtrackwhiz/View/ResetPasswordScreen/reset_pass_binding.dart';
 import 'package:towtrackwhiz/View/ResetPasswordScreen/reset_pass_screen.dart';
-import '../../View/Auth/bindings/profile_binding.dart';
 
 class AppPages {
   static List<GetPage> pages = [
@@ -46,7 +44,7 @@ class AppPages {
     GetPage(
       name: AppRoute.signUpScreen,
       page: () => SignUpScreen(),
-      binding: SignUpBinding(), 
+      binding: SignUpBinding(),
     ),
 
     GetPage(
@@ -68,11 +66,6 @@ class AppPages {
       name: AppRoute.dashboard,
       page: () => DashboardScreen(),
       binding: DashboardBinding(),
-    ),
-    GetPage(
-      name: AppRoute.profileScreen,
-      page: () => ProfileScreen(),
-      binding: ProfileBinding(),
     ),
   ];
 }

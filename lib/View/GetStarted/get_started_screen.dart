@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:towtrackwhiz/Controller/Other/get_started_controller.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/app_button.dart';
-import 'package:towtrackwhiz/Core/Common/Widgets/base_scaffold.dart';
 import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 
 class GetStartedScreen extends GetView<GetStartedController> {
@@ -16,29 +15,29 @@ class GetStartedScreen extends GetView<GetStartedController> {
         body: Padding(
           padding: EdgeInsets.all(16.w),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 10.w,
             children: [
-              30.verticalSpace,
-              Image.asset(ImgPath.appLogo),
+              50.verticalSpace,
+              Image.asset(ImgPath.appLogo, width: 300.w),
               Text(
                 "Let's Get Started",
-                style: Get.textTheme.displayLarge?.copyWith(
+                style: Get.textTheme.displaySmall?.copyWith(
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
                 ),
               ),
-              Expanded(child: Image.asset(ImgPath.tow4)),
+              Expanded(child: Image.asset(ImgPath.tow3Png)),
               AppButton(
                 onPressed: () => controller.loginPage(),
                 title: controller.login,
-                
               ),
-              12.verticalSpace,
               AppButton(
                 onPressed: () => controller.signUpPage(),
+                isOutlined: true,
                 title: controller.signUp,
-                
               ),
+              20.verticalSpace,
             ],
           ),
         ),

@@ -1,14 +1,13 @@
 import 'dart:io';
 
-import 'package:towtrackwhiz/Controller/Auth/profile_controller.dart';
-import 'package:towtrackwhiz/Core/Common/Widgets/app_text_field.dart';
-import 'package:towtrackwhiz/Core/Common/Widgets/base_scaffold.dart';
-import 'package:towtrackwhiz/Core/Common/validation_helper.dart';
-import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:towtrackwhiz/Controller/Dashboard/profile_controller.dart';
+import 'package:towtrackwhiz/Core/Common/Widgets/app_text_field.dart';
+import 'package:towtrackwhiz/Core/Common/Widgets/base_scaffold.dart';
+import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
 
 import '../../Core/Common/Widgets/app_button.dart';
 

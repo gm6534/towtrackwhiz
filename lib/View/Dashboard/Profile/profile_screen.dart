@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
-import 'package:towtrackwhiz/Controller/Auth/profile_controller.dart';
+import 'package:towtrackwhiz/Controller/Dashboard/profile_controller.dart';
 
 class ProfileScreen extends GetView<ProfileController> {
   ProfileController controller = Get.find<ProfileController>();

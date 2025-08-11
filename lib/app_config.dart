@@ -1,9 +1,8 @@
-import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' as dot_env;
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
 
 import '../../Controller/Other/connectivity_controller.dart';
 import 'Controller/Auth/auth_controller.dart';
@@ -34,10 +33,10 @@ class AppConfig {
   static Future<void> setSystemChromeTheme() async {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarColor: AppColors.primary,
-        statusBarBrightness: Brightness.light,
-        statusBarIconBrightness: Brightness.light,
-        systemNavigationBarColor: Colors.white,
+        statusBarColor: AppColors.scaffoldBgColor,
+        statusBarBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.dark,
+        systemNavigationBarColor: AppColors.scaffoldBgColor,
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );

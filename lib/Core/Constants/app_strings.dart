@@ -21,6 +21,22 @@ class ImgPath {
   static const String tow1Png = "${png}tow1.png";
   static const String tow2Png = "${png}tow2.png";
   static const String tow3Png = "${png}tow3.png";
+  static const String alertIcon = "${png}alertIcon.png";
+  static const String announcementIcon = "${png}announcementIcon.png";
+  static const String carIcon = "${png}carIcon.png";
+  static const String deleteIcon = "${png}deleteIcon.png";
+  static const String editIcon = "${png}editIcon.png";
+  static const String filledLookupIcon = "${png}filledLookupIcon.png";
+  static const String filledHomeIcon = "${png}filledHomeIcon.png";
+  static const String filledProfileIcon = "${png}filledProfileIcon.png";
+  static const String profileIcon = "${png}profileOutlinedIcon.png";
+  static const String homeIcon = "${png}homeIcon.png";
+  static const String locationIcon = "${png}locationIcon.png";
+  static const String lookupIcon = "${png}lookupIcon.png";
+  static const String msgIcon = "${png}msgIcon.png";
+  static const String outlinedAlertIcon = "${png}outlinedAlertIcon.png";
+  static const String passIcon = "${png}passIcon.png";
+  static const String successBadge = "${png}successBadge.png";
 
   /////////////////<<<<<-- SVG IMAGES -->>>>///////////////////////
   static const String appLogoSvg = "${svg}towTrackLogo.svg";
@@ -34,12 +50,15 @@ class AppHeadings {
       "Welcome to TowTrackWhiz\nAssist users in locating towed vehicles";
   static const signUpTitle =
       "Welcome to TowTrackWhiz\nEngaging with a Community-driven Alert system";
-  static const forgetPassTitle = "Forget Password";
+  static const forgetPassTitle = "Forgot Password";
+  static const forgetPassBtnTitle = "Forgot Password ?";
   static const forgetPassSubTitle =
       "Please enter your registered email to recover the account.";
   static const otpTitle = "OTP Verification";
-  static const otpSubTitle =
-      "We have sent OTP Code via email to john34@Gmail.com";
+  static otpSubTitle(String value) {
+    return "We have sent OTP Code via email to $value";
+  }
+
   static const resetPassTitle = "Reset Password";
   static const resetPassSubTitle =
       "Protect your account with a secure password. Try to use different";
@@ -53,7 +72,7 @@ class Strings {
 }
 
 class ActionText {
-  static const String login = "Log In";
+  static const String signIn = "Sign In";
   static const String singUp = "Sign Up";
   static const String sendCode = "Send Code";
   static const String submit = "Submit";

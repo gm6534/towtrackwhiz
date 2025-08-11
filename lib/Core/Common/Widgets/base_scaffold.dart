@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 class BaseScaffold extends StatelessWidget {
   final String appBarTitle;
   final bool centerTitle;
+  final AppBar? appBar;
   final Widget body;
   final Widget? drawer;
   final List<Widget>? actions;
@@ -19,29 +20,31 @@ class BaseScaffold extends StatelessWidget {
     this.centerTitle = true,
     required this.body,
     this.actions,
-    this.drawer, 
+    this.drawer,
     this.bottomNavigationBar,
     this.floatingActionButton,
     this.floatingActionButtonLocation,
+    this.appBar,
   });
 
   final ConnectionManagerController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: drawer,
-      appBar:
-          appBarTitle.isNotEmpty
-              ? AppBar(
-                title: Text(appBarTitle),
-                centerTitle: centerTitle,
-                actionsPadding: EdgeInsets.symmetric(horizontal: 20.w),
-                actions: actions,
-              )
-              : null,
-      body: SafeArea(
-        child: Obx(() {
+    return SafeArea(
+      child: Scaffold(
+        drawer: drawer,
+        appBar:
+            appBar ??
+            (appBarTitle.isNotEmpty
+                ? AppBar(
+                  title: Text(appBarTitle),
+                  centerTitle: centerTitle,
+                  actionsPadding: EdgeInsets.symmetric(horizontal: 20.w),
+                  actions: actions,
+                )
+                : null),
+        body: Obx(() {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -52,10 +55,10 @@ class BaseScaffold extends StatelessWidget {
             ],
           );
         }),
+        floatingActionButton: floatingActionButton,
+        floatingActionButtonLocation: floatingActionButtonLocation,
+        bottomNavigationBar: bottomNavigationBar,
       ),
-      floatingActionButton: floatingActionButton,
-      floatingActionButtonLocation: floatingActionButtonLocation,
-      bottomNavigationBar: bottomNavigationBar,
     );
   }
 }

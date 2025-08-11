@@ -1,14 +1,12 @@
-import 'package:towtrackwhiz/Controller/Auth/auth_controller.dart';
-import 'package:towtrackwhiz/Core/Routes/app_route.dart';
-import 'package:towtrackwhiz/Model/Login/login_response_model.dart';
-import 'package:towtrackwhiz/Repository/auth_repo.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
-import '../../Core/Constants/app_strings.dart';
+import 'package:towtrackwhiz/Controller/Auth/auth_controller.dart';
+import 'package:towtrackwhiz/Core/Routes/app_route.dart';
+import 'package:towtrackwhiz/Model/Login/login_response_model.dart';
+import 'package:towtrackwhiz/Repository/auth_repo.dart';
 
 class LoginController extends GetxController {
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
@@ -45,17 +43,13 @@ class LoginController extends GetxController {
   }
 
   void signUp() {
-    Get.offAllNamed(AppRoute.signUpScreen);
-  }
-
-  void forgetPassword() {
-    Get.offAllNamed(AppRoute.forgetPassScreen);
+    Get.toNamed(AppRoute.signUpScreen);
   }
 
   void login() {
     Get.offAllNamed(AppRoute.dashboard);
   }
-  
+
   // Future<void> login() async {
   //   if (loginFormKey.currentState!.validate()) {
   //     final authController = Get.find<AuthController>();

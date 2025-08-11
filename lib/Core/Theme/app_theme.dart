@@ -7,8 +7,14 @@ class AppTheme {
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     primaryColor: AppColors.primary,
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: AppColors.scaffoldBgColor,
     useMaterial3: true,
+    cardTheme: CardThemeData(
+      color: AppColors.white,
+      surfaceTintColor: AppColors.white,
+      shadowColor: AppColors.scaffoldBgColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+    ),
 
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.primary,
@@ -71,6 +77,7 @@ class AppTheme {
     // Outlined Button
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
+        side: BorderSide(color: AppColors.primary, width: 1.5.w),
         padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 15.w),
         backgroundColor: Colors.white,
         surfaceTintColor: AppColors.primary,
@@ -82,7 +89,7 @@ class AppTheme {
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.r),
-          side: BorderSide(color: AppColors.primary, width: 2.w),
+          side: BorderSide(color: AppColors.primary, width: 1.5.w),
         ),
       ),
     ),
@@ -90,7 +97,13 @@ class AppTheme {
     // Text Button
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        textStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
+        foregroundColor: AppColors.primary,
+        surfaceTintColor: AppColors.primary,
+        textStyle: TextStyle(
+          fontSize: 14.sp,
+          fontWeight: FontWeight.w600,
+          color: AppColors.primary,
+        ),
       ),
     ),
 
@@ -116,18 +129,25 @@ class AppTheme {
       floatingLabelBehavior: FloatingLabelBehavior.always,
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.primary, width: 2),
+        borderRadius: BorderRadius.circular(10.r),
       ),
+      fillColor: AppColors.white,
+      filled: true,
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.greyColor, width: 1),
+        borderSide: BorderSide(color: AppColors.white, width: 1),
+        borderRadius: BorderRadius.circular(10.r),
       ),
       disabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.greyColor, width: 1),
+        borderRadius: BorderRadius.circular(10.r),
       ),
       errorBorder: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.redColor, width: 1),
+        borderRadius: BorderRadius.circular(10.r),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.redColor, width: 2),
+        borderRadius: BorderRadius.circular(10.r),
       ),
     ),
   );

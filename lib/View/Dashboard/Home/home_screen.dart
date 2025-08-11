@@ -8,21 +8,18 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: 15.w,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        20.verticalSpace,
         Align(
           alignment: AlignmentDirectional.centerStart,
           child: Text(
             "Towing Hot Zones Map",
-            style: Get.textTheme.headlineLarge?.copyWith(
-              color: Colors.black,
-              fontWeight: FontWeight.w600,
-            ),
+            style: Get.textTheme.headlineLarge,
           ),
         ),
         Expanded(
           child: Container(
-            margin: EdgeInsets.all(16.w),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12.r),
               color: Colors.grey.shade300,
@@ -30,6 +27,7 @@ class HomeScreen extends StatelessWidget {
             child: const Center(child: Text("Map Placeholder")),
           ),
         ),
+        10.verticalSpace,
       ],
     );
   }

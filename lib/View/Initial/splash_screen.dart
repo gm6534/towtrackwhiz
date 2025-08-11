@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
 
-import '../../Controller/Other/initial_controller.dart';
+import '../../Controller/initial_controller.dart';
 
 class SplashScreen extends GetView<InitialController> {
   const SplashScreen({super.key});

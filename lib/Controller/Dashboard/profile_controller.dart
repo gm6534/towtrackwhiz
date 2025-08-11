@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../Core/Common/helper.dart';
-import 'auth_controller.dart';
+import '../Auth/auth_controller.dart';
 
 class ProfileController extends GetxController {
   final GlobalKey<FormState> profileFormKey = GlobalKey<FormState>();
@@ -33,11 +33,11 @@ class ProfileController extends GetxController {
 
   Future<void> firstApiCall() async {
     isProfileLoading.value = true;
-    if (authController?.authInfo?.user == null ||
-        authController?.authInfo?.user?.id == null) {
-      await authController?.getUserProfile();
-    }
-    setUserModel(authController!.authInfo!.user!);
+    // if (authController?.authInfo?.user == null ||
+    //     authController?.authInfo?.user?.id == null) {
+    //   await authController?.getUserProfile();
+    // }
+    // setUserModel(authController!.authInfo!.user!);
 
     isProfileLoading.value = false;
   }

@@ -17,10 +17,10 @@ class SignUpController extends GetxController {
   }
 
   void loginPage() {
-    Get.offAllNamed(AppRoute.loginScreen);
+    Get.back();
   }
 
   void signUpPage() {
-    Get.offAllNamed(AppRoute.dashboard);
+    Get.back();
   }
 }

@@ -36,9 +36,6 @@ class AppButton extends StatelessWidget {
                 ? OutlinedButton(
                   onPressed: controller.isConnected.value ? onPressed : null,
                   style: Get.theme.outlinedButtonTheme.style?.copyWith(
-                    side: WidgetStatePropertyAll(
-                      BorderSide(color: AppColors.primary, width: 1.5.w),
-                    ),
                     shape: WidgetStatePropertyAll(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(

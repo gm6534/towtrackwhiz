@@ -1,4 +1,4 @@
-import 'package:towtrackwhiz/Controller/Auth/profile_controller.dart';
+import 'package:towtrackwhiz/Controller/Dashboard/profile_controller.dart';
 import 'package:get/get.dart';
 
 

@@ -1,4 +1,4 @@
-import 'package:towtrackwhiz/Controller/Other/initial_controller.dart';
+import 'package:towtrackwhiz/Controller/initial_controller.dart';
 import 'package:get/get.dart';
 
 class InitialBinding implements Bindings {

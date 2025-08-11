@@ -1,13 +1,13 @@
-import 'package:towtrackwhiz/Controller/Auth/login_controller.dart';
-import 'package:towtrackwhiz/Core/Common/Widgets/app_button.dart';
-import 'package:towtrackwhiz/Core/Common/Widgets/app_text_field.dart';
-import 'package:towtrackwhiz/Core/Common/Widgets/app_web_view.dart';
-import 'package:towtrackwhiz/Core/Common/validation_helper.dart';
-import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
-import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:towtrackwhiz/Controller/Auth/login_controller.dart';
+import 'package:towtrackwhiz/Core/Common/Widgets/app_button.dart';
+import 'package:towtrackwhiz/Core/Common/validation_helper.dart';
+import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
+import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
+
+import '../../Core/Common/Widgets/app_heading_text_field.dart';
 
 class LoginScreen extends GetView<LoginController> {
   const LoginScreen({super.key});
@@ -20,99 +20,128 @@ class LoginScreen extends GetView<LoginController> {
           padding: EdgeInsets.all(16.w),
           child: Form(
             key: controller.loginFormKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-
-              children: [
-                35.verticalSpace,
-                Image.asset(ImgPath.appLogo, width: 300.w),
-                10.verticalSpace,
-                // Align(
-                //   alignment: AlignmentDirectional.center,
-                //   child: Text(
-                //     "Welcome to TowTrackWhiz",
-                //     style: Get.textTheme.headlineSmall?.copyWith(
-                //       fontWeight: FontWeight.w600,
-                //       color: Colors.black,
-                //     ),
-                //   ),
-                // ),
-                // Align(
-                //   alignment: AlignmentDirectional.center,
-                //   child: Text(
-                //     "Assist users in locating towed vehicles",
-                //     style: Get.textTheme.headlineSmall?.copyWith(
-                //       fontWeight: FontWeight.w600,
-                //       color: Colors.black,
-                //     ),
-                //   ),
-                // ),
-                Text(
-                  AppHeadings.signInTitle,
-                  textAlign: TextAlign.center,
-                  style: Get.textTheme.headlineSmall,
-
-                ),
-
-                50.verticalSpace,
-                AppTextField(
-                  label: 'Email',
-                  controller: controller.emailController,
-                  prefix: Icon(Icons.email, color: AppColors.primary),
-                  hintText: "login_hint".tr,
-                  validator: (value) => ValidationHelper.validateEmail(value),
-                ),
-                30.verticalSpace,
-
-                Obx(() {
-                  return AppTextField(
-                    label: 'Password',
-                    controller: controller.passwordController,
-                    obscureText: !controller.isPasswordVisible.value,
-                    prefix: Icon(Icons.lock, color: AppColors.primary),
-                    suffix: IconButton(
-                      icon: Icon(
-                        controller.isPasswordVisible.value
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                        color: AppColors.primary,
-                      ),
-                      onPressed: controller.togglePasswordVisibility,
-                    ),
-                    hintText: "**********",
-                    validator:
-                        (value) => ValidationHelper.validatePassword(value),
-                  );
-                }),
-
-                Spacer(),
-                // Sign In Button
-                SizedBox(
-                  width: double.infinity,
-                  height: 50.h,
-                  child: AppButton(
-                    onPressed: controller.login,
-                    title: ActionText.login,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: 20.w,
+                children: [
+                  30.verticalSpace,
+                  Image.asset(ImgPath.appLogo, width: 300.w),
+                  Text(
+                    AppHeadings.signInTitle,
+                    textAlign: TextAlign.center,
+                    style: Get.textTheme.headlineSmall,
                   ),
-                ),
-                15.verticalSpace,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("Don’t have an account? "),
-                    GestureDetector(
-                      onTap: controller.signUp,
-                      child: const Text(
-                        ActionText.singUp,
-                        style: TextStyle(color: AppColors.primary),
+
+                  40.verticalSpace,
+                  AppHeadingTextField(
+                    heading: 'Email',
+                    controller: controller.emailController,
+                    prefix: Container(
+                      margin: EdgeInsets.all(12.w),
+                      child: Image.asset(
+                        ImgPath.msgIcon,
+                        height: 10.w,
+                        width: 10.w,
                       ),
                     ),
-                  ],
-                ),
-              ],
+                    hintText: "login_hint".tr,
+                    validator: (value) => ValidationHelper.validateEmail(value),
+                  ),
+
+                  Obx(() {
+                    return AppHeadingTextField(
+                      heading: 'Password',
+                      controller: controller.passwordController,
+                      obscureText: !controller.isPasswordVisible.value,
+                      prefix: Container(
+                        margin: EdgeInsets.all(15.w),
+                        child: Image.asset(
+                          ImgPath.passIcon,
+                          height: 10.w,
+                          width: 10.w,
+                        ),
+                      ),
+                      suffix: IconButton(
+                        icon: Icon(
+                          controller.isPasswordVisible.value
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: AppColors.primary,
+                        ),
+                        onPressed: controller.togglePasswordVisibility,
+                      ),
+                      hintText: "**********",
+                      validator:
+                          (value) => ValidationHelper.validatePassword(value),
+                    );
+                  }),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Text(AppHeadings.forgetPassBtnTitle),
+                    ),
+                  ),
+                  SizedBox(height: context.width * 0.1),
+                  AppButton(
+                    onPressed: controller.login,
+                    title: ActionText.signIn,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Don’t have an account? ",
+                        style: Get.textTheme.bodyMedium,
+                      ),
+                      GestureDetector(
+                        onTap: controller.signUp,
+                        child: Text(
+                          ActionText.singUp,
+                          style: Get.textTheme.titleMedium?.copyWith(
+                            color: AppColors.primary,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        // floatingActionButton: SafeArea(
+        //   child: Padding(
+        //     padding: EdgeInsets.all(16.w),
+        //     child: Column(
+        //       mainAxisSize: MainAxisSize.min,
+        //       spacing: 10.w,
+        //       children: [
+        //         AppButton(onPressed: controller.login, title: ActionText.login),
+        //         Row(
+        //           mainAxisAlignment: MainAxisAlignment.center,
+        //           children: [
+        //             Text(
+        //               "Don’t have an account? ",
+        //               style: Get.textTheme.bodyMedium,
+        //             ),
+        //             GestureDetector(
+        //               onTap: controller.signUp,
+        //               child: Text(
+        //                 ActionText.singUp,
+        //                 style: Get.textTheme.titleMedium?.copyWith(
+        //                   color: AppColors.primary,
+        //                 ),
+        //               ),
+        //             ),
+        //           ],
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }

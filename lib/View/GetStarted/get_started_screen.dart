@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:towtrackwhiz/Controller/Other/get_started_controller.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/app_button.dart';
 import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 
-class GetStartedScreen extends GetView<GetStartedController> {
+import '../../Core/Routes/app_route.dart';
+
+class GetStartedScreen extends StatelessWidget {
   const GetStartedScreen({super.key});
 
   @override
@@ -20,22 +21,20 @@ class GetStartedScreen extends GetView<GetStartedController> {
             children: [
               50.verticalSpace,
               Image.asset(ImgPath.appLogo, width: 300.w),
-              Text(
-                "Let's Get Started",
-                style: Get.textTheme.displaySmall?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
-              ),
+              Text("Let's Get Started", style: Get.textTheme.displaySmall),
               Expanded(child: Image.asset(ImgPath.tow3Png)),
               AppButton(
-                onPressed: () => controller.loginPage(),
-                title: controller.login,
+                onPressed: () {
+                  Get.toNamed(AppRoute.loginScreen);
+                },
+                title: ActionText.signIn,
               ),
               AppButton(
-                onPressed: () => controller.signUpPage(),
+                onPressed: () {
+                  Get.toNamed(AppRoute.signUpScreen);
+                },
                 isOutlined: true,
-                title: controller.signUp,
+                title: ActionText.singUp,
               ),
               20.verticalSpace,
             ],

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:towtrackwhiz/View/Dashboard/report_tow_activity_dialog.dart';
+import 'package:towtrackwhiz/View/Dashboard/Common/report_tow_activity_dialog.dart';
 
 import '../../../View/Auth/profile_screen.dart';
 import '../../../View/Dashboard/Alert/alert_screen.dart';

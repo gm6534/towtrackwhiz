@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/base_scaffold.dart';
-import 'package:towtrackwhiz/View/Dashboard/report_tow_activity_dialog.dart';
+import 'package:towtrackwhiz/View/Dashboard/Common/report_tow_activity_dialog.dart';
 import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
 

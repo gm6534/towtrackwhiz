@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -23,8 +24,9 @@ class HomeScreen extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12.r),
               color: Colors.grey.shade300,
+              image: DecorationImage(image: AssetImage(ImgPath.mapImg), fit: BoxFit.cover)
             ),
-            child: const Center(child: Text("Map Placeholder")),
+            // child: const Center(child: Text("Map Placeholder")),
           ),
         ),
         10.verticalSpace,

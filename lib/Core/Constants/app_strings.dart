@@ -44,6 +44,7 @@ class ImgPath {
   static const String settingIcon = "${png}settingIcon.png";
   static const String badgeIcon = "${png}badgeIcon.png";
   static const String verifyBadge = "${png}verifyBadge.png";
+  static const String mapImg = "${png}mapImg.png";
 
   /////////////////<<<<<-- SVG IMAGES -->>>>///////////////////////
   static const String appLogoSvg = "${svg}towTrackLogo.svg";

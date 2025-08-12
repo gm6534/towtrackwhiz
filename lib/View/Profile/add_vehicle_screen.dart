@@ -3,15 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:towtrackwhiz/Controller/Dashboard/profile_controller.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/app_button.dart';
+import 'package:towtrackwhiz/Core/Common/Widgets/app_heading_text_field.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/base_scaffold.dart';
-import 'package:towtrackwhiz/Core/Routes/app_route.dart';
 
 import '../../Core/Constants/app_strings.dart';
 import '../../Core/Utils/app_colors.dart';
-import '../Common/vehicle_card.dart';
 
-class VehicleScreen extends GetView<ProfileController> {
-  const VehicleScreen({super.key});
+class AddVehicleScreen extends GetView<ProfileController> {
+  const AddVehicleScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,34 +25,18 @@ class VehicleScreen extends GetView<ProfileController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 10.w,
         children: [
-          Text("Registered Vehicles", style: Get.textTheme.headlineMedium),
+          Text("Add Vehicles", style: Get.textTheme.headlineMedium),
           10.verticalSpace,
-          Expanded(
-            child: ListView.separated(
-              itemCount: controller.vehicles.length,
-              separatorBuilder: (_, __) => 10.verticalSpace,
-              itemBuilder: (context, index) {
-                final vehicle = controller.vehicles[index];
-                return VehicleCard(
-                  name: vehicle["name"]!,
-                  plate: vehicle["plate"]!,
-                  model: vehicle["model"]!,
-                  onDelete: () {
-                    // handle delete
-                  },
-                  onEdit: () {
-                    // handle edit
-                  },
-                );
-              },
-            ),
-          ),
+          AppHeadingTextField(heading: "License Plate", hintText: "LUE6850"),
+          AppHeadingTextField(heading: "Make", hintText: "-----------"),
+          Spacer(),
           AppButton(
             onPressed: () {
-             Get.toNamed(AppRoute.addVehicles);
+              // handle add vehicle
             },
-            title: "Add Vehicle",
+            title: ActionText.save,
           ),
+          20.verticalSpace,
         ],
       ),
     );

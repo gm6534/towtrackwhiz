@@ -11,6 +11,7 @@ import 'package:towtrackwhiz/View/Initial/initial_binding.dart';
 import 'package:towtrackwhiz/View/Initial/splash_screen.dart';
 import 'package:towtrackwhiz/View/Onboarding/onboarding_binding.dart';
 import 'package:towtrackwhiz/View/Onboarding/onboarding_screen.dart';
+import 'package:towtrackwhiz/View/Profile/add_vehicles.dart';
 import 'package:towtrackwhiz/View/Profile/my_vehicle.dart';
 
 import '../../View/Profile/notification_setting_screen.dart';
@@ -49,5 +50,6 @@ class AppPages {
       name: AppRoute.notificationSettingScreen,
       page: () => NotificationSettingScreen(),
     ),
+    // GetPage(name: AppRoute.addVehicles, page: () => AddVehicles()),
   ];
 }

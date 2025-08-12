@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/base_scaffold.dart';
-import 'package:towtrackwhiz/View/Dashboard/Common/report_tow_activity_dialog.dart';
 import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
 
@@ -23,29 +22,24 @@ class DashboardScreen extends GetView<DashboardController> {
           title: Image.asset(ImgPath.appLogo, width: context.width * 0.5),
         ),
         body: controller.pages[controller.currentIndex.value],
-        floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: AppColors.primary,
-          icon: Image.asset(
-            ImgPath.announcementIcon,
-            height: 24.w,
-            width: 24.w,
-          ),
-          label: Text(
-            "Report Tow",
-            style: Get.textTheme.headlineSmall?.copyWith(
-              color: AppColors.white,
-            ),
-          ),
-          onPressed: () {
-            controller.showReportTowActivityDialog();
-            return;
-            Get.bottomSheet(
-              const ReportTowActivityDialog(),
-              isScrollControlled: true,
-              backgroundColor: Colors.white,
-            );
-          },
-        ),
+        floatingActionButton:
+            (controller.currentIndex.value == 3)
+                ? null
+                : FloatingActionButton.extended(
+                  backgroundColor: AppColors.primary,
+                  icon: Image.asset(
+                    ImgPath.announcementIcon,
+                    height: 24.w,
+                    width: 24.w,
+                  ),
+                  label: Text(
+                    "Report Tow",
+                    style: Get.textTheme.headlineSmall?.copyWith(
+                      color: AppColors.white,
+                    ),
+                  ),
+                  onPressed: controller.showReportTowActivityDialog,
+                ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: controller.currentIndex.value,

@@ -37,6 +37,13 @@ class ImgPath {
   static const String outlinedAlertIcon = "${png}outlinedAlertIcon.png";
   static const String passIcon = "${png}passIcon.png";
   static const String successBadge = "${png}successBadge.png";
+  static const String logoutIcon = "${png}logoutIcon.png";
+  static const String myVehicleIcon = "${png}myVehicleIcon.png";
+  static const String notificationIcon = "${png}notificationIcon.png";
+  static const String payMethodIcon = "${png}payMethodIcon.png";
+  static const String settingIcon = "${png}settingIcon.png";
+  static const String badgeIcon = "${png}badgeIcon.png";
+  static const String verifyBadge = "${png}verifyBadge.png";
 
   /////////////////<<<<<-- SVG IMAGES -->>>>///////////////////////
   static const String appLogoSvg = "${svg}towTrackLogo.svg";

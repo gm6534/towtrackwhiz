@@ -3,76 +3,73 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class VehicleCard extends StatelessWidget {
   final String title;
-  final String subTitle;
-  final String imagePath;
-  final Color bgColor;
-  final VoidCallback onTap;
+  final String licensePlate;
+  final String model;
+  final VoidCallback onDelete;
+  final VoidCallback onEdit;
 
   const VehicleCard({
     super.key,
     required this.title,
-    required this.subTitle,
-    required this.imagePath,
-    required this.bgColor,
-    required this.onTap,
+    required this.licensePlate,
+    required this.model,
+    required this.onDelete,
+    required this.onEdit,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.r),
-        ),
-        elevation: 4,
-        color: bgColor,
-        child: Padding(
-          padding: EdgeInsets.all(12.w),
-          child: Row(
-            children: [
-              Container(
-                height: 60.h,
-                width: 60.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.r),
-                  image: DecorationImage(
-                    image: AssetImage(imagePath),
-                    fit: BoxFit.cover,
+    return Card(
+      elevation: 1,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.r),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(12.w),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Vehicle info
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
+                  SizedBox(height: 4.h),
+                  Text(
+                    "License plate: $licensePlate",
+                    style: TextStyle(fontSize: 12.sp, color: Colors.grey[600]),
+                  ),
+                  SizedBox(height: 2.h),
+                  Text(
+                    "Model:$model",
+                    style: TextStyle(fontSize: 12.sp, color: Colors.grey[600]),
+                  ),
+                ],
+              ),
+            ),
+
+            // Action buttons
+            Column(
+              children: [
+                GestureDetector(
+                  onTap: onDelete,
+                  child: Icon(Icons.delete, color: Colors.red, size: 18.sp),
                 ),
-              ),
-              SizedBox(width: 12.w),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    SizedBox(height: 4.h),
-                    Text(
-                      subTitle,
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: Colors.white70,
-                      ),
-                    ),
-                  ],
+                SizedBox(height: 8.h),
+                GestureDetector(
+                  onTap: onEdit,
+                  child: Icon(Icons.edit, color: Colors.cyan, size: 18.sp),
                 ),
-              ),
-              Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.white,
-                size: 18.sp,
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ),
       ),
     );

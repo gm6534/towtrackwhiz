@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:towtrackwhiz/View/Dashboard/Common/report_tow_activity_dialog.dart';
+import 'package:towtrackwhiz/View/Common/report_tow_activity_dialog.dart';
 
 import '../../../View/Dashboard/Alert/alert_screen.dart';
 import '../../../View/Dashboard/Home/home_screen.dart';
 import '../../../View/Dashboard/LookUp/lookup_screen.dart';
-import '../../View/Dashboard/Profile/profile_screen.dart';
+import '../../View/Profile/profile_screen.dart';
 
 class DashboardController extends GetxController {
   final TextEditingController commentController = TextEditingController();

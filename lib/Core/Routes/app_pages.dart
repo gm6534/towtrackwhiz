@@ -11,6 +11,7 @@ import 'package:towtrackwhiz/View/Initial/initial_binding.dart';
 import 'package:towtrackwhiz/View/Initial/splash_screen.dart';
 import 'package:towtrackwhiz/View/Onboarding/onboarding_binding.dart';
 import 'package:towtrackwhiz/View/Onboarding/onboarding_screen.dart';
+import 'package:towtrackwhiz/View/Profile/my_vehicle.dart';
 
 class AppPages {
   static List<GetPage> pages = [
@@ -41,5 +42,6 @@ class AppPages {
       page: () => DashboardScreen(),
       binding: DashboardBinding(),
     ),
+    GetPage(name: AppRoute.myVehicle, page: () => VehicleScreen()),
   ];
 }

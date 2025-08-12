@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:towtrackwhiz/Controller/Dashboard/profile_controller.dart';
 import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
+import 'package:towtrackwhiz/Core/Routes/app_route.dart';
 import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
+import 'package:towtrackwhiz/View/Profile/my_vehicle.dart';
 
 class ProfileScreen extends GetView<ProfileController> {
   const ProfileScreen({super.key});
@@ -98,7 +100,7 @@ class ProfileScreen extends GetView<ProfileController> {
             ),
           ),
           10.verticalSpace,
-          _menuTile(ImgPath.myVehicleIcon, "My Vehicles"),
+          InkWell(onTap: () => Get.toNamed(AppRoute.myVehicle), child: _menuTile(ImgPath.myVehicleIcon, "My Vehicles")),
           _menuTile(ImgPath.notificationIcon, "Notification Settings"),
           _menuTile(ImgPath.settingIcon, "Account Settings"),
           _menuTile(ImgPath.payMethodIcon, "Payout Method"),

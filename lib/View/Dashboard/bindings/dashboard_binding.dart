@@ -10,7 +10,7 @@ class DashboardBinding implements Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => DashboardController(), fenix: true);
-    Get.lazyPut(() => ProfileController());
+    Get.lazyPut(() => ProfileController(), fenix: true);
     Get.lazyPut(() => LookupController());
     Get.lazyPut(() => AlertController());
     Get.lazyPut(() => HomeController());

@@ -13,6 +13,8 @@ import 'package:towtrackwhiz/View/Onboarding/onboarding_binding.dart';
 import 'package:towtrackwhiz/View/Onboarding/onboarding_screen.dart';
 import 'package:towtrackwhiz/View/Profile/my_vehicle.dart';
 
+import '../../View/Profile/notification_setting_screen.dart';
+
 class AppPages {
   static List<GetPage> pages = [
     GetPage(
@@ -43,5 +45,9 @@ class AppPages {
       binding: DashboardBinding(),
     ),
     GetPage(name: AppRoute.myVehicle, page: () => VehicleScreen()),
+    GetPage(
+      name: AppRoute.notificationSettingScreen,
+      page: () => NotificationSettingScreen(),
+    ),
   ];
 }

@@ -5,7 +5,6 @@ import 'package:towtrackwhiz/Controller/Dashboard/profile_controller.dart';
 import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 import 'package:towtrackwhiz/Core/Routes/app_route.dart';
 import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
-import 'package:towtrackwhiz/View/Profile/my_vehicle.dart';
 
 class ProfileScreen extends GetView<ProfileController> {
   const ProfileScreen({super.key});
@@ -100,8 +99,16 @@ class ProfileScreen extends GetView<ProfileController> {
             ),
           ),
           10.verticalSpace,
-          InkWell(onTap: () => Get.toNamed(AppRoute.myVehicle), child: _menuTile(ImgPath.myVehicleIcon, "My Vehicles")),
-          _menuTile(ImgPath.notificationIcon, "Notification Settings"),
+          _menuTile(
+            ImgPath.myVehicleIcon,
+            "My Vehicles",
+            onTap: () => Get.toNamed(AppRoute.myVehicle),
+          ),
+          _menuTile(
+            ImgPath.notificationIcon,
+            "Notification Settings",
+            onTap: () => Get.toNamed(AppRoute.notificationSettingScreen),
+          ),
           _menuTile(ImgPath.settingIcon, "Account Settings"),
           _menuTile(ImgPath.payMethodIcon, "Payout Method"),
           _menuTile(ImgPath.logoutIcon, "Logout", color: Colors.red),
@@ -113,6 +120,7 @@ class ProfileScreen extends GetView<ProfileController> {
   Widget _menuTile(
     String icon,
     String title, {
+    Function()? onTap,
     Color color = AppColors.primary,
   }) {
     return Container(
@@ -129,7 +137,7 @@ class ProfileScreen extends GetView<ProfileController> {
           size: 14.sp,
           color: AppColors.primary,
         ),
-        onTap: () {},
+        onTap: onTap,
       ),
     );
   }

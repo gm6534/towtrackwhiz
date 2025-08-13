@@ -45,7 +45,7 @@ class LoginScreen extends GetView<LoginController> {
                         width: 10.w,
                       ),
                     ),
-                    hintText: "login_hint".tr,
+                    hintText: "Enter email here",
                     validator: (value) => ValidationHelper.validateEmail(value),
                   ),
 

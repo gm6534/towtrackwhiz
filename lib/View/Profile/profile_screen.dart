@@ -111,7 +111,12 @@ class ProfileScreen extends GetView<ProfileController> {
           ),
           _menuTile(ImgPath.settingIcon, "Account Settings"),
           _menuTile(ImgPath.payMethodIcon, "Payout Method"),
-          _menuTile(ImgPath.logoutIcon, "Logout", color: Colors.red),
+          _menuTile(
+            ImgPath.logoutIcon,
+            "Logout",
+            color: Colors.red,
+            onTap: () => Get.offAllNamed(AppRoute.loginScreen),
+          ),
         ],
       ),
     );

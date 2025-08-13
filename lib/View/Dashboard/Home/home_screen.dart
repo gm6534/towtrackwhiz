@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:towtrackwhiz/Controller/Dashboard/dashboard_controller.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends GetView<DashboardController> {
   const HomeScreen({super.key});
 
   @override
@@ -24,12 +25,41 @@ class HomeScreen extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12.r),
               color: Colors.grey.shade300,
-              image: DecorationImage(image: AssetImage(ImgPath.mapImg), fit: BoxFit.cover)
+              // image: DecorationImage(
+              //   image: AssetImage(ImgPath.mapImg),
+              //   fit: BoxFit.cover,
+              // ),
             ),
-            // child: const Center(child: Text("Map Placeholder")),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12.r),
+              child: GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(52.577622, -2.135586),
+                  zoom: 11.0,
+                ),
+                liteModeEnabled: true,
+                onMapCreated: (GoogleMapController value) {
+                  if (!controller.mapController.isCompleted) {
+                    controller.mapController.complete(value);
+                  }
+                },
+                mapToolbarEnabled: true,
+                markers: {
+                  Marker(
+                    markerId: const MarkerId('currentLocation'),
+                    position: LatLng(52.577622, -2.135586),
+                    // icon: AssetMapBitmap(ImgPath.carIcon, height: 20.w, width: 40.w),
+                    infoWindow: InfoWindow(
+                      title: 'Location',
+                      snippet: '${52.577622}, ${-2.135586}',
+                    ),
+                  ),
+                },
+              ),
+            ),
           ),
         ),
-        10.verticalSpace,
+        30.verticalSpace,
       ],
     );
   }

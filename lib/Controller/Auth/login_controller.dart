@@ -47,6 +47,7 @@ class LoginController extends GetxController {
   }
 
   void login() {
+    if (!loginFormKey.currentState!.validate()) return;
     Get.offAllNamed(AppRoute.dashboard);
   }
 

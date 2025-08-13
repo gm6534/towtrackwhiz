@@ -48,7 +48,7 @@ class SignUpScreen extends GetView<SignUpController> {
                         width: 10.w,
                       ),
                     ),
-                    hintText: "login_hint".tr,
+                    hintText: "Enter email here",
                     validator: (value) => ValidationHelper.validateEmail(value),
                   ),
                   Obx(() {
@@ -110,7 +110,9 @@ class SignUpScreen extends GetView<SignUpController> {
                   }),
                   SizedBox(height: context.width * 0.15),
                   AppButton(
-                    onPressed: () => controller.signUpPage(),
+                    onPressed: () {
+                      controller.signUpPage();
+                    },
                     title: ActionText.singUp,
                   ),
                   Row(

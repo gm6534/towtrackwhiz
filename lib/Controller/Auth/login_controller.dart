@@ -5,8 +5,10 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:towtrackwhiz/Controller/Auth/auth_controller.dart';
 import 'package:towtrackwhiz/Core/Routes/app_route.dart';
-import 'package:towtrackwhiz/Model/Login/login_response_model.dart';
+import 'package:towtrackwhiz/Model/Auth/auth_response_model.dart';
 import 'package:towtrackwhiz/Repository/auth_repo.dart';
+
+import '../../Core/Constants/app_strings.dart';
 
 class LoginController extends GetxController {
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
@@ -17,12 +19,12 @@ class LoginController extends GetxController {
   String? _deviceToken;
 
   final emailController = TextEditingController(
-    text: kDebugMode ? "tcleaner@gmail.com" : "",
+    text: kDebugMode ? "gmdev@gmail.com" : "",
   );
   final passwordController = TextEditingController(
     text: kDebugMode ? "12345678" : "",
   );
-  LoginResponseModel? loginResponseModel = LoginResponseModel();
+  AuthResponseModel? loginResponseModel = AuthResponseModel();
   AuthController? authController;
 
   AuthRepo? authRepo;
@@ -46,32 +48,33 @@ class LoginController extends GetxController {
     Get.toNamed(AppRoute.signUpScreen);
   }
 
-  void login() {
-    if (!loginFormKey.currentState!.validate()) return;
-    Get.offAllNamed(AppRoute.dashboard);
-  }
-
-  // Future<void> login() async {
-  //   if (loginFormKey.currentState!.validate()) {
-  //     final authController = Get.find<AuthController>();
-
-  //     final email = emailController.text.toString();
-  //     final password = passwordController.text.toString();
-  //     _deviceToken = await firebaseMessaging.getToken();
-  //     final loginResponse = await authController.login(
-  //       userName: email,
-  //       password: password,
-  //       deviceToken: _deviceToken ?? "",
-  //     );
-  //     if (loginResponse != null) {
-  //       if (isRememberMe.value) {
-  //         // await _storage!.write(GetStorageKeys.credentials,
-  //         //     email + AppInfo.splitSeparator + password);
-  //       } else {
-  //         await _storage!.write(GetStorageKeys.credentials, null);
-  //       }
-  //       await _storage!.write(GetStorageKeys.authInfo, loginResponse.toJson());
-  //     }
-  //   }
+  // void login() {
+  //   if (!loginFormKey.currentState!.validate()) return;
+  //   Get.offAllNamed(AppRoute.dashboard);
   // }
+
+  Future<void> login() async {
+    if (loginFormKey.currentState!.validate()) {
+      final authController = Get.find<AuthController>();
+
+      final email = emailController.text.toString();
+      final password = passwordController.text.toString();
+      // _deviceToken = "eSkWfILmQX-MjLx3boWeCE:APA91bEi4mst6ffUoDl6PPkh1qDrZK0ilFH4j2cISOoBYEvCABujuzfc-aajYX7-UCCTNuRC3zJrD8T1zqiH1teB9O9nvVrei_LVtILnvUY-3sm4uV0e-rQ";
+      _deviceToken = await firebaseMessaging.getToken();
+      final loginResponse = await authController.login(
+        userName: email,
+        password: password,
+        deviceToken: _deviceToken ?? "",
+      );
+      if (loginResponse != null) {
+        if (isRememberMe.value) {
+          // await _storage!.write(GetStorageKeys.credentials,
+          //     email + AppInfo.splitSeparator + password);
+        } else {
+          await _storage!.write(GetStorageKeys.credentials, null);
+        }
+        await _storage!.write(GetStorageKeys.authInfo, loginResponse.toJson());
+      }
+    }
+  }
 }

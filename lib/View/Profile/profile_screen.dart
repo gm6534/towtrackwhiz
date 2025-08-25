@@ -115,7 +115,7 @@ class ProfileScreen extends GetView<ProfileController> {
             ImgPath.logoutIcon,
             "Logout",
             color: Colors.red,
-            onTap: () => Get.offAllNamed(AppRoute.loginScreen),
+            onTap: controller.authController?.logout,
           ),
         ],
       ),

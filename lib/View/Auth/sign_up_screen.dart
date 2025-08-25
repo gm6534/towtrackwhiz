@@ -38,6 +38,21 @@ class SignUpScreen extends GetView<SignUpController> {
 
                   10.verticalSpace,
                   AppHeadingTextField(
+                    heading: 'Name',
+                    controller: controller.nameController,
+                    prefix: Container(
+                      margin: EdgeInsets.all(12.w),
+                      child: Image.asset(
+                        ImgPath.msgIcon,
+                        height: 10.w,
+                        width: 10.w,
+                      ),
+                    ),
+                    hintText: "Enter name here",
+                    validator:
+                        (value) => ValidationHelper.validateName(value, "Name"),
+                  ),
+                  AppHeadingTextField(
                     heading: 'Email',
                     controller: controller.emailController,
                     prefix: Container(
@@ -103,16 +118,14 @@ class SignUpScreen extends GetView<SignUpController> {
                       hintText: "**********",
                       validator:
                           (value) => ValidationHelper.validateConfirmPassword(
-                            controller.passwordController.value.toString(),
+                            controller.passwordController.text,
                             value,
                           ),
                     );
                   }),
-                  SizedBox(height: context.width * 0.15),
+                  SizedBox(height: context.width * 0.04),
                   AppButton(
-                    onPressed: () {
-                      controller.signUpPage();
-                    },
+                    onPressed: controller.signUp,
                     title: ActionText.singUp,
                   ),
                   Row(

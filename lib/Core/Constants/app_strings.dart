@@ -3,6 +3,7 @@ class AppInfo {
 }
 
 class GetStorageKeys {
+  static const String firstTime = "first_time";
   static const String authInfo = 'authInfo';
   static const String credentials = "credentials";
   static const String languageCode = 'language_code';

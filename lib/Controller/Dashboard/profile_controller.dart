@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:towtrackwhiz/Controller/Auth/auth_controller.dart';
 
 class ProfileController extends GetxController {
   var isNotificationEnabled = true.obs;
@@ -10,8 +11,11 @@ class ProfileController extends GetxController {
     {"name": "Car 02465", "plate": "Lue4567", "model": "2022"},
   ];
 
+  AuthController? authController;
+
   @override
   void onInit() {
+    authController = Get.find<AuthController>();
     firstApiCall();
     super.onInit();
   }

@@ -1,10 +1,10 @@
-class LoginResponseModel {
+class AuthResponseModel {
   String? token;
   UserModel? user;
 
-  LoginResponseModel({this.token, this.user});
+  AuthResponseModel({this.token, this.user});
 
-  LoginResponseModel.fromJson(Map<String, dynamic> json) {
+  AuthResponseModel.fromJson(Map<String, dynamic> json) {
     token = json['token'];
     user = json['user'] != null ? UserModel.fromJson(json['user']) : null;
   }

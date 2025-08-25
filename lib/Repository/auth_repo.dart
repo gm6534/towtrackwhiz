@@ -1,23 +1,42 @@
 import 'package:towtrackwhiz/Core/Network/api_client.dart';
-import 'package:towtrackwhiz/Model/Login/login_req_model.dart';
+import 'package:towtrackwhiz/Model/Auth/login_req_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:towtrackwhiz/Model/Auth/signup_req_model.dart';
 import '../Core/Utils/log_util.dart';
-import '../Model/Login/login_response_model.dart';
+import '../Model/Auth/auth_response_model.dart';
 
 class AuthRepo extends ApiClient {
-  Future<LoginResponseModel?> login({LoginReqModel? model}) async {
+  Future<AuthResponseModel?> login({LoginReqModel? model}) async {
     try {
       var response = await post("login", body: model?.toJson());
 
-      LoginResponseModel loginResponseModel;
+      AuthResponseModel authResponseModel;
       if (response.data != null) {
-        loginResponseModel = LoginResponseModel.fromJson(response.data);
+        authResponseModel = AuthResponseModel.fromJson(response.data);
       } else {
         throw http.ClientException(response.message!);
       }
-      return loginResponseModel;
+      return authResponseModel;
     } catch (e) {
       Log.e("login: AuthRepo- ", e.toString());
+
+      rethrow;
+    }
+  }
+
+  Future<AuthResponseModel?> signUp({SignupReqModel? model}) async {
+    try {
+      var response = await post("register", body: model?.toJson());
+
+      AuthResponseModel authResponseModel;
+      if (response.data != null) {
+        authResponseModel = AuthResponseModel.fromJson(response.data);
+      } else {
+        throw http.ClientException(response.message!);
+      }
+      return authResponseModel;
+    } catch (e) {
+      Log.e("signUp: AuthRepo- ", e.toString());
 
       rethrow;
     }
@@ -41,7 +60,9 @@ class AuthRepo extends ApiClient {
     }
   }
 
-  Future<UpdateProfileResModel?> updateProfile({UpdateUserReqModel? model}) async {
+  Future<UpdateProfileResModel?> updateProfile({
+    UpdateUserReqModel? model,
+  }) async {
     try {
       var response = await multipartPost(
         endpoint: "profile/update",

@@ -91,6 +91,9 @@ class ActionText {
   static const String yes = "Yes";
   static const String no = "No";
   static const String cancel = "Cancel";
+  static const String delete = "Delete";
+  static const String edit = "Edit";
+  static const String update = "Update";
 }
 
 class ToastMsg {
@@ -98,7 +101,7 @@ class ToastMsg {
   static const String allowGalleryAccess = "Please allow access to the Gallery";
   static const String noInternetConnection = "No Internet Connection";
   static const String required = "* required";
-  static const String pleaseWait = "please_wait";
+  static const String pleaseWait = "Please Wait";
   static const String unknownError =
       "The application has encountered an unknown error. Please check that your device is connected to the internet";
   static const String unableToConnect = "Unable to connect to the internet";

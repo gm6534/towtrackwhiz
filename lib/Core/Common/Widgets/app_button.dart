@@ -1,9 +1,7 @@
-import 'package:towtrackwhiz/Controller/Other/connectivity_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
-import '../../../core/Utils/app_colors.dart';
+import 'package:towtrackwhiz/Controller/Other/connectivity_controller.dart';
 
 class AppButton extends StatelessWidget {
   final Function()? onPressed;
@@ -12,6 +10,7 @@ class AppButton extends StatelessWidget {
   final double? width;
   final double? cornerRadius;
   final bool isOutlined;
+  final Color? btnColor;
 
   AppButton({
     super.key,
@@ -21,6 +20,7 @@ class AppButton extends StatelessWidget {
     this.width,
     this.cornerRadius,
     this.isOutlined = false,
+    this.btnColor,
   });
 
   final ConnectionManagerController controller = Get.find();
@@ -36,6 +36,12 @@ class AppButton extends StatelessWidget {
                 ? OutlinedButton(
                   onPressed: controller.isConnected.value ? onPressed : null,
                   style: Get.theme.outlinedButtonTheme.style?.copyWith(
+                    side: WidgetStatePropertyAll(
+                      btnColor != null
+                          ? BorderSide(color: btnColor!)
+                          : BorderSide.none,
+                    ),
+                    foregroundColor: WidgetStatePropertyAll(btnColor),
                     shape: WidgetStatePropertyAll(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
@@ -49,6 +55,7 @@ class AppButton extends StatelessWidget {
                 : ElevatedButton(
                   onPressed: controller.isConnected.value ? onPressed : null,
                   style: Get.theme.elevatedButtonTheme.style?.copyWith(
+                    backgroundColor: WidgetStatePropertyAll(btnColor),
                     shape: WidgetStatePropertyAll(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(

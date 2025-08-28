@@ -13,7 +13,7 @@ class BaseScaffold extends StatelessWidget {
   final List<Widget>? actions;
   final Widget? floatingActionButton;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
-  final BottomNavigationBar? bottomNavigationBar;
+  final Widget? bottomNavigationBar;
   BaseScaffold({
     super.key,
     this.appBarTitle = '',

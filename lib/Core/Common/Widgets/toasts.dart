@@ -10,7 +10,7 @@ import '../Dialog/error_dialoge.dart';
 
 class ToastAndDialog {
   static progressIndicator({RxString? text}) {
-    text ??= ToastMsg.pleaseWait.tr.obs;
+    text ??= ToastMsg.pleaseWait.obs;
 
     Get.dialog(ProgressDialog(text: text), barrierDismissible: false);
   }

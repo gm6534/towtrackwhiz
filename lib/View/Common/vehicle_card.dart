@@ -9,6 +9,7 @@ class VehicleCard extends StatelessWidget {
   final String name;
   final String plate;
   final String model;
+  final VoidCallback onTap;
   final VoidCallback onDelete;
   final VoidCallback onEdit;
 
@@ -18,64 +19,67 @@ class VehicleCard extends StatelessWidget {
     required this.plate,
     required this.model,
     required this.onDelete,
-    required this.onEdit,
+    required this.onEdit, required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(15.w),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.r),
-        color: AppColors.white,
-        boxShadow: [
-          BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
-        ],
-      ),
-      child: Row(
-        spacing: 15.w,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 5.w,
-              children: [
-                Text(name, style: Get.textTheme.titleLarge),
-                Text(
-                  "License plate: $plate",
-                  style: Get.textTheme.bodyMedium?.copyWith(
-                    color: AppColors.greyColor,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.all(15.w),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.r),
+          color: AppColors.white,
+          boxShadow: [
+            BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
+          ],
+        ),
+        child: Row(
+          spacing: 15.w,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 5.w,
+                children: [
+                  Text(name, style: Get.textTheme.titleLarge),
+                  Text(
+                    "License plate: $plate",
+                    style: Get.textTheme.bodyMedium?.copyWith(
+                      color: AppColors.greyColor,
+                    ),
                   ),
-                ),
-                Text(
-                  "Model: $model",
-                  style: Get.textTheme.bodyMedium?.copyWith(
-                    color: AppColors.greyColor,
+                  Text(
+                    "Model: $model",
+                    style: Get.textTheme.bodyMedium?.copyWith(
+                      color: AppColors.greyColor,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          GestureDetector(
-            onTap: onDelete,
-            child: Image.asset(
-              ImgPath.deleteIcon,
-              color: AppColors.redColor,
-              height: 20.w,
-              width: 20.w,
+            GestureDetector(
+              onTap: onDelete,
+              child: Image.asset(
+                ImgPath.deleteIcon,
+                color: AppColors.redColor,
+                height: 20.w,
+                width: 20.w,
+              ),
             ),
-          ),
-          GestureDetector(
-            onTap: onEdit,
-            child: Image.asset(
-              ImgPath.editIcon,
-              color: AppColors.primary,
-              height: 20.w,
-              width: 20.w,
+            GestureDetector(
+              onTap: onEdit,
+              child: Image.asset(
+                ImgPath.editIcon,
+                color: AppColors.primary,
+                height: 20.w,
+                width: 20.w,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

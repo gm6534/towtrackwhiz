@@ -80,22 +80,4 @@ class AlertCardWidget extends StatelessWidget {
       ),
     );
   }
-
-  Widget _buildLocationPoint(String point) {
-    return Padding(
-      padding: EdgeInsets.only(left: 8.w, bottom: 4.h),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('• ', style: TextStyle(fontSize: 16.sp, color: Colors.red)),
-          Expanded(
-            child: Text(
-              point,
-              style: TextStyle(fontSize: 14.sp, color: Colors.red[900]),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:towtrackwhiz/Controller/onboarding_controller.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/app_button.dart';
-import 'package:towtrackwhiz/Core/Common/Widgets/base_scaffold.dart';
 import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
 
@@ -43,7 +42,7 @@ class OnboardingScreen extends GetView<OnboardingController> {
                 ),
               ),
               30.verticalSpace,
-              Image.asset(ImgPath.appLogo, width: 300.w,),
+              Image.asset(ImgPath.appLogo, width: 300.w),
               Flexible(
                 child: PageView.builder(
                   controller: controller.pageController,
@@ -97,10 +96,13 @@ class OnboardingScreen extends GetView<OnboardingController> {
               Obx(
                 () => AppButton(
                   onPressed: controller.nextPage,
-                  title: controller.currentPage.value == 2 ? "Get Started" : "Next",
+                  title:
+                      controller.currentPage.value == 2
+                          ? "Get Started"
+                          : "Next",
                 ),
               ),
-              20.verticalSpace
+              20.verticalSpace,
             ],
           ),
         ),

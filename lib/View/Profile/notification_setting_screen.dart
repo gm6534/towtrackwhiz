@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:towtrackwhiz/Controller/Dashboard/profile_controller.dart';
-import 'package:towtrackwhiz/Core/Common/Widgets/app_button.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/base_scaffold.dart';
 import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
@@ -51,43 +50,43 @@ class NotificationSettingScreen extends GetView<ProfileController> {
                         ),
                         value: controller.isNotificationEnabled.value,
                         onChanged: (val) {
-                          controller.isNotificationEnabled.value = val;
+                          controller.toggleNotify(value: val);
                         },
                       );
                     }),
                   ],
                 ),
-                Text("Choose tone", style: Get.textTheme.titleMedium),
-                Container(
-                  width: context.width,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12.w,
-                    vertical: 14.h,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.r),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 4,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: Text(
-                    "------------------",
-                    style: Get.textTheme.titleMedium,
-                  ),
-                ),
+                // Text("Choose tone", style: Get.textTheme.titleMedium),
+                // Container(
+                //   width: context.width,
+                //   padding: EdgeInsets.symmetric(
+                //     horizontal: 12.w,
+                //     vertical: 14.h,
+                //   ),
+                //   decoration: BoxDecoration(
+                //     borderRadius: BorderRadius.circular(10.r),
+                //     color: Colors.white,
+                //     boxShadow: [
+                //       BoxShadow(
+                //         color: Colors.black12,
+                //         blurRadius: 4,
+                //         offset: Offset(0, 2),
+                //       ),
+                //     ],
+                //   ),
+                //   child: Text(
+                //     "------------------",
+                //     style: Get.textTheme.titleMedium,
+                //   ),
+                // ),
               ],
             ),
-            AppButton(
-              onPressed: () {
-                // controller.saveSettings();
-              },
-              title: ActionText.save,
-            ),
+            // AppButton(
+            //   onPressed: () {
+            //     // controller.saveSettings();
+            //   },
+            //   title: ActionText.save,
+            // ),
           ],
         ),
       ),

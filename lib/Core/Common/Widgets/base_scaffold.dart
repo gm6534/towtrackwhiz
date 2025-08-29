@@ -9,6 +9,7 @@ class BaseScaffold extends StatelessWidget {
   final bool centerTitle;
   final AppBar? appBar;
   final Widget body;
+  final EdgeInsets? bodyPadding;
   final Widget? drawer;
   final List<Widget>? actions;
   final Widget? floatingActionButton;
@@ -25,6 +26,7 @@ class BaseScaffold extends StatelessWidget {
     this.floatingActionButton,
     this.floatingActionButtonLocation,
     this.appBar,
+    this.bodyPadding,
   });
 
   final ConnectionManagerController controller = Get.find();
@@ -49,7 +51,10 @@ class BaseScaffold extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                child: Padding(padding: EdgeInsets.all(16.w), child: body),
+                child: Padding(
+                  padding: bodyPadding ?? EdgeInsets.all(16.w),
+                  child: body,
+                ),
               ),
               if (!controller.isConnected.value) NoInternetWidget(),
             ],

@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:towtrackwhiz/Core/Common/Widgets/app_web_view.dart';
 import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
 
@@ -78,15 +79,23 @@ class LookupScreen extends GetView<LookupController> {
         DropdownButtonFormField<String>(
           dropdownColor: AppColors.white,
           items:
-              controller.cities
-                  .map(
-                    (city) => DropdownMenuItem(
-                      value: city,
-                      child: Text(city, style: Get.textTheme.titleSmall),
-                    ),
-                  )
-                  .toList(),
-          onChanged: (value) {},
+              controller.cities.map((city) {
+                return DropdownMenuItem(
+                  value: city,
+                  child: Text(city, style: Get.textTheme.titleSmall),
+                );
+              }).toList(),
+          onChanged: (value) {
+            if (value != null) {
+              final index = controller.cities.indexOf(value);
+              Get.to(
+                () => AppWebView(
+                  fileUrl: controller.citiesUrl[index],
+                  barTitle: value,
+                ),
+              );
+            }
+          },
           decoration: InputDecoration(
             contentPadding: EdgeInsets.all(12.w),
             hintText: "Choose Your City",

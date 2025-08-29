@@ -24,6 +24,27 @@ class AuthRepo extends ApiClient {
     }
   }
 
+  Future<String?> toggleNotification({int toggleValue = 0}) async {
+    try {
+      var response = await post(
+        "toggle-notification",
+        body: {"is_notify": toggleValue},
+      );
+
+      String message;
+      if (response.data != null) {
+        message = response.data["message"];
+      } else {
+        throw http.ClientException(response.message!);
+      }
+      return message;
+    } catch (e) {
+      Log.e("toggleNotification: AuthRepo- ", e.toString());
+
+      rethrow;
+    }
+  }
+
   Future<AuthResponseModel?> signUp({SignupReqModel? model}) async {
     try {
       var response = await post("register", body: model?.toJson());

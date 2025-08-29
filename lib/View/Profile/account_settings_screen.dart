@@ -1,0 +1,148 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
+
+import '../../Controller/Dashboard/profile_controller.dart';
+import '../../Core/Common/Widgets/app_button.dart';
+import '../../Core/Common/Widgets/app_heading_text_field.dart';
+import '../../Core/Common/Widgets/base_scaffold.dart';
+import '../../core/Utils/app_colors.dart';
+
+class AccountSettingsScreen extends GetView<ProfileController> {
+  const AccountSettingsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BaseScaffold(
+      appBarTitle: "Account Settings",
+      body: Center(
+        child: SingleChildScrollView(
+          child: Obx(() {
+            if (controller.isProfileLoading.value) {
+              return Center(child: CircularProgressIndicator());
+            }
+            final user = controller.currentUser.value;
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              spacing: 10.w,
+              children: [
+                GestureDetector(
+                  onTap: () => _showAvatarPicker(context),
+                  child: Container(
+                    height: 130.w,
+                    width: 130.w,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.greyColor,
+                      image:
+                          user.avatar != null
+                              ? DecorationImage(
+                                fit: BoxFit.cover,
+                                image:
+                                    user.avatar!.startsWith("http")
+                                        ? NetworkImage(user.avatar!)
+                                        : FileImage(File(user.avatar!))
+                                            as ImageProvider,
+                              )
+                              : null,
+                    ),
+                    child:
+                        user.avatar == null
+                            ? Icon(
+                              Icons.camera_alt,
+                              size: 40.w,
+                              color: Colors.white,
+                            )
+                            : null,
+                  ),
+                ),
+                AppHeadingTextField(
+                  heading: AppHeadings.email,
+                  initialValue: user.email ?? '',
+                  enabled: false,
+                ),
+                AppHeadingTextField(
+                  heading: AppHeadings.name,
+                  initialValue: user.name ?? '',
+                  onChanged: (value) => controller.updateField(name: value),
+                ),
+                AppHeadingTextField(
+                  heading: AppHeadings.password,
+                  controller: controller.passwordC,
+                  textInputType: TextInputType.phone,
+                  onChanged: (value) => controller.checkChanges(),
+                  // validator:
+                  //     (password) => ValidationHelper.validatePassword(password),
+                ),
+                AppHeadingTextField(
+                  heading: AppHeadings.confirmPassword,
+                  controller: controller.confirmPasswordC,
+                  textInputType: TextInputType.phone,
+                  onChanged: (value) => controller.checkChanges(),
+                  // validator:
+                  //     (confirmPassword) =>
+                  //         ValidationHelper.validateConfirmPassword(
+                  //           controller.passwordC.text,
+                  //           confirmPassword,
+                  //         ),
+                ),
+                SizedBox(height: 30.h),
+
+                Obx(
+                  () => AppButton(
+                    title: ActionText.update,
+                    onPressed:
+                        !controller.isChanged.value
+                            ? null
+                            : () async {
+                              await controller.updateUserProfile();
+                            },
+                  ),
+                ),
+              ],
+            );
+          }),
+        ),
+      ),
+    );
+  }
+
+  void _showAvatarPicker(BuildContext context) {
+    Get.bottomSheet(
+      Container(
+        padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 20.w),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text("choose_image".tr, style: TextStyle(fontSize: 16.sp)),
+            ListTile(
+              leading: Icon(Icons.camera_alt),
+              title: Text("camera".tr),
+              onTap: () {
+                Get.back();
+                controller.pickImageFromSource(ImageSource.camera);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.photo),
+              title: Text("gallery".tr),
+              onTap: () {
+                Get.back();
+                controller.pickImageFromSource(ImageSource.gallery);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

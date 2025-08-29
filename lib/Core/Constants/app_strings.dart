@@ -55,6 +55,10 @@ class ImgPath {
 }
 
 class AppHeadings {
+  static const name = "Name";
+  static const email = "Email";
+  static const password = "Password";
+  static const confirmPassword = "Confirm Password";
   static const signInTitle =
       "Welcome to TowTrackWhiz\nAssist users in locating towed vehicles";
   static const signUpTitle =

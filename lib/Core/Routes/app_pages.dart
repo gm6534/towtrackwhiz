@@ -13,6 +13,7 @@ import 'package:towtrackwhiz/View/Onboarding/onboarding_binding.dart';
 import 'package:towtrackwhiz/View/Onboarding/onboarding_screen.dart';
 import 'package:towtrackwhiz/View/Profile/my_vehicle.dart';
 
+import '../../View/Profile/account_settings_screen.dart';
 import '../../View/Profile/add_edit_vehicle_screen.dart';
 import '../../View/Profile/notification_setting_screen.dart';
 
@@ -50,6 +51,10 @@ class AppPages {
     GetPage(
       name: AppRoute.notificationSettingScreen,
       page: () => NotificationSettingScreen(),
+    ),
+    GetPage(
+      name: AppRoute.accountSettingsScreen,
+      page: () => AccountSettingsScreen(),
     ),
   ];
 }

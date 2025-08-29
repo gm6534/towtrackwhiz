@@ -55,6 +55,7 @@ class _AppWebViewState extends State<AppWebView> {
               },
             ),
           )
+          ..enableZoom(false)
           ..loadRequest(Uri.parse(widget.fileUrl));
   }
 
@@ -73,6 +74,7 @@ class _AppWebViewState extends State<AppWebView> {
       },
       child: BaseScaffold(
         appBarTitle: widget.barTitle,
+        bodyPadding: EdgeInsets.zero,
         body: Obx(() {
           if (isPageLoading.value) {
             return Center(child: CircularProgressIndicator());

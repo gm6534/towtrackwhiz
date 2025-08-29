@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:towtrackwhiz/Controller/Dashboard/profile_controller.dart';
 import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 import 'package:towtrackwhiz/Core/Routes/app_route.dart';
@@ -19,18 +20,29 @@ class ProfileScreen extends GetView<ProfileController> {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.all(30.w),
+              height: 120.w,
+              width: 120.w,
               decoration: BoxDecoration(
-                color: AppColors.lightRed,
+                color: AppColors.secondary,
                 shape: BoxShape.circle,
+                image: DecorationImage(
+                  fit: BoxFit.fitWidth,
+                  image: NetworkImage(controller.currentUser.value.avatar!),
+                ),
               ),
-              child: Icon(Icons.person, size: 50.w, color: AppColors.redColor),
+              // child: Icon(Icons.person, size: 50.w, color: AppColors.redColor),
             ),
             10.verticalSpace,
-            Text("Lee Jenna", style: Get.textTheme.headlineMedium),
-            Text("leeje24@gmail.com", style: Get.textTheme.bodyLarge),
             Text(
-              "Member Since 2025",
+              controller.currentUser.value.name!,
+              style: Get.textTheme.headlineMedium,
+            ),
+            Text(
+              controller.currentUser.value.email!,
+              style: Get.textTheme.bodyLarge,
+            ),
+            Text(
+              "Member Since ${DateFormat("yyyy").format(DateTime.parse(controller.currentUser.value.createdAt!))}",
               style: Get.textTheme.bodyMedium?.copyWith(
                 color: AppColors.greyColor.withValues(alpha: 0.9),
               ),
@@ -83,7 +95,7 @@ class ProfileScreen extends GetView<ProfileController> {
                           style: Get.textTheme.titleMedium,
                         ),
                         Text(
-                          "You’ve helped verify 8+ Community alerts",
+                          "You’ve helped verify ${int.parse(controller.currentUser.value.verified!) > 0 ? controller.currentUser.value.verified : 0} Community alerts",
                           style: Get.textTheme.bodySmall?.copyWith(
                             color: AppColors.hintColor,
                           ),
@@ -100,7 +112,10 @@ class ProfileScreen extends GetView<ProfileController> {
                       color: AppColors.yellowColor,
                       borderRadius: BorderRadius.circular(20.r),
                     ),
-                    child: Text("Level 2", style: Get.textTheme.labelLarge),
+                    child: Text(
+                      "Level ${controller.currentUser.value.level}",
+                      style: Get.textTheme.labelLarge,
+                    ),
                   ),
                 ],
               ),
@@ -116,8 +131,12 @@ class ProfileScreen extends GetView<ProfileController> {
               "Notification Settings",
               onTap: () => Get.toNamed(AppRoute.notificationSettingScreen),
             ),
-            _menuTile(ImgPath.settingIcon, "Account Settings"),
-            _menuTile(ImgPath.payMethodIcon, "Payout Method"),
+            _menuTile(
+              ImgPath.settingIcon,
+              "Account Settings",
+              onTap: () => Get.toNamed(AppRoute.accountSettingsScreen),
+            ),
+            // _menuTile(ImgPath.payMethodIcon, "Payout Method"),
             _menuTile(
               ImgPath.logoutIcon,
               "Logout",

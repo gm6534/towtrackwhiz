@@ -8,4 +8,5 @@ class AppRoute {
   static const String myVehicle = '/myVehicle';
   static const String addVehicles = '/addVehicles';
   static const String notificationSettingScreen = '/notificationSettingScreen';
+  static const String accountSettingsScreen = '/accountSettingsScreen';
 }

@@ -185,15 +185,17 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> getUserProfile() async {
+  Future<UserModel?> getUserProfile() async {
     try {
       var result = await _authRepo?.getProfile();
 
       if (result != null) {
         updateUserInfo(result);
       }
+      return result;
     } catch (e) {
       Log.e("getUserProfile _ Auth Controller", "$e");
+      return authInfo?.user;
     }
   }
 

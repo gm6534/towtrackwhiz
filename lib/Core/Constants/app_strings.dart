@@ -59,6 +59,36 @@ class AppHeadings {
   static const email = "Email";
   static const password = "Password";
   static const confirmPassword = "Confirm Password";
+  static const home = "Home";
+  static const alert = "Alert";
+  static const lookUp = "Look Up";
+  static const profile = "Profile";
+  static const updateVehicle = "Update Vehicle";
+  static const addVehicles = "Add Vehicles";
+  static const make = "Make";
+  static const vehicleModel = "Vehicle Model";
+  static const modelYear = "Model Year (e.g. 2025)";
+  static const vehicleColor = "Vehicle Color";
+  static const registrationState = "Registration State";
+  static const registeredVehicles = "Registered Vehicles";
+  static const myVehicles = "My Vehicles";
+  static const notificationSettings = "Notification Settings";
+  static const accountSettings = "Account Settings";
+  static const notificationSetting = "Notification Setting";
+  static const vehicleDetail = "Vehicle Detail";
+
+  static const letGetStarted = "Let's Get Started";
+  static const findTowedCarEasily = "Find your towed car easily";
+  static const helpCommunityRewards = "Help the community & earn rewards";
+  static const avoidHighRiskZone = "Avoid high-risk zones with live heatmaps";
+  static const towingHotZonesMap = "Towing Hot Zones Map";
+  static const communityAlerts = "Community Alerts";
+  static const communityHelper = "Community Helper";
+  static const String type = "Type";
+  static const String location = "Location";
+  static const reportTowActivity = "Report Tow Activity";
+  static const comments = "Comments (Optional)";
+  static const String uploadImage = "Upload Image (Optional)";
   static const signInTitle =
       "Welcome to TowTrackWhiz\nAssist users in locating towed vehicles";
   static const signUpTitle =
@@ -80,8 +110,36 @@ class AppHeadings {
 }
 
 class Strings {
+  static const String alertRequire = "Alert Require";
+  static const String verified = "Verified";
+  static const String carsRegistered = "Cars Registered";
+  static const String youHaveHelpedVerify = "You’ve helped verify";
+  static const String communityAlerts = "Community alerts";
+  static const String level = "Level";
+
   static const String permissionRequired = "Permission Required";
   static const String openSettings = "Open Settings";
+  static const String enterEmailHere = "Enter email here";
+  static const String enterNameHere = "Enter name here";
+  static const String dontHaveAccount = "Don’t have an account? ";
+  static const String haveAnAccount = "Have an account? ";
+  static const String selectType = "Select Type....";
+  static const String emergency = "Emergency";
+  static const String gasLeakReported = "Gas Leak Reported";
+  static const String chooseOnMap = "Choose on map";
+  static const String attachFile = "Attach file";
+  static const String typeComment = "Type Comment";
+  static const String licensePlate = "License plate";
+  static const String model = "Model";
+  static const String reportTow = "Report Tow";
+  static const String image = "Image";
+  static const String chooseImg = "Choose Image";
+  static const String camera = "Camera";
+  static const String gallery = "Gallery";
+  static const String noRecordFound = "No record found";
+  static const String availabilityOfNotification =
+      "Availability of notification";
+  static const String memberSince = "Member Since";
 }
 
 class ActionText {
@@ -89,8 +147,15 @@ class ActionText {
   static const String singUp = "Sign Up";
   static const String sendCode = "Send Code";
   static const String submit = "Submit";
+  static const String submitReport = "Submit Report";
   static const String save = "Save";
   static const String resendCode = "Resend Code";
+  static const String getStarted = "Get Started";
+  static const String addVehicle = "Add Vehicle";
+  static const String deleteVehicle = "Delete Vehicle";
+  static const String next = "Next";
+  static const String skip = "Skip";
+  static const String logout = "Logout";
 
   static const String yes = "Yes";
   static const String no = "No";
@@ -106,6 +171,11 @@ class ToastMsg {
   static const String noInternetConnection = "No Internet Connection";
   static const String required = "* required";
   static const String pleaseWait = "Please Wait";
+  static const String closeApp = "Close App";
+  static const String deleteVehicle = "Delete Vehicle";
+  static const String areYouSureToDelVehicle =
+      "Are you sure you want to delete this vehicle?";
+
   static const String unknownError =
       "The application has encountered an unknown error. Please check that your device is connected to the internet";
   static const String unableToConnect = "Unable to connect to the internet";
@@ -131,6 +201,13 @@ class ErrorCode {
   static const String connectionAbort = "Software caused connection abort";
   static const String failedHost = "Failed host lookup";
   static const String invalidHtml = "<!DOCTYPE html>";
+  static const String unexpectedError = "Unexpected error";
+  static const String validationError = "Validation error";
+  static const String serverError = "Server error";
+  static const String failedToParseResponse = "Failed to parse response";
+  static const String invalidHTTPMethod = "Invalid HTTP method";
+  static const String unAuthorizedAccess =
+      "Unauthorized access. Please login again.";
 }
 
 class ValidationMessages {

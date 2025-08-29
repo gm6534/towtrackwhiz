@@ -30,14 +30,14 @@ class VehicleScreen extends GetView<ProfileController> {
         }
         if (controller.vehiclesList.isEmpty) {
           return Center(
-            child: Text("No record found", style: context.textTheme.titleLarge),
+            child: Text(Strings.noRecordFound, style: context.textTheme.titleLarge),
           );
         }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 10.w,
           children: [
-            Text("Registered Vehicles", style: Get.textTheme.headlineMedium),
+            Text(AppHeadings.registeredVehicles, style: Get.textTheme.headlineMedium),
             10.verticalSpace,
             Expanded(
               child: ListView.separated(
@@ -51,9 +51,9 @@ class VehicleScreen extends GetView<ProfileController> {
                     model: vehicle.model!,
                     onDelete: () async {
                       var response = await ToastAndDialog.confirmation(
-                        title: "Delete Vehicle",
+                        title: ToastMsg.deleteVehicle,
                         message:
-                            "Are you sure you want to delete this vehicle?",
+                            ToastMsg.areYouSureToDelVehicle,
                       );
                       if (response) {
                         controller.deleteVehicle(vId: vehicle.id!);
@@ -73,7 +73,7 @@ class VehicleScreen extends GetView<ProfileController> {
               onPressed: () {
                 Get.toNamed(AppRoute.addVehicles);
               },
-              title: "Add Vehicle",
+              title: ActionText.addVehicle,
             ),
           ],
         );

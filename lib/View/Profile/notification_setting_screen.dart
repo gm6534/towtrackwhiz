@@ -30,14 +30,14 @@ class NotificationSettingScreen extends GetView<ProfileController> {
               spacing: 20.w,
               children: [
                 Text(
-                  "Notification Setting",
+                  AppHeadings.notificationSetting,
                   style: Get.textTheme.headlineLarge,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Availability of notification",
+                      Strings.availabilityOfNotification,
                       style: Get.textTheme.titleLarge,
                     ),
                     Obx(() {

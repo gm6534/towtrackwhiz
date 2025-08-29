@@ -21,7 +21,7 @@ class GetStartedScreen extends StatelessWidget {
             children: [
               50.verticalSpace,
               Image.asset(ImgPath.appLogo, width: 300.w),
-              Text("Let's Get Started", style: Get.textTheme.displaySmall),
+              Text(AppHeadings.letGetStarted, style: Get.textTheme.displaySmall),
               Expanded(child: Image.asset(ImgPath.tow3Png)),
               AppButton(
                 onPressed: () {

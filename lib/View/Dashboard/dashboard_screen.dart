@@ -20,7 +20,7 @@ class DashboardScreen extends GetView<DashboardController> {
       onPopInvokedWithResult: (didPop, result) async {
         if (didPop) return;
         bool result = await ToastAndDialog.confirmation(
-          title: "Close App",
+          title: ToastMsg.closeApp,
           message: ToastMsg.closeAppConfirmation,
         );
         if (result) {
@@ -48,7 +48,7 @@ class DashboardScreen extends GetView<DashboardController> {
                       width: 24.w,
                     ),
                     label: Text(
-                      "Report Tow",
+                      Strings.reportTow,
                       style: Get.textTheme.headlineSmall?.copyWith(
                         color: AppColors.white,
                       ),
@@ -77,7 +77,7 @@ class DashboardScreen extends GetView<DashboardController> {
                           height: 24.w,
                           width: 24.w,
                         ),
-                label: 'Home',
+                label: AppHeadings.home,
               ),
               BottomNavigationBarItem(
                 icon:
@@ -93,7 +93,7 @@ class DashboardScreen extends GetView<DashboardController> {
                           height: 24.w,
                           width: 24.w,
                         ),
-                label: 'Alert',
+                label: AppHeadings.alert,
               ),
               BottomNavigationBarItem(
                 icon:
@@ -108,7 +108,7 @@ class DashboardScreen extends GetView<DashboardController> {
                           height: 24.w,
                           width: 24.w,
                         ),
-                label: 'Look Up',
+                label: AppHeadings.lookUp,
               ),
               BottomNavigationBarItem(
                 icon:
@@ -123,7 +123,7 @@ class DashboardScreen extends GetView<DashboardController> {
                           height: 24.w,
                           width: 24.w,
                         ),
-                label: 'Profile',
+                label: AppHeadings.profile,
               ),
             ],
           ),

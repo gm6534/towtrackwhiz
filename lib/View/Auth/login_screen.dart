@@ -35,7 +35,7 @@ class LoginScreen extends GetView<LoginController> {
 
                   40.verticalSpace,
                   AppHeadingTextField(
-                    heading: 'Email',
+                    heading: AppHeadings.email,
                     controller: controller.emailController,
                     prefix: Container(
                       margin: EdgeInsets.all(12.w),
@@ -45,13 +45,13 @@ class LoginScreen extends GetView<LoginController> {
                         width: 10.w,
                       ),
                     ),
-                    hintText: "Enter email here",
+                    hintText: Strings.enterEmailHere,
                     validator: (value) => ValidationHelper.validateEmail(value),
                   ),
 
                   Obx(() {
                     return AppHeadingTextField(
-                      heading: 'Password',
+                      heading: AppHeadings.password,
                       controller: controller.passwordController,
                       obscureText: !controller.isPasswordVisible.value,
                       prefix: Container(
@@ -92,7 +92,7 @@ class LoginScreen extends GetView<LoginController> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Don’t have an account? ",
+                        Strings.dontHaveAccount,
                         style: Get.textTheme.bodyMedium,
                       ),
                       GestureDetector(

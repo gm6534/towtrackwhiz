@@ -18,7 +18,7 @@ class AccountSettingsScreen extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return BaseScaffold(
-      appBarTitle: "Account Settings",
+      appBarTitle: AppHeadings.accountSettings,
       body: Center(
         child: SingleChildScrollView(
           child: Obx(() {
@@ -123,10 +123,10 @@ class AccountSettingsScreen extends GetView<ProfileController> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text("choose_image".tr, style: TextStyle(fontSize: 16.sp)),
+            Text(Strings.chooseImg, style: TextStyle(fontSize: 16.sp)),
             ListTile(
               leading: Icon(Icons.camera_alt),
-              title: Text("camera".tr),
+              title: Text(Strings.camera),
               onTap: () {
                 Get.back();
                 controller.pickImageFromSource(ImageSource.camera);
@@ -134,7 +134,7 @@ class AccountSettingsScreen extends GetView<ProfileController> {
             ),
             ListTile(
               leading: Icon(Icons.photo),
-              title: Text("gallery".tr),
+              title: Text(Strings.gallery),
               onTap: () {
                 Get.back();
                 controller.pickImageFromSource(ImageSource.gallery);

@@ -38,7 +38,7 @@ class SignUpScreen extends GetView<SignUpController> {
 
                   10.verticalSpace,
                   AppHeadingTextField(
-                    heading: 'Name',
+                    heading: AppHeadings.name,
                     controller: controller.nameController,
                     prefix: Container(
                       margin: EdgeInsets.all(12.w),
@@ -48,12 +48,12 @@ class SignUpScreen extends GetView<SignUpController> {
                         width: 10.w,
                       ),
                     ),
-                    hintText: "Enter name here",
+                    hintText: Strings.enterNameHere,
                     validator:
                         (value) => ValidationHelper.validateName(value, "Name"),
                   ),
                   AppHeadingTextField(
-                    heading: 'Email',
+                    heading: AppHeadings.email,
                     controller: controller.emailController,
                     prefix: Container(
                       margin: EdgeInsets.all(12.w),
@@ -63,12 +63,12 @@ class SignUpScreen extends GetView<SignUpController> {
                         width: 10.w,
                       ),
                     ),
-                    hintText: "Enter email here",
+                    hintText: Strings.enterEmailHere,
                     validator: (value) => ValidationHelper.validateEmail(value),
                   ),
                   Obx(() {
                     return AppHeadingTextField(
-                      heading: 'Password',
+                      heading: AppHeadings.password,
                       controller: controller.passwordController,
                       obscureText: !controller.isPasswordVisible.value,
                       prefix: Container(
@@ -95,7 +95,7 @@ class SignUpScreen extends GetView<SignUpController> {
                   }),
                   Obx(() {
                     return AppHeadingTextField(
-                      heading: 'Confirm Password',
+                      heading: AppHeadings.confirmPassword,
                       controller: controller.passwordConfirmController,
                       obscureText: !controller.isConfirmVisible.value,
                       prefix: Container(
@@ -132,7 +132,7 @@ class SignUpScreen extends GetView<SignUpController> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Have an account? ",
+                        Strings.haveAnAccount,
                         style: Get.textTheme.bodyMedium,
                       ),
                       GestureDetector(

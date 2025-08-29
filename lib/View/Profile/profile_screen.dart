@@ -42,7 +42,7 @@ class ProfileScreen extends GetView<ProfileController> {
               style: Get.textTheme.bodyLarge,
             ),
             Text(
-              "Member Since ${DateFormat("yyyy").format(DateTime.parse(controller.currentUser.value.createdAt!))}",
+              "${Strings.memberSince} ${DateFormat("yyyy").format(DateTime.parse(controller.currentUser.value.createdAt!))}",
               style: Get.textTheme.bodyMedium?.copyWith(
                 color: AppColors.greyColor.withValues(alpha: 0.9),
               ),
@@ -54,20 +54,20 @@ class ProfileScreen extends GetView<ProfileController> {
                 children: [
                   SelectionCard(
                     icon: ImgPath.alertIcon,
-                    title: "Alert Require",
+                    title: Strings.alertRequire,
                     value: "${controller.analyticsResModel.value.totalAlerts}",
                     bgColor: AppColors.lightPrimary,
                   ),
                   SelectionCard(
                     icon: ImgPath.verifyBadge,
-                    title: "Verified",
+                    title: Strings.verified,
                     value:
                         "${controller.analyticsResModel.value.verifiedAlerts}",
                     bgColor: AppColors.lightPrimary,
                   ),
                   SelectionCard(
                     icon: ImgPath.myVehicleIcon,
-                    title: "Cars Registered",
+                    title: Strings.carsRegistered,
                     value:
                         "${controller.analyticsResModel.value.totalVehicles}",
                     bgColor: AppColors.lightPrimary,
@@ -91,11 +91,11 @@ class ProfileScreen extends GetView<ProfileController> {
                       // spacing: 5.w,
                       children: [
                         Text(
-                          "Community Helper",
+                          AppHeadings.communityHelper,
                           style: Get.textTheme.titleMedium,
                         ),
                         Text(
-                          "You’ve helped verify ${int.parse(controller.currentUser.value.verified!) > 0 ? controller.currentUser.value.verified : 0} Community alerts",
+                          "${Strings.youHaveHelpedVerify} ${int.parse(controller.currentUser.value.verified!) > 0 ? controller.currentUser.value.verified : 0} ${Strings.communityAlerts}",
                           style: Get.textTheme.bodySmall?.copyWith(
                             color: AppColors.hintColor,
                           ),
@@ -113,7 +113,7 @@ class ProfileScreen extends GetView<ProfileController> {
                       borderRadius: BorderRadius.circular(20.r),
                     ),
                     child: Text(
-                      "Level ${controller.currentUser.value.level}",
+                      "${Strings.level} ${controller.currentUser.value.level}",
                       style: Get.textTheme.labelLarge,
                     ),
                   ),
@@ -123,23 +123,23 @@ class ProfileScreen extends GetView<ProfileController> {
             10.verticalSpace,
             _menuTile(
               ImgPath.myVehicleIcon,
-              "My Vehicles",
+              AppHeadings.myVehicles,
               onTap: () => controller.getVehicleList(),
             ),
             _menuTile(
               ImgPath.notificationIcon,
-              "Notification Settings",
+              AppHeadings.notificationSettings,
               onTap: () => Get.toNamed(AppRoute.notificationSettingScreen),
             ),
             _menuTile(
               ImgPath.settingIcon,
-              "Account Settings",
+            AppHeadings.accountSettings,
               onTap: () => Get.toNamed(AppRoute.accountSettingsScreen),
             ),
             // _menuTile(ImgPath.payMethodIcon, "Payout Method"),
             _menuTile(
               ImgPath.logoutIcon,
-              "Logout",
+              ActionText.logout,
               color: Colors.red,
               onTap: controller.authController?.logout,
             ),

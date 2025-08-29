@@ -41,7 +41,7 @@ class VehicleDetailPage extends GetView<ProfileController> {
         backgroundColor: AppColors.primary,
         surfaceTintColor: AppColors.scaffoldBgColor,
         title: Text(
-          "Vehicle Detail",
+          AppHeadings.vehicleDetail,
           style: context.textTheme.headlineMedium?.copyWith(
             color: AppColors.white,
           ),
@@ -85,8 +85,8 @@ class VehicleDetailPage extends GetView<ProfileController> {
               child: AppButton(
                 onPressed: () async {
                   var response = await ToastAndDialog.confirmation(
-                    title: "Delete Vehicle",
-                    message: "Are you sure you want to delete this vehicle?",
+                    title: ActionText.deleteVehicle,
+                    message: ToastMsg.areYouSureToDelVehicle,
                   );
                   if (response) {
                     Get.back();

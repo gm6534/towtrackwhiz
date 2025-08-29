@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:towtrackwhiz/Controller/Dashboard/dashboard_controller.dart';
+import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 
 class HomeScreen extends GetView<DashboardController> {
   const HomeScreen({super.key});
@@ -16,7 +17,7 @@ class HomeScreen extends GetView<DashboardController> {
         Align(
           alignment: AlignmentDirectional.centerStart,
           child: Text(
-            "Towing Hot Zones Map",
+            AppHeadings.towingHotZonesMap,
             style: Get.textTheme.headlineLarge,
           ),
         ),
@@ -50,7 +51,7 @@ class HomeScreen extends GetView<DashboardController> {
                     position: LatLng(52.577622, -2.135586),
                     // icon: AssetMapBitmap(ImgPath.carIcon, height: 20.w, width: 40.w),
                     infoWindow: InfoWindow(
-                      title: 'Location',
+                      title: AppHeadings.location,
                       snippet: '${52.577622}, ${-2.135586}',
                     ),
                   ),

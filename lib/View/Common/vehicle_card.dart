@@ -46,13 +46,13 @@ class VehicleCard extends StatelessWidget {
                 children: [
                   Text(name, style: Get.textTheme.titleLarge),
                   Text(
-                    "License plate: $plate",
+                    "${Strings.licensePlate}: $plate",
                     style: Get.textTheme.bodyMedium?.copyWith(
                       color: AppColors.greyColor,
                     ),
                   ),
                   Text(
-                    "Model: $model",
+                    "${Strings.model}: $model",
                     style: Get.textTheme.bodyMedium?.copyWith(
                       color: AppColors.greyColor,
                     ),

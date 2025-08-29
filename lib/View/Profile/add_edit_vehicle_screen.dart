@@ -32,13 +32,13 @@ class AddEditVehicleScreen extends GetView<ProfileController> {
             spacing: 10.w,
             children: [
               Text(
-                argument != null ? "Update Vehicle" : "Add Vehicles",
+                argument != null ? AppHeadings.updateVehicle : AppHeadings.addVehicles,
                 style: Get.textTheme.headlineMedium,
               ),
               10.verticalSpace,
               AppHeadingTextField(
                 controller: controller.licPlateController,
-                heading: "License Plate",
+                heading: Strings.licensePlate,
                 hintText: "",
                 textInputType: TextInputType.text,
                 validator:
@@ -49,7 +49,7 @@ class AddEditVehicleScreen extends GetView<ProfileController> {
               ),
               AppHeadingTextField(
                 controller: controller.makeController,
-                heading: "Make",
+                heading: AppHeadings.make,
                 textInputType: TextInputType.name,
                 hintText: "",
                 validator:
@@ -57,7 +57,7 @@ class AddEditVehicleScreen extends GetView<ProfileController> {
               ),
               AppHeadingTextField(
                 controller: controller.modelController,
-                heading: "Vehicle Model",
+                heading: AppHeadings.vehicleModel,
                 hintText: "",
                 textInputType: TextInputType.name,
                 validator:
@@ -68,7 +68,7 @@ class AddEditVehicleScreen extends GetView<ProfileController> {
               ),
               AppHeadingTextField(
                 controller: controller.modelYearController,
-                heading: "Model Year (e.g. 2025)",
+                heading: AppHeadings.modelYear,
                 textInputType: TextInputType.number,
                 hintText: "",
                 validator:
@@ -79,7 +79,7 @@ class AddEditVehicleScreen extends GetView<ProfileController> {
               ),
               AppHeadingTextField(
                 controller: controller.colorController,
-                heading: "Vehicle Color",
+                heading: AppHeadings.vehicleColor,
                 hintText: "",
                 textInputType: TextInputType.name,
                 validator:
@@ -90,7 +90,7 @@ class AddEditVehicleScreen extends GetView<ProfileController> {
               ),
               AppHeadingTextField(
                 controller: controller.registerStateController,
-                heading: "Registration State",
+                heading: AppHeadings.registrationState,
                 textInputType: TextInputType.name,
                 hintText: "",
                 validator:

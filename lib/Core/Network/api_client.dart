@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:towtrackwhiz/Controller/Auth/auth_controller.dart';
 import 'package:towtrackwhiz/Controller/Other/connectivity_controller.dart';
+import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 import 'package:towtrackwhiz/app_config.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -52,7 +53,7 @@ class ApiClient {
     try {
       var connectivity = Get.find<ConnectionManagerController>();
       if (!connectivity.isConnected.value) {
-        return ApiResponse.error("No internet connection");
+        return ApiResponse.error(ToastMsg.noInternetConnection);
       }
 
       final request = http.MultipartRequest(
@@ -82,7 +83,10 @@ class ApiClient {
 
       // 📷 Add avatar as multipart file if present
       if (avatarPath != null && avatarPath.toString().isNotEmpty) {
-        final file = await http.MultipartFile.fromPath('avatar', avatarPath.toString());
+        final file = await http.MultipartFile.fromPath(
+          'avatar',
+          avatarPath.toString(),
+        );
         request.files.add(file);
       }
 
@@ -91,10 +95,9 @@ class ApiClient {
 
       return _handleResponse<T>(response);
     } catch (e) {
-      return ApiResponse.error("Unexpected error: ${e.toString()}");
+      return ApiResponse.error("${ErrorCode.unexpectedError} ${e.toString()}");
     }
   }
-
 
   Future<ApiResponse<T>> multipartPost1<T>({
     required String endpoint,
@@ -105,7 +108,7 @@ class ApiClient {
     try {
       var connectivity = Get.find<ConnectionManagerController>();
       if (!connectivity.isConnected.value) {
-        return ApiResponse.error("No internet connection");
+        return ApiResponse.error(ToastMsg.noInternetConnection);
       }
 
       final request = http.MultipartRequest(
@@ -131,7 +134,6 @@ class ApiClient {
         ),
       );
 
-
       // request.fields.addAll(
       //   fields.map((key, value) => MapEntry(key, value?.toString() ?? '')),
       // );
@@ -151,7 +153,7 @@ class ApiClient {
 
       return _handleResponse<T>(response);
     } catch (e) {
-      return ApiResponse.error("Unexpected error: ${e.toString()}");
+      return ApiResponse.error("${ErrorCode.unexpectedError}: ${e.toString()}");
     }
   }
 
@@ -190,7 +192,7 @@ class ApiClient {
     try {
       var connectivity = Get.find<ConnectionManagerController>();
       if (!connectivity.isConnected.value) {
-        return ApiResponse.error("No internet connection");
+        return ApiResponse.error(ToastMsg.noInternetConnection);
       }
 
       final token = _authController.accessToken;
@@ -236,12 +238,12 @@ class ApiClient {
               .timeout(_timeout);
           break;
         default:
-          return ApiResponse.error("Invalid HTTP method: $method");
+          return ApiResponse.error("${ErrorCode.invalidHTTPMethod}: $method");
       }
 
       return _handleResponse<T>(response);
     } catch (e) {
-      return ApiResponse.error("Unexpected error: ${e.toString()}");
+      return ApiResponse.error("${ErrorCode.unexpectedError}: ${e.toString()}");
     }
   }
 
@@ -258,19 +260,19 @@ class ApiClient {
         // 🔐 Handle auth expiry
         _authController.logout();
         return ApiResponse.error(
-          "Unauthorized access. Please login again.",
+          ErrorCode.unAuthorizedAccess,
           statusCode: statusCode,
         );
       } else if (statusCode == 422) {
-        return ApiResponse.error("Validation error", statusCode: statusCode);
+        return ApiResponse.error(ErrorCode.validationError, statusCode: statusCode);
       } else if (statusCode >= 500) {
-        return ApiResponse.error("Server error", statusCode: statusCode);
+        return ApiResponse.error(ErrorCode.serverError, statusCode: statusCode);
       } else {
-        return ApiResponse.error("Unexpected error", statusCode: statusCode);
+        return ApiResponse.error(ErrorCode.unexpectedError, statusCode: statusCode);
       }
     } catch (_) {
       return ApiResponse.error(
-        "Failed to parse response",
+        ErrorCode.failedToParseResponse,
         statusCode: statusCode,
       );
     }

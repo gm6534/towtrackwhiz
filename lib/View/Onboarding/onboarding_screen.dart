@@ -9,12 +9,12 @@ import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
 
 class OnboardingScreen extends GetView<OnboardingController> {
   final List<Map<String, String>> onboardingData = [
-    {"image": ImgPath.tow1Png, "title": "Find your towed car easily"},
+    {"image": ImgPath.tow1Png, "title": AppHeadings.findTowedCarEasily},
     {
       "image": ImgPath.tow2Png,
-      "title": "Avoid high-risk zones with live heatmaps",
+      "title": AppHeadings.avoidHighRiskZone,
     },
-    {"image": ImgPath.tow2Png, "title": "Help the community & earn rewards"},
+    {"image": ImgPath.tow2Png, "title": AppHeadings.helpCommunityRewards},
   ];
 
   OnboardingScreen({super.key});
@@ -34,7 +34,7 @@ class OnboardingScreen extends GetView<OnboardingController> {
                 child: TextButton(
                   onPressed: controller.skip,
                   child: Text(
-                    "Skip",
+                    ActionText.skip,
                     style: Get.textTheme.headlineSmall?.copyWith(
                       color: AppColors.primary,
                     ),
@@ -98,8 +98,8 @@ class OnboardingScreen extends GetView<OnboardingController> {
                   onPressed: controller.nextPage,
                   title:
                       controller.currentPage.value == 2
-                          ? "Get Started"
-                          : "Next",
+                          ? ActionText.getStarted
+                          : ActionText.next,
                 ),
               ),
               20.verticalSpace,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 
 class VehicleCard extends StatelessWidget {
   final String title;
@@ -43,12 +44,12 @@ class VehicleCard extends StatelessWidget {
                   ),
                   SizedBox(height: 4.h),
                   Text(
-                    "License plate: $licensePlate",
+                    "${Strings.licensePlate}: $licensePlate",
                     style: TextStyle(fontSize: 12.sp, color: Colors.grey[600]),
                   ),
                   SizedBox(height: 2.h),
                   Text(
-                    "Model:$model",
+                    "${Strings.model}:$model",
                     style: TextStyle(fontSize: 12.sp, color: Colors.grey[600]),
                   ),
                 ],

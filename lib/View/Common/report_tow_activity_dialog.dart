@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:towtrackwhiz/Controller/Dashboard/dashboard_controller.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/app_button.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/app_heading_text_field.dart';
+import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
 
 class ReportTowActivityDialog extends GetView<DashboardController> {
@@ -32,7 +33,7 @@ class ReportTowActivityDialog extends GetView<DashboardController> {
                 spacing: 10.w,
                 children: [
                   Text(
-                    "Report Tow Activity",
+                    AppHeadings.reportTowActivity,
                     style: Get.textTheme.headlineMedium,
                   ),
                   GestureDetector(
@@ -47,7 +48,7 @@ class ReportTowActivityDialog extends GetView<DashboardController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   spacing: 10.w,
                   children: [
-                    Text("Type", style: Get.textTheme.titleLarge),
+                    Text(AppHeadings.type, style: Get.textTheme.titleLarge),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 12.w),
                       decoration: BoxDecoration(
@@ -58,7 +59,7 @@ class ReportTowActivityDialog extends GetView<DashboardController> {
                         child: DropdownButton<String>(
                           dropdownColor: AppColors.white,
                           hint: Text(
-                            "Select Type....",
+                            Strings.selectType,
                             style: Get.textTheme.bodySmall,
                           ),
                           isExpanded: true,
@@ -92,7 +93,7 @@ class ReportTowActivityDialog extends GetView<DashboardController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 10.w,
                 children: [
-                  Text("Location", style: Get.textTheme.titleLarge),
+                  Text(AppHeadings.location, style: Get.textTheme.titleLarge),
                   Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: 12.w,
@@ -106,7 +107,7 @@ class ReportTowActivityDialog extends GetView<DashboardController> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Choose on map",
+                          Strings.chooseOnMap,
                           style: TextStyle(color: Colors.grey),
                         ),
                         Icon(Icons.location_on, color: Colors.red),
@@ -117,8 +118,8 @@ class ReportTowActivityDialog extends GetView<DashboardController> {
               ),
               AppHeadingTextField(
                 controller: controller.commentController,
-                heading: "Comments (Optional)",
-                hintText: "Type Comment",
+                heading: AppHeadings.comments,
+                hintText: Strings.typeComment,
                 fillColor: AppColors.scaffoldBgColor,
                 textInputAction: TextInputAction.newline,
                 textInputType: TextInputType.multiline,
@@ -131,7 +132,7 @@ class ReportTowActivityDialog extends GetView<DashboardController> {
                 spacing: 10.w,
                 children: [
                   Text(
-                    "Upload Image (Optional)",
+                    AppHeadings.uploadImage,
                     style: Get.textTheme.titleLarge,
                   ),
                   Container(
@@ -147,7 +148,7 @@ class ReportTowActivityDialog extends GetView<DashboardController> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Attach file",
+                          Strings.attachFile,
                           style: TextStyle(color: Colors.grey),
                         ),
                         Icon(Icons.attach_file, color: Colors.cyan),
@@ -160,7 +161,7 @@ class ReportTowActivityDialog extends GetView<DashboardController> {
                 onPressed: () {
                   Get.back();
                 },
-                title: "Submit Report",
+                title: ActionText.submitReport,
               ),
             ],
           ),

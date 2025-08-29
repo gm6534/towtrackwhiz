@@ -42,17 +42,17 @@ class AlertCardWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20.r),
                   ),
                   child: Text(
-                    "Emergency",
+                    Strings.emergency,
                     style: Get.textTheme.bodyMedium?.copyWith(
                       color: AppColors.redColor,
                     ),
                   ),
                 ),
-                Text("Gas Leak Reported", style: Get.textTheme.labelLarge),
+                Text(Strings.gasLeakReported, style: Get.textTheme.labelLarge),
                 Row(
                   spacing: 5.w,
                   children: [
-                    Text("Location", style: Get.textTheme.bodyMedium),
+                    Text(AppHeadings.location, style: Get.textTheme.bodyMedium),
                     Image.asset(
                       ImgPath.locationIcon,
                       height: 15.w,

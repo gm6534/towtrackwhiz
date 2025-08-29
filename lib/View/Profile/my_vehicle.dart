@@ -29,8 +29,27 @@ class VehicleScreen extends GetView<ProfileController> {
           return Center(child: CircularProgressIndicator());
         }
         if (controller.vehiclesList.isEmpty) {
-          return Center(
-            child: Text("No record found", style: context.textTheme.titleLarge),
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 10.w,
+            children: [
+              Text("Registered Vehicles", style: Get.textTheme.headlineMedium),
+              10.verticalSpace,
+              Expanded(
+                child: Center(
+                  child: Text(
+                    "No record found",
+                    style: context.textTheme.titleLarge,
+                  ),
+                ),
+              ),
+              AppButton(
+                onPressed: () {
+                  Get.toNamed(AppRoute.addVehicles);
+                },
+                title: "Add Vehicle",
+              ),
+            ],
           );
         }
         return Column(

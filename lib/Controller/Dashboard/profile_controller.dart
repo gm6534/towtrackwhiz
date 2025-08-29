@@ -7,6 +7,7 @@ import 'package:towtrackwhiz/Controller/Auth/auth_controller.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/toasts.dart';
 import 'package:towtrackwhiz/Core/Routes/app_route.dart';
 import 'package:towtrackwhiz/Core/Utils/log_util.dart';
+import 'package:towtrackwhiz/Model/Alerts/my_alerts_res_model.dart';
 import 'package:towtrackwhiz/Model/Auth/auth_response_model.dart';
 import 'package:towtrackwhiz/Model/Vehicle/add_vehicle_req_model.dart';
 import 'package:towtrackwhiz/Model/analytics_res_model.dart';
@@ -33,6 +34,8 @@ class ProfileController extends GetxController {
 
   RxBool isProfileLoading = false.obs;
   RxBool isVehicleLoading = true.obs;
+  RxBool isAlertRequireLoading = true.obs;
+  RxList<AlertsModel> myAlertsList = <AlertsModel>[].obs;
   late UserModel originalUser;
   var currentUser = UserModel().obs;
   RxBool isChanged = false.obs;
@@ -179,6 +182,10 @@ class ProfileController extends GetxController {
     resetChanges();
   }
 
+  Future<void> deleteUserProfile() async {
+    await authController?.deleteUser();
+  }
+
   Future<void> getAnalyticsData() async {
     try {
       final result = await dashboardRepo?.getAnalytics();
@@ -208,6 +215,27 @@ class ProfileController extends GetxController {
       Log.d("getVehicleList - ProfileController", e.toString());
     } finally {
       isVehicleLoading.value = false;
+    }
+  }
+
+  Future<void> getMyAlertList() async {
+    try {
+      isAlertRequireLoading.value = true;
+      myAlertsList.value = [];
+      Get.toNamed(AppRoute.myAlertScreen);
+      final result = await dashboardRepo?.getMyAlertsList();
+      if (result != null) {
+        myAlertsList.value = result.alerts ?? [];
+      }
+    } catch (e) {
+      if (e is ClientException) {
+        ToastAndDialog.showCustomSnackBar(e.message);
+      } else {
+        ToastAndDialog.showCustomSnackBar(e.toString());
+      }
+      Log.d("myAlertList - ProfileController", e.toString());
+    } finally {
+      isAlertRequireLoading.value = false;
     }
   }
 

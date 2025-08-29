@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:towtrackwhiz/Core/Network/api_client.dart';
+import 'package:towtrackwhiz/Model/Alerts/my_alerts_res_model.dart';
 import 'package:towtrackwhiz/Model/Vehicle/add_vehicle_req_model.dart';
 import 'package:towtrackwhiz/Model/Vehicle/add_vehicle_res_model.dart';
 import 'package:towtrackwhiz/Model/Vehicle/vehicle_list_res_model.dart';
@@ -39,6 +40,24 @@ class DashboardRepo extends ApiClient {
       return vehicleListResModel;
     } catch (e) {
       Log.e("getMyVehicleList: DashboardRepo- ", e.toString());
+
+      rethrow;
+    }
+  }
+
+  Future<MyAlertsResModel?> getMyAlertsList() async {
+    try {
+      var response = await get("tow-reports/my/list");
+
+      MyAlertsResModel? myAlertsResModel;
+      if (response.data != null) {
+        myAlertsResModel = MyAlertsResModel.fromJson(response.data);
+      } else {
+        throw http.ClientException(response.message!);
+      }
+      return myAlertsResModel;
+    } catch (e) {
+      Log.e("getMyAlertsList: DashboardRepo- ", e.toString());
 
       rethrow;
     }

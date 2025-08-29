@@ -15,6 +15,7 @@ import 'package:towtrackwhiz/View/Profile/my_vehicle.dart';
 
 import '../../View/Profile/account_settings_screen.dart';
 import '../../View/Profile/add_edit_vehicle_screen.dart';
+import '../../View/Profile/my_alert_screen.dart';
 import '../../View/Profile/notification_setting_screen.dart';
 
 class AppPages {
@@ -56,5 +57,6 @@ class AppPages {
       name: AppRoute.accountSettingsScreen,
       page: () => AccountSettingsScreen(),
     ),
+    GetPage(name: AppRoute.myAlertScreen, page: () => MyAlertScreen()),
   ];
 }

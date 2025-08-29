@@ -104,6 +104,12 @@ class AccountSettingsScreen extends GetView<ProfileController> {
                             },
                   ),
                 ),
+                15.verticalSpace,
+                AppButton(
+                  title: ActionText.delete,
+                  btnColor: AppColors.redColor,
+                  onPressed: controller.deleteUserProfile,
+                ),
               ],
             );
           }),

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:towtrackwhiz/Controller/Auth/login_controller.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/app_button.dart';
+import 'package:towtrackwhiz/Core/Common/Widgets/app_web_view.dart';
 import 'package:towtrackwhiz/Core/Common/validation_helper.dart';
 import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
@@ -79,7 +80,15 @@ class LoginScreen extends GetView<LoginController> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(
+                          () => AppWebView(
+                            fileUrl:
+                                "https://towtrackwhiz.dynamicdev.tech/forgot-password",
+                            barTitle: AppHeadings.forgetPassTitle,
+                          ),
+                        );
+                      },
                       child: Text(AppHeadings.forgetPassBtnTitle),
                     ),
                   ),

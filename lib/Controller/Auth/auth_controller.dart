@@ -199,6 +199,24 @@ class AuthController extends GetxController {
     }
   }
 
+  Future<void> deleteUser() async {
+    try {
+      ToastAndDialog.progressIndicator();
+      var result = await _authRepo?.deleteProfile();
+
+      if (result != null) {
+        await logout();
+        ToastAndDialog.showCustomSnackBar(result);
+      }
+    } catch (e) {
+      Log.e("deleteUser _ Auth Controller", "$e");
+    } finally {
+      if (Get.isDialogOpen ?? false) {
+        Get.back();
+      }
+    }
+  }
+
   Future<void> logout({bool justToClear = true}) async {
     try {
       var credentials = _storage!.read(GetStorageKeys.credentials);

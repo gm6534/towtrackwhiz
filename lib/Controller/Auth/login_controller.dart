@@ -19,7 +19,7 @@ class LoginController extends GetxController {
   String? _deviceToken;
 
   final emailController = TextEditingController(
-    text: kDebugMode ? "gmdev@gmail.com" : "",
+    text: kDebugMode ? "gmdev4@gmail.com" : "",
   );
   final passwordController = TextEditingController(
     text: kDebugMode ? "12345678" : "",

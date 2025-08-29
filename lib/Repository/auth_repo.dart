@@ -63,6 +63,24 @@ class AuthRepo extends ApiClient {
     }
   }
 
+  Future<String?> deleteProfile() async {
+    try {
+      var response = await post("delete/profile");
+
+      String message;
+      if (response.data != null) {
+        message = response.data["message"];
+      } else {
+        throw http.ClientException(response.message!);
+      }
+      return message;
+    } catch (e) {
+      Log.e("deleteProfile: AuthRepo- ", e.toString());
+
+      rethrow;
+    }
+  }
+
   Future<UserModel?> getProfile() async {
     try {
       var response = await get("user");

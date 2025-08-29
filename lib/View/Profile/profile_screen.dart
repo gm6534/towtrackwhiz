@@ -57,6 +57,7 @@ class ProfileScreen extends GetView<ProfileController> {
                     title: "Alert Require",
                     value: "${controller.analyticsResModel.value.totalAlerts}",
                     bgColor: AppColors.lightPrimary,
+                    onTap: controller.getMyAlertList,
                   ),
                   SelectionCard(
                     icon: ImgPath.verifyBadge,

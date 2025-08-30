@@ -47,7 +47,7 @@ class VehicleScreen extends GetView<ProfileController> {
                 onPressed: () {
                   Get.toNamed(AppRoute.addVehicles);
                 },
-                title: "Add Vehicle",
+                title: ActionText.addVehicle,
               ),
             ],
           );

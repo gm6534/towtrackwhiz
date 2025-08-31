@@ -2,9 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../Model/Alerts/location_model.dart';
 import '../../core/Utils/app_colors.dart';
 import '../Constants/app_strings.dart';
 import '../Utils/log_util.dart';
@@ -81,47 +84,47 @@ class Helper {
     }
   }
 
-  // static Future<LocationModel?> getCurrentLocation() async {
-  //   try {
-  //     PermissionStatus permissionStatus = await requestPermission(
-  //       Permission.location,
-  //       message: ToastMessages.allowLocationAccess,
-  //     );
-  //
-  //     if (permissionStatus != PermissionStatus.granted) {
-  //       return null;
-  //     }
-  //     LocationModel? locationModel = LocationModel();
-  //     // Stream<Position>  position = Geolocator.getPositionStream(
-  //     //   locationSettings: GetPlatform.isAndroid
-  //     //       ? AndroidSettings(
-  //     //           accuracy: LocationAccuracy.high,
-  //     //         )
-  //     //       : GetPlatform.isIOS
-  //     //           ? AppleSettings(
-  //     //               accuracy: LocationAccuracy.high,
-  //     //             )
-  //     //           : const LocationSettings(
-  //     //               accuracy: LocationAccuracy.high,
-  //     //             ),
-  //     // );
-  //     Position position = await Geolocator.getCurrentPosition(
-  //       locationSettings:
-  //           GetPlatform.isAndroid
-  //               ? AndroidSettings(accuracy: LocationAccuracy.high)
-  //               : GetPlatform.isIOS
-  //               ? AppleSettings(accuracy: LocationAccuracy.high)
-  //               : const LocationSettings(accuracy: LocationAccuracy.high),
-  //     );
-  //
-  //     locationModel.longitude = position.longitude;
-  //     locationModel.latitude = position.latitude;
-  //     return locationModel;
-  //   } catch (e) {
-  //     Log.e("Get Current Location - Helper", e.toString());
-  //     return null;
-  //   }
-  // }
+  static Future<LocationModel?> getCurrentLocation() async {
+    try {
+      PermissionStatus permissionStatus = await requestPermission(
+        Permission.location,
+        message: ToastMsg.allowLocationAccess,
+      );
+
+      if (permissionStatus != PermissionStatus.granted) {
+        return null;
+      }
+      LocationModel? locationModel = LocationModel();
+      // Stream<Position>  position = Geolocator.getPositionStream(
+      //   locationSettings: GetPlatform.isAndroid
+      //       ? AndroidSettings(
+      //           accuracy: LocationAccuracy.high,
+      //         )
+      //       : GetPlatform.isIOS
+      //           ? AppleSettings(
+      //               accuracy: LocationAccuracy.high,
+      //             )
+      //           : const LocationSettings(
+      //               accuracy: LocationAccuracy.high,
+      //             ),
+      // );
+      Position position = await Geolocator.getCurrentPosition(
+        locationSettings:
+            GetPlatform.isAndroid
+                ? AndroidSettings(accuracy: LocationAccuracy.high)
+                : GetPlatform.isIOS
+                ? AppleSettings(accuracy: LocationAccuracy.high)
+                : const LocationSettings(accuracy: LocationAccuracy.high),
+      );
+
+      locationModel.longitude = position.longitude;
+      locationModel.latitude = position.latitude;
+      return locationModel;
+    } catch (e) {
+      Log.e("Get Current Location - Helper", e.toString());
+      return null;
+    }
+  }
   //
   // static Future<Stream<Position>?> getCurrentLocationStream() async {
   //   try {
@@ -168,6 +171,29 @@ class Helper {
     } catch (e) {
       Log.e("IP Fetch Error - Helper", e.toString());
       return null;
+    }
+  }
+
+  static String timeAgo(String createdAt) {
+    final DateTime createdTime = DateTime.parse(createdAt).toLocal();
+    final Duration diff = DateTime.now().difference(createdTime);
+
+    if (diff.inSeconds < 60) {
+      return '${diff.inSeconds}s ago';
+    } else if (diff.inMinutes < 60) {
+      return '${diff.inMinutes}m ago';
+    } else if (diff.inHours < 24) {
+      return '${diff.inHours}h ago';
+    } else if (diff.inDays == 1) {
+      return 'yesterday';
+    } else if (diff.inDays < 7) {
+      return '${diff.inDays}d ago';
+    } else if (diff.inDays < 30) {
+      return '${(diff.inDays / 7).floor()}w ago';
+    } else if (diff.inDays < 365) {
+      return '${(diff.inDays / 30).floor()}mo ago';
+    } else {
+      return '${(diff.inDays / 365).floor()}y ago';
     }
   }
 }

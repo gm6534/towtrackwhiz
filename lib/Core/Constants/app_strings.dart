@@ -98,6 +98,7 @@ class AppHeadings {
   static const forgetPassSubTitle =
       "Please enter your registered email to recover the account.";
   static const otpTitle = "OTP Verification";
+
   static otpSubTitle(String value) {
     return "We have sent OTP Code via email to $value";
   }
@@ -195,6 +196,8 @@ class ToastMsg {
   static const String linkError = "Unable to launch url";
   static const String closeAppConfirmation =
       "Are you sure you would like to close the app?";
+  static const String allowLocationAccess =
+      "Please allow access to the location";
 }
 
 class ErrorCode {
@@ -233,5 +236,33 @@ String filterLabel(TaskFilter filter) {
       return 'Tomorrow';
     case TaskFilter.thisWeek:
       return 'This Week';
+  }
+}
+
+enum TowEvent { tow_truck_seen, car_being_towed, signage_posted }
+
+extension TowEventExtension on TowEvent {
+  String get label {
+    switch (this) {
+      case TowEvent.tow_truck_seen:
+        return 'Tow truck seen';
+      case TowEvent.car_being_towed:
+        return 'Car being towed';
+      case TowEvent.signage_posted:
+        return 'Tow signage posted';
+    }
+  }
+
+  static TowEvent? fromValue(String value) {
+    switch (value) {
+      case 'tow_truck_seen':
+        return TowEvent.tow_truck_seen;
+      case 'car_being_towed':
+        return TowEvent.car_being_towed;
+      case 'signage_posted':
+        return TowEvent.signage_posted;
+      default:
+        return null;
+    }
   }
 }

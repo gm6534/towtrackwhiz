@@ -1,11 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:towtrackwhiz/Core/Common/helper.dart';
 import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
 
 class AlertCardWidget extends StatelessWidget {
-  const AlertCardWidget({super.key});
+  final String title;
+  final String location;
+  final String imgUrl;
+  final String time;
+  final String upVote;
+  final String downVote;
+  final Function()? onTapUpVote;
+  final Function()? onTapDownVote;
+
+  const AlertCardWidget({
+    super.key,
+    required this.title,
+    required this.location,
+    required this.imgUrl,
+    required this.time,
+    this.upVote = "0",
+    this.downVote = "0",
+    this.onTapUpVote,
+    this.onTapDownVote,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -48,15 +68,69 @@ class AlertCardWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(Strings.gasLeakReported, style: Get.textTheme.labelLarge),
+                Text(
+                  TowEventExtension.fromValue(title)!.label,
+                  style: Get.textTheme.labelLarge,
+                ),
                 Row(
                   spacing: 5.w,
                   children: [
-                    Text(AppHeadings.location, style: Get.textTheme.bodyMedium),
+                    Text(location, style: Get.textTheme.bodyMedium),
                     Image.asset(
                       ImgPath.locationIcon,
                       height: 15.w,
                       width: 15.w,
+                    ),
+                  ],
+                ),
+                Row(
+                  spacing: 10.w,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      spacing: 3.w,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: onTapUpVote,
+                          child: Icon(
+                            Icons.keyboard_arrow_up,
+                            color: AppColors.greenColor,
+                            size: 28.w,
+                          ),
+                        ),
+                        Text(
+                          upVote,
+                          style: TextStyle(
+                            fontSize: 18.sp,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      spacing: 3.w,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: onTapDownVote,
+                          child: Icon(
+                            Icons.keyboard_arrow_down,
+                            color: AppColors.redColor,
+                            size: 28.w,
+                          ),
+                        ),
+                        Text(
+                          downVote,
+                          style: TextStyle(
+                            fontSize: 18.sp,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -68,12 +142,15 @@ class AlertCardWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                "20min Ago",
+                Helper.timeAgo(time),
                 style: Get.textTheme.labelLarge?.copyWith(
                   color: AppColors.greyColor.withValues(alpha: 0.9),
                 ),
               ),
-              Image.asset(ImgPath.tow1Png, height: 70.w, width: 70.w),
+              if (imgUrl.isNotEmpty)
+                Image.network(imgUrl, height: 70.w, width: 70.w)
+              else
+                Image.asset(ImgPath.tow1Png, height: 70.w, width: 70.w),
             ],
           ),
         ],

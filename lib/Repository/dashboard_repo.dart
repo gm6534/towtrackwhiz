@@ -1,12 +1,16 @@
 import 'package:http/http.dart' as http;
 import 'package:towtrackwhiz/Core/Network/api_client.dart';
 import 'package:towtrackwhiz/Model/Alerts/my_alerts_res_model.dart';
+import 'package:towtrackwhiz/Model/Alerts/report_tow_req_model.dart';
+import 'package:towtrackwhiz/Model/Alerts/report_tow_res_model.dart';
+import 'package:towtrackwhiz/Model/Alerts/submit_vote_res_model.dart';
 import 'package:towtrackwhiz/Model/Vehicle/add_vehicle_req_model.dart';
 import 'package:towtrackwhiz/Model/Vehicle/add_vehicle_res_model.dart';
 import 'package:towtrackwhiz/Model/Vehicle/vehicle_list_res_model.dart';
 import 'package:towtrackwhiz/Model/analytics_res_model.dart';
 
 import '../Core/Utils/log_util.dart';
+import '../Model/Alerts/community_alert_res_model.dart';
 
 class DashboardRepo extends ApiClient {
   Future<AnalyticsResModel?> getAnalytics() async {
@@ -58,6 +62,30 @@ class DashboardRepo extends ApiClient {
       return myAlertsResModel;
     } catch (e) {
       Log.e("getMyAlertsList: DashboardRepo- ", e.toString());
+
+      rethrow;
+    }
+  }
+
+  Future<CommunityAlertResModel?> getCommunityAlertList({
+    double? latitude,
+    double? longitude,
+    double? radius = 10,
+  }) async {
+    try {
+      var response = await get(
+        "tow-reports/all/list?latitude=$latitude&longitude=$longitude&radius=$radius",
+      );
+
+      CommunityAlertResModel? resModel;
+      if (response.data != null) {
+        resModel = CommunityAlertResModel.fromJson(response.data);
+      } else {
+        throw http.ClientException(response.message!);
+      }
+      return resModel;
+    } catch (e) {
+      Log.e("getCommunityAlertList: DashboardRepo- ", e.toString());
 
       rethrow;
     }
@@ -116,6 +144,51 @@ class DashboardRepo extends ApiClient {
       return updateVehicleResModel;
     } catch (e) {
       Log.e("updateVehicle: DashboardRepo- ", e.toString());
+      rethrow;
+    }
+  }
+
+  Future<SubmitVoteResModel?> submitVote({
+    required String voteType,
+    required int alertId,
+  }) async {
+    try {
+      var response = await post(
+        "varifications/submit",
+        body: {"vote_type": voteType, "alert_id": alertId},
+      );
+
+      SubmitVoteResModel? resModel;
+      if (response.data != null) {
+        resModel = SubmitVoteResModel.fromJson(response.data);
+      } else {
+        throw http.ClientException(response.message!);
+      }
+      return resModel;
+    } catch (e) {
+      Log.e("submitVote: DashboardRepo- ", e.toString());
+      rethrow;
+    }
+  }
+
+  Future<ReportTowResModel?> reportTowApi({ReportTowReqModel? model}) async {
+    try {
+      var response = await multipartPost(
+        endpoint: "tow-reports/store",
+        imageKeyValue: "image",
+        fields: model!.toJson(),
+      );
+
+      ReportTowResModel resModel;
+      if (response.data != null) {
+        resModel = ReportTowResModel.fromJson(response.data);
+      } else {
+        throw http.ClientException(response.message!);
+      }
+      return resModel;
+    } catch (e) {
+      Log.e("reportTowApi: AuthRepo- ", e.toString());
+
       rethrow;
     }
   }

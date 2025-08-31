@@ -38,7 +38,15 @@ class MyAlertScreen extends GetView<ProfileController> {
               child: ListView.builder(
                 itemCount: controller.myAlertsList.length,
                 itemBuilder: (context, index) {
-                  return AlertCardWidget();
+                  final alert = controller.myAlertsList[index];
+                  return AlertCardWidget(
+                    title: alert.alertType ?? "",
+                    location: alert.location ?? "",
+                    upVote: alert.upvotes.toString(),
+                    downVote: alert.downvotes.toString(),
+                    imgUrl: alert.imagePath ?? "",
+                    time: alert.createdAt ?? "",
+                  );
                 },
               ),
             ),

@@ -3,9 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:towtrackwhiz/Controller/Dashboard/dashboard_controller.dart';
+import 'package:towtrackwhiz/Controller/Dashboard/home_controller.dart';
 import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 
-class HomeScreen extends GetView<DashboardController> {
+class HomeScreen extends GetView<HomeController> {
   const HomeScreen({super.key});
 
   @override

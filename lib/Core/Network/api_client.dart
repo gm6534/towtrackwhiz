@@ -48,6 +48,7 @@ class ApiClient {
   Future<ApiResponse<T>> multipartPost<T>({
     required String endpoint,
     required Map<String, dynamic> fields,
+    String imageKeyValue = 'avatar',
     Map<String, String>? headers,
   }) async {
     try {
@@ -72,9 +73,9 @@ class ApiClient {
       }
 
       // ✏️ Extract avatar and remove from fields map
-      final avatarPath = fields['avatar'];
+      final avatarPath = fields[imageKeyValue];
       final filteredFields = Map<String, dynamic>.from(fields)
-        ..removeWhere((key, value) => key == 'avatar' || value == null);
+        ..removeWhere((key, value) => key == imageKeyValue || value == null);
 
       // 🌐 Add remaining fields as strings
       request.fields.addAll(
@@ -84,7 +85,7 @@ class ApiClient {
       // 📷 Add avatar as multipart file if present
       if (avatarPath != null && avatarPath.toString().isNotEmpty) {
         final file = await http.MultipartFile.fromPath(
-          'avatar',
+          imageKeyValue,
           avatarPath.toString(),
         );
         request.files.add(file);
@@ -264,11 +265,17 @@ class ApiClient {
           statusCode: statusCode,
         );
       } else if (statusCode == 422) {
-        return ApiResponse.error(ErrorCode.validationError, statusCode: statusCode);
+        return ApiResponse.error(
+          ErrorCode.validationError,
+          statusCode: statusCode,
+        );
       } else if (statusCode >= 500) {
         return ApiResponse.error(ErrorCode.serverError, statusCode: statusCode);
       } else {
-        return ApiResponse.error(ErrorCode.unexpectedError, statusCode: statusCode);
+        return ApiResponse.error(
+          ErrorCode.unexpectedError,
+          statusCode: statusCode,
+        );
       }
     } catch (_) {
       return ApiResponse.error(

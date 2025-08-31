@@ -1,8 +1,5 @@
-import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:towtrackwhiz/Controller/Dashboard/home_controller.dart';
 import 'package:towtrackwhiz/View/Common/report_tow_activity_dialog.dart';
 
 import '../../../View/Dashboard/Alert/alert_screen.dart';
@@ -11,21 +8,15 @@ import '../../../View/Dashboard/LookUp/lookup_screen.dart';
 import '../../View/Profile/profile_screen.dart';
 
 class DashboardController extends GetxController {
-  final TextEditingController commentController = TextEditingController();
   var currentIndex = 0.obs;
-  final List<String> towTypes = [
-    "Tow truck seen",
-    "Car being towed",
-    "Tow signage posted",
-  ];
 
-  RxString selectedType = "Tow truck seen".obs;
+  HomeController? homeController;
 
-  ////////////Map Items////////////////
-  final Completer<GoogleMapController> mapController =
-  Completer<GoogleMapController>();
-
-  ////////////////////////////////////
+  @override
+  void onInit() {
+    homeController = Get.find<HomeController>();
+    super.onInit();
+  }
 
   final pages = [
     const HomeScreen(),
@@ -39,6 +30,7 @@ class DashboardController extends GetxController {
   }
 
   void showReportTowActivityDialog() {
+    homeController?.resetDialogData();
     Get.dialog(ReportTowActivityDialog());
   }
 }

@@ -36,20 +36,18 @@ class AlertScreen extends GetView<CommunityAlertController> {
               itemCount: controller.communityAlertsList.length,
               itemBuilder: (context, index) {
                 final alert = controller.communityAlertsList[index];
-                controller.submitVoteModel.value.upvotes = int.parse(
-                  alert.upvotes.toString(),
-                );
-                controller.submitVoteModel.value.downvotes = int.parse(
-                  alert.downvotes.toString(),
-                );
+                controller.submitVoteModel.value.upvotes = alert.upVoteCount;
+                controller.submitVoteModel.value.downvotes = alert.downVoteCount;
                 return AlertCardWidget(
                   title: alert.alertType ?? "",
                   location: alert.location ?? "",
                   imgUrl: alert.imagePath ?? "",
                   time: alert.createdAt ?? "",
-                  upVote: controller.submitVoteModel.value.upvotes.toString(),
-                  downVote:
-                      controller.submitVoteModel.value.downvotes.toString(),
+                  upVote: alert.upVoteCount.toString(),
+                  downVote: alert.downVoteCount.toString(),
+                  // upVote: controller.submitVoteModel.value.upvotes.toString(),
+                  // downVote:
+                  //     controller.submitVoteModel.value.downvotes.toString(),
                   onTapUpVote: () async {
                     await controller.submitAlertVote(
                       type: "upvote",

@@ -26,6 +26,9 @@ class HomeController extends GetxController {
   RxString imagePath = Strings.attachFile.obs;
   var selectedVehicle = Rxn<VehiclesListModel>();
   var selectedType = Rxn<TowEvent>();
+  RxBool isTypeValid = true.obs;
+  RxBool isVehicleSelected = true.obs;
+  RxBool isLocationPicked = true.obs;
   DashboardRepo? dashboardRepo;
   RxBool isGetLocLoading = false.obs;
   RxDouble initialLat = (0.0).obs;
@@ -39,20 +42,32 @@ class HomeController extends GetxController {
   final Completer<GoogleMapController> mapController1 =
       Completer<GoogleMapController>();
 
-  Rxn<LatLng> pickedLocation = Rxn<LatLng>();
+  Rxn<LatLng> pickedLocation = Rxn<LatLng>(); // confirmed location
+  Rxn<LatLng> tempLocation = Rxn<LatLng>(); // temporary preview marker
   RxString pickedAddress = "Tap on map to get location".obs;
+
+  /// Preview marker only
+  void previewMarker(LatLng latLng) {
+    tempLocation.value = latLng;
+  }
 
   ////////////////////////////////////
 
   @override
   void onInit() {
     dashboardRepo = DashboardRepo();
-    getCurrentLocation();
-    getVehicleList();
     super.onInit();
   }
 
+  Future<void> firstApiCall() async {
+    await getCurrentLocation();
+    getVehicleList();
+  }
+
   void resetDialogData() {
+    isTypeValid.value = true;
+    isVehicleSelected.value = true;
+    isLocationPicked.value = true;
     commentController.clear();
     pickedLocation.value = null;
     selectedVehicle = Rxn<VehiclesListModel>();
@@ -60,14 +75,15 @@ class HomeController extends GetxController {
     imagePath.value = Strings.attachFile;
   }
 
-  /// Set marker and fetch address
-  Future<void> setMarker(LatLng latLng) async {
-    pickedLocation.value = latLng;
-    // Get.back();
+  /// Confirm and set marker
+  Future<void> setMarker() async {
+    if (tempLocation.value == null) return;
+
+    pickedLocation.value = tempLocation.value;
     try {
       List<Placemark> placemarks = await placemarkFromCoordinates(
-        latLng.latitude,
-        latLng.longitude,
+        tempLocation.value!.latitude,
+        tempLocation.value!.longitude,
       );
       if (placemarks.isNotEmpty) {
         final p = placemarks.first;
@@ -91,8 +107,17 @@ class HomeController extends GetxController {
 
   Future<void> navigateToPickLoc() async {
     isGetLocLoading.value = true;
+
     LocationModel? pos;
-    if (initialLat.value == 0.0 || initialLong.value == 0.0) {
+
+    if (pickedLocation.value != null) {
+      pos = LocationModel(
+        latitude: pickedLocation.value!.latitude,
+        longitude: pickedLocation.value!.longitude,
+      );
+      // pre-fill preview marker
+      tempLocation.value = pickedLocation.value;
+    } else if (initialLat.value == 0.0 || initialLong.value == 0.0) {
       pos = await Helper.getCurrentLocation();
     } else {
       pos = LocationModel(
@@ -110,12 +135,10 @@ class HomeController extends GetxController {
       ),
     );
 
-    setMarker(LatLng(pos!.latitude!, pos.longitude!));
-
     isGetLocLoading.value = false;
   }
 
-  Future<void> getVehicleList() async {
+  Future<List<VehiclesListModel>> getVehicleList() async {
     try {
       vehiclesList.value = [];
       final result = await dashboardRepo?.getMyVehicleList();
@@ -125,16 +148,42 @@ class HomeController extends GetxController {
     } catch (e) {
       Log.d("getVehicleList - ProfileController", e.toString());
     }
+    return vehiclesList;
   }
 
   Future<void> reportTow() async {
     try {
-      if (pickedLocation.value?.latitude == null ||
-          // imagePath.value == Strings.attachFile ||
-          selectedType.value == null ||
-          selectedVehicle.value == null) {
+      // Reset all validations to true
+      isTypeValid.value = true;
+      isVehicleSelected.value = true;
+      isLocationPicked.value = true;
+
+      // Validate fields
+      if (pickedLocation.value == null ||
+          pickedLocation.value?.latitude == null ||
+          pickedLocation.value?.longitude == null) {
+        isLocationPicked.value = false;
+      }
+      if (selectedType.value == null) {
+        isTypeValid.value = false;
+      }
+      if (selectedVehicle.value == null) {
+        isVehicleSelected.value = false;
+      }
+
+      // If any invalid, stop here
+      if (!isTypeValid.value ||
+          !isVehicleSelected.value ||
+          !isLocationPicked.value) {
         return ToastAndDialog.showCustomSnackBar("Please select all fields");
       }
+      // if (pickedLocation.value?.latitude == null ||
+      //     // imagePath.value == Strings.attachFile ||
+      //     selectedType.value == null ||
+      //     selectedVehicle.value == null) {
+      //
+      //   return ToastAndDialog.showCustomSnackBar("Please select all fields");
+      // }
       ToastAndDialog.progressIndicator();
       ReportTowReqModel reportTowReqModel = ReportTowReqModel();
       if (imagePath.value != Strings.attachFile) {
@@ -168,9 +217,9 @@ class HomeController extends GetxController {
         Get.back();
       }
       if (e is ClientException) {
-        ToastAndDialog.showCustomSnackBar(e.message);
+        ToastAndDialog.showCustomSnackBar(e.message, title: "Error");
       } else {
-        ToastAndDialog.showCustomSnackBar(e.toString());
+        ToastAndDialog.showCustomSnackBar(e.toString(), title: "Error");
       }
       Log.d("reportTow - DashboardController", e.toString());
     }

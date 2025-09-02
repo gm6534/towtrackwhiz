@@ -164,6 +164,7 @@ class ActionText {
   static const String delete = "Delete";
   static const String edit = "Edit";
   static const String update = "Update";
+  static const String select = "Select";
 }
 
 class ToastMsg {

@@ -36,97 +36,105 @@ class DashboardScreen extends GetView<DashboardController> {
             surfaceTintColor: AppColors.scaffoldBgColor,
             title: Image.asset(ImgPath.appLogo, width: context.width * 0.5),
           ),
-          body: controller.pages[controller.currentIndex.value],
+          body:
+              controller.isDashboardLoading.value
+                  ? Center(child: CircularProgressIndicator())
+                  : controller.pages[controller.currentIndex.value],
           floatingActionButton:
-              (controller.currentIndex.value == 3)
+              controller.isDashboardLoading.value
                   ? null
-                  : FloatingActionButton.extended(
-                    backgroundColor: AppColors.primary,
-                    icon: Image.asset(
-                      ImgPath.announcementIcon,
-                      height: 24.w,
-                      width: 24.w,
-                    ),
-                    label: Text(
-                      Strings.reportTow,
-                      style: Get.textTheme.headlineSmall?.copyWith(
-                        color: AppColors.white,
-                      ),
-                    ),
-                    onPressed: controller.showReportTowActivityDialog,
-                  ),
+                  : ((controller.currentIndex.value == 3)
+                      ? null
+                      : FloatingActionButton.extended(
+                        backgroundColor: AppColors.primary,
+                        icon: Image.asset(
+                          ImgPath.announcementIcon,
+                          height: 24.w,
+                          width: 24.w,
+                        ),
+                        label: Text(
+                          Strings.reportTow,
+                          style: Get.textTheme.headlineSmall?.copyWith(
+                            color: AppColors.white,
+                          ),
+                        ),
+                        onPressed: controller.showReportTowActivityDialog,
+                      )),
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: controller.currentIndex.value,
-            onTap: controller.changeTab,
-            type: BottomNavigationBarType.fixed,
-            selectedItemColor: AppColors.primary,
-            unselectedItemColor: AppColors.greyColor,
-            backgroundColor: AppColors.white,
-            items: [
-              BottomNavigationBarItem(
-                icon:
-                    (controller.currentIndex.value == 0)
-                        ? Image.asset(
-                          ImgPath.filledHomeIcon,
-                          height: 24.w,
-                          width: 24.w,
-                        )
-                        : Image.asset(
-                          ImgPath.homeIcon,
-                          height: 24.w,
-                          width: 24.w,
-                        ),
-                label: AppHeadings.home,
-              ),
-              BottomNavigationBarItem(
-                icon:
-                    (controller.currentIndex.value == 1)
-                        ? Image.asset(
-                          ImgPath.alertIcon,
-                          height: 24.w,
-                          width: 24.w,
-                          color: AppColors.primary,
-                        )
-                        : Image.asset(
-                          ImgPath.outlinedAlertIcon,
-                          height: 24.w,
-                          width: 24.w,
-                        ),
-                label: AppHeadings.alert,
-              ),
-              BottomNavigationBarItem(
-                icon:
-                    (controller.currentIndex.value == 2)
-                        ? Image.asset(
-                          ImgPath.filledLookupIcon,
-                          height: 24.w,
-                          width: 24.w,
-                        )
-                        : Image.asset(
-                          ImgPath.lookupIcon,
-                          height: 24.w,
-                          width: 24.w,
-                        ),
-                label: AppHeadings.lookUp,
-              ),
-              BottomNavigationBarItem(
-                icon:
-                    (controller.currentIndex.value == 3)
-                        ? Image.asset(
-                          ImgPath.filledProfileIcon,
-                          height: 24.w,
-                          width: 24.w,
-                        )
-                        : Image.asset(
-                          ImgPath.profileIcon,
-                          height: 24.w,
-                          width: 24.w,
-                        ),
-                label: AppHeadings.profile,
-              ),
-            ],
-          ),
+          bottomNavigationBar:
+              controller.isDashboardLoading.value
+                  ? null
+                  : BottomNavigationBar(
+                    currentIndex: controller.currentIndex.value,
+                    onTap: controller.changeTab,
+                    type: BottomNavigationBarType.fixed,
+                    selectedItemColor: AppColors.primary,
+                    unselectedItemColor: AppColors.greyColor,
+                    backgroundColor: AppColors.white,
+                    items: [
+                      BottomNavigationBarItem(
+                        icon:
+                            (controller.currentIndex.value == 0)
+                                ? Image.asset(
+                                  ImgPath.filledHomeIcon,
+                                  height: 24.w,
+                                  width: 24.w,
+                                )
+                                : Image.asset(
+                                  ImgPath.homeIcon,
+                                  height: 24.w,
+                                  width: 24.w,
+                                ),
+                        label: AppHeadings.home,
+                      ),
+                      BottomNavigationBarItem(
+                        icon:
+                            (controller.currentIndex.value == 1)
+                                ? Image.asset(
+                                  ImgPath.alertIcon,
+                                  height: 24.w,
+                                  width: 24.w,
+                                  color: AppColors.primary,
+                                )
+                                : Image.asset(
+                                  ImgPath.outlinedAlertIcon,
+                                  height: 24.w,
+                                  width: 24.w,
+                                ),
+                        label: AppHeadings.alert,
+                      ),
+                      BottomNavigationBarItem(
+                        icon:
+                            (controller.currentIndex.value == 2)
+                                ? Image.asset(
+                                  ImgPath.filledLookupIcon,
+                                  height: 24.w,
+                                  width: 24.w,
+                                )
+                                : Image.asset(
+                                  ImgPath.lookupIcon,
+                                  height: 24.w,
+                                  width: 24.w,
+                                ),
+                        label: AppHeadings.lookUp,
+                      ),
+                      BottomNavigationBarItem(
+                        icon:
+                            (controller.currentIndex.value == 3)
+                                ? Image.asset(
+                                  ImgPath.filledProfileIcon,
+                                  height: 24.w,
+                                  width: 24.w,
+                                )
+                                : Image.asset(
+                                  ImgPath.profileIcon,
+                                  height: 24.w,
+                                  width: 24.w,
+                                ),
+                        label: AppHeadings.profile,
+                      ),
+                    ],
+                  ),
         ),
       ),
     );

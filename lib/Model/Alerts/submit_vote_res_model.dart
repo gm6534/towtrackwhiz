@@ -47,8 +47,8 @@ class SubmitVoteResModel {
 
 class Verification {
   int? id;
-  String? alertId;
-  String? userId;
+  int? alertId;
+  int? userId;
   String? voteType;
   dynamic deviceId;
   String? createdAt;
@@ -66,8 +66,8 @@ class Verification {
 
   Verification.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    alertId = json['alert_id'];
-    userId = json['user_id'];
+    alertId = int.parse(json['alert_id'].toString());
+    userId = int.parse(json['user_id'].toString());
     voteType = json['vote_type'];
     deviceId = json['device_id'];
     createdAt = json['created_at'];

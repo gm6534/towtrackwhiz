@@ -57,6 +57,13 @@ class ReportTowActivityDialog extends GetView<HomeController> {
                       decoration: BoxDecoration(
                         color: AppColors.scaffoldBgColor,
                         borderRadius: BorderRadius.circular(8.r),
+                        border:
+                            controller.isTypeValid.value
+                                ? null
+                                : Border.all(
+                                  width: 1.5,
+                                  color: AppColors.redColor,
+                                ),
                       ),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<TowEvent>(
@@ -88,6 +95,7 @@ class ReportTowActivityDialog extends GetView<HomeController> {
                               controller.selectedType.value =
                                   value; // store enum
                             }
+                            controller.isTypeValid.value = true;
                           },
                         ),
                       ),
@@ -107,6 +115,13 @@ class ReportTowActivityDialog extends GetView<HomeController> {
                       decoration: BoxDecoration(
                         color: AppColors.scaffoldBgColor,
                         borderRadius: BorderRadius.circular(8.r),
+                        border:
+                            controller.isVehicleSelected.value
+                                ? null
+                                : Border.all(
+                                  width: 1.5,
+                                  color: AppColors.redColor,
+                                ),
                       ),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<VehiclesListModel>(
@@ -138,6 +153,7 @@ class ReportTowActivityDialog extends GetView<HomeController> {
                             if (value != null) {
                               controller.selectedVehicle.value = value;
                             }
+                            controller.isVehicleSelected.value = true;
                           },
                         ),
                       ),
@@ -145,47 +161,57 @@ class ReportTowActivityDialog extends GetView<HomeController> {
                   ],
                 );
               }),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 10.w,
-                children: [
-                  Text(AppHeadings.location, style: Get.textTheme.titleLarge),
-                  GestureDetector(
-                    onTap: () {
-                      controller.navigateToPickLoc();
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 12.w,
-                        vertical: 14.h,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade100,
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
-                      child: Obx(
-                        () => Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                controller.pickedLocation.value?.latitude !=
-                                        null
-                                    ? "${controller.pickedLocation.value?.latitude.toStringAsFixed(3)}, ${controller.pickedLocation.value?.longitude.toStringAsFixed(3)}"
-                                    : Strings.chooseOnMap,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(color: Colors.grey),
+              Obx(() {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 10.w,
+                  children: [
+                    Text(AppHeadings.location, style: Get.textTheme.titleLarge),
+                    GestureDetector(
+                      onTap: () {
+                        controller.navigateToPickLoc();
+                        controller.isLocationPicked.value = true;
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12.w,
+                          vertical: 14.h,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade100,
+                          borderRadius: BorderRadius.circular(8.r),
+                          border:
+                              controller.isLocationPicked.value
+                                  ? null
+                                  : Border.all(
+                                    width: 1.5,
+                                    color: AppColors.redColor,
+                                  ),
+                        ),
+                        child: Obx(
+                          () => Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  controller.pickedLocation.value?.latitude !=
+                                          null
+                                      ? "${controller.pickedLocation.value?.latitude.toStringAsFixed(3)}, ${controller.pickedLocation.value?.longitude.toStringAsFixed(3)}"
+                                      : Strings.chooseOnMap,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(color: Colors.grey),
+                                ),
                               ),
-                            ),
-                            Icon(Icons.location_on, color: Colors.red),
-                          ],
+                              Icon(Icons.location_on, color: Colors.red),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                );
+              }),
               AppHeadingTextField(
                 controller: controller.commentController,
                 heading: AppHeadings.comments,

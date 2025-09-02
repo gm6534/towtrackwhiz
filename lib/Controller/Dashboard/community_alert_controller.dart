@@ -11,6 +11,7 @@ class CommunityAlertController extends GetxController {
   DashboardRepo? dashboardRepo;
   RxList<CommunityAlertsModel> communityAlertsList =
       <CommunityAlertsModel>[].obs;
+  var communityAlertsModel = CommunityAlertsModel().obs;
   RxBool isCommunityAlertLoading = false.obs;
   var submitVoteModel = SubmitVoteResModel().obs;
 
@@ -49,16 +50,26 @@ class CommunityAlertController extends GetxController {
       );
       if (result != null) {
         submitVoteModel.value = result;
-        submitVoteModel.update((model) {
-          model?.upvotes = result.upvotes;
-          model?.downvotes = result.downvotes;
-        });
+        // find the alert in list and update its values
+        final index = communityAlertsList.indexWhere((a) => a.id == id);
+        if (index != -1) {
+          communityAlertsList[index].upVoteCount = result.upvotes ?? 0;
+          communityAlertsList[index].downVoteCount = result.downvotes ?? 0;
+          communityAlertsList.refresh(); // 🔑 notify UI
+        }
+
+        // submitVoteModel.update((model) {
+        //   model?.upvotes = result.upvotes;
+        //   model?.downvotes = result.downvotes;
+        // });
         ToastAndDialog.showCustomSnackBar(result.message!);
       }
     } catch (e) {
       Log.d("submitAlertVote - CommunityAlertController", e.toString());
     } finally {
-      Get.back();
+      if (Get.isDialogOpen ?? false) {
+        Get.back();
+      }
     }
   }
 }

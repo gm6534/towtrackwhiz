@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:towtrackwhiz/Controller/Dashboard/profile_controller.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/app_button.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/base_scaffold.dart';
@@ -54,9 +55,36 @@ class VehicleDetailPage extends GetView<ProfileController> {
             _buildInfoTile("License Plate", vehicle.licensePlate),
             _buildInfoTile("Make", vehicle.make),
             _buildInfoTile("Model", vehicle.model),
-            _buildInfoTile("Color", vehicle.color),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.h),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Color:  ",
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Container(
+                    height: 20.w,
+                    width: 80.w,
+                    decoration: BoxDecoration(
+                      color: controller.parseColor(vehicle.color),
+                      border: Border.all(color: AppColors.primary, width: 1.5)
+                    ),
+                  ),
+                ],
+              ),
+            ),
             _buildInfoTile("Registration State", vehicle.registrationState),
-            _buildInfoTile("Created At", vehicle.createdAt),
+            _buildInfoTile(
+              "Created At",
+              DateFormat(
+                'yyyy/MM/dd',
+              ).format(DateTime.parse(vehicle.createdAt!)),
+            ),
             _buildInfoTile("Status", vehicle.status),
           ],
         ),

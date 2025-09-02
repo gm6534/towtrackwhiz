@@ -33,10 +33,12 @@ class CommunityAlertsModel {
   String? location;
   String? comments;
   String? imagePath;
-  String? verified;
-  String? upvotes;
-  String? downvotes;
-  String? votes;
+  int? verified;
+  int? upvotes;
+  int? downvotes;
+  int? votes;
+  int? upVoteCount;
+  int? downVoteCount;
   dynamic expiresAt;
   String? createdAt;
   String? updatedAt;
@@ -45,26 +47,29 @@ class CommunityAlertsModel {
   String? vehicleId;
   String? distance;
 
-  CommunityAlertsModel(
-      {this.id,
-        this.userId,
-        this.alertType,
-        this.latitude,
-        this.longitude,
-        this.location,
-        this.comments,
-        this.imagePath,
-        this.verified,
-        this.upvotes,
-        this.downvotes,
-        this.votes,
-        this.expiresAt,
-        this.createdAt,
-        this.updatedAt,
-        this.status,
-        this.date,
-        this.vehicleId,
-        this.distance});
+  CommunityAlertsModel({
+    this.id,
+    this.userId,
+    this.alertType,
+    this.latitude,
+    this.longitude,
+    this.location,
+    this.comments,
+    this.imagePath,
+    this.verified,
+    this.upvotes,
+    this.downvotes,
+    this.votes,
+    this.expiresAt,
+    this.createdAt,
+    this.updatedAt,
+    this.status,
+    this.date,
+    this.vehicleId,
+    this.distance,
+    this.upVoteCount,
+    this.downVoteCount,
+  });
 
   CommunityAlertsModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -75,10 +80,10 @@ class CommunityAlertsModel {
     location = json['location'];
     comments = json['comments'];
     imagePath = json['image_path'];
-    verified = json['verified'];
-    upvotes = json['upvotes'];
-    downvotes = json['downvotes'];
-    votes = json['votes'];
+    verified = int.parse(json['verified'].toString());
+    upvotes = int.parse(json['upvotes'].toString());
+    downvotes = int.parse(json['downvotes'].toString());
+    votes = int.parse(json['votes'].toString());
     expiresAt = json['expires_at'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -86,6 +91,9 @@ class CommunityAlertsModel {
     date = json['date'];
     vehicleId = json['vehicle_id'];
     distance = json['distance'];
+
+    upVoteCount = int.parse(json['upvotes_count'].toString());
+    downVoteCount = int.parse(json['downvotes_count'].toString());
   }
 
   Map<String, dynamic> toJson() {

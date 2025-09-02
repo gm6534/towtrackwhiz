@@ -9,6 +9,7 @@ class VehiclesListModel {
   String? createdAt;
   String? updatedAt;
   String? status;
+  String? year;
 
   VehiclesListModel({
     this.id,
@@ -21,6 +22,7 @@ class VehiclesListModel {
     this.createdAt,
     this.updatedAt,
     this.status,
+    this.year
   });
 
   VehiclesListModel.fromJson(Map<String, dynamic> json) {
@@ -29,6 +31,7 @@ class VehiclesListModel {
     licensePlate = json['license_plate'];
     make = json['make'];
     model = json['model'];
+    year = json['year'];
     color = json['color'];
     registrationState = json['registration_state'];
     createdAt = json['created_at'];
@@ -48,6 +51,7 @@ class VehiclesListModel {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     data['status'] = status;
+    data['year'] = year;
     return data;
   }
 }

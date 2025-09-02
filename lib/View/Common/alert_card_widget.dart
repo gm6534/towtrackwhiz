@@ -149,8 +149,8 @@ class AlertCardWidget extends StatelessWidget {
               ),
               if (imgUrl.isNotEmpty)
                 Image.network(imgUrl, height: 70.w, width: 70.w)
-              else
-                Image.asset(ImgPath.tow1Png, height: 70.w, width: 70.w),
+              // else
+              //   Image.asset(ImgPath.tow1Png, height: 70.w, width: 70.w),
             ],
           ),
         ],

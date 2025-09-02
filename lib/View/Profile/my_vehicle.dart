@@ -45,6 +45,7 @@ class VehicleScreen extends GetView<ProfileController> {
               ),
               AppButton(
                 onPressed: () {
+                  controller.clearAddVehicleForm();
                   Get.toNamed(AppRoute.addVehicles);
                 },
                 title: ActionText.addVehicle,
@@ -90,6 +91,7 @@ class VehicleScreen extends GetView<ProfileController> {
             ),
             AppButton(
               onPressed: () {
+                controller.clearAddVehicleForm();
                 Get.toNamed(AppRoute.addVehicles);
               },
               title: ActionText.addVehicle,

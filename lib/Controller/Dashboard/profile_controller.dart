@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
@@ -6,6 +9,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:towtrackwhiz/Controller/Auth/auth_controller.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/toasts.dart';
 import 'package:towtrackwhiz/Core/Routes/app_route.dart';
+import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
 import 'package:towtrackwhiz/Core/Utils/log_util.dart';
 import 'package:towtrackwhiz/Model/Alerts/my_alerts_res_model.dart';
 import 'package:towtrackwhiz/Model/Auth/auth_response_model.dart';
@@ -62,6 +66,15 @@ class ProfileController extends GetxController {
     isNotificationEnabled.value = currentUser.value.isNotify ?? false;
     originalUser = currentUser.value;
     isProfileLoading.value = false;
+  }
+
+  void clearVehicleFields() {
+    licPlateController.clear();
+    makeController.clear();
+    modelController.clear();
+    modelYearController.clear();
+    colorController.clear();
+    registerStateController.clear();
   }
 
   void checkChanges() {
@@ -183,6 +196,10 @@ class ProfileController extends GetxController {
   }
 
   Future<void> deleteUserProfile() async {
+    final result = await ToastAndDialog.confirmation(
+      message: "Are you sure you want to delete your account?",
+    );
+    if (!result) return;
     await authController?.deleteUser();
   }
 
@@ -357,7 +374,7 @@ class ProfileController extends GetxController {
     modelController.text = vModel.model ?? "";
     colorController.text = vModel.color ?? "";
     registerStateController.text = vModel.registrationState ?? "";
-    modelYearController.text = "";
+    modelYearController.text = vModel.year ?? "";
   }
 
   void clearAddVehicleForm() {
@@ -390,6 +407,152 @@ class ProfileController extends GetxController {
       if (Get.isDialogOpen ?? false) {
         Get.back();
       }
+    }
+  }
+
+  Future<void> showYearPicker(BuildContext context) async {
+    final now = DateTime.now();
+    final int currentYear = now.year;
+    final int startYear = 1950;
+    final int itemCount = currentYear - startYear + 1;
+
+    // Default selected index = current year
+    int selectedIndex = currentYear - startYear;
+
+    // If controller already has a valid year → set as initial
+    if (modelYearController.text.isNotEmpty) {
+      final parsed = int.tryParse(modelYearController.text);
+      if (parsed != null && parsed >= startYear && parsed <= currentYear) {
+        selectedIndex = parsed - startYear;
+      }
+    }
+
+    await showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) {
+        return SizedBox(
+          height: 250,
+          child: Column(
+            children: [
+              // Action bar
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(ctx),
+                    child: const Text("Cancel"),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      final pickedYear = startYear + selectedIndex;
+                      modelYearController.text = pickedYear.toString();
+                      Navigator.pop(ctx);
+                    },
+                    child: const Text("Done"),
+                  ),
+                ],
+              ),
+              const Divider(height: 1),
+              // Cupertino Picker
+              Expanded(
+                child: CupertinoPicker(
+                  scrollController: FixedExtentScrollController(
+                    initialItem: selectedIndex,
+                  ),
+                  itemExtent: 40,
+                  onSelectedItemChanged: (index) {
+                    selectedIndex = index;
+                  },
+                  children: List.generate(
+                    itemCount,
+                        (index) => Center(
+                      child: Text(
+                        (startYear + index).toString(),
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> pickColor(BuildContext context) async {
+    Color selectedColor = Colors.blue;
+
+    await showDialog(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          backgroundColor: AppColors.scaffoldBgColor,
+          surfaceTintColor: AppColors.scaffoldBgColor,
+          insetPadding: EdgeInsets.symmetric(horizontal: 20.w),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.r),
+          ),
+          title: const Text("Pick Vehicle Color"),
+          content: SingleChildScrollView(
+            child: ColorPicker(
+              pickerColor: selectedColor,
+              onColorChanged: (color) {
+                selectedColor = color;
+              },
+              showLabel: true,
+              pickerAreaHeightPercent: 0.8,
+            ),
+          ),
+          actions: [
+            TextButton(
+              child: Text(
+                ActionText.cancel,
+                style: context.textTheme.titleLarge,
+              ),
+              onPressed: () => Navigator.pop(ctx),
+            ),
+            TextButton(
+              child: Text(
+                ActionText.select,
+                style: context.textTheme.titleLarge?.copyWith(
+                  color: AppColors.primary,
+                ),
+              ),
+              onPressed: () {
+                colorController.text =
+                    "#${selectedColor.value.toRadixString(16).substring(2).toUpperCase()}";
+                Navigator.pop(ctx);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Color parseColor(String? hexColor, {Color fallback = Colors.grey}) {
+    if (hexColor == null || hexColor.isEmpty) return fallback;
+
+    try {
+      String cleaned = hexColor.toUpperCase().replaceAll("#", "");
+
+      // If only RGB (6 chars), prepend full opacity (FF)
+      if (cleaned.length == 6) {
+        cleaned = "FF$cleaned";
+      }
+
+      // If still not valid (should be 8 chars for ARGB), fallback
+      if (cleaned.length != 8) return fallback;
+
+      return Color(int.parse("0x$cleaned"));
+    } catch (e) {
+      return fallback; // In case parsing fails
     }
   }
 }

@@ -13,6 +13,7 @@ import '../../Core/Utils/app_colors.dart';
 
 class AddEditVehicleScreen extends GetView<ProfileController> {
   AddEditVehicleScreen({super.key});
+
   final VehiclesListModel? argument = Get.arguments;
 
   @override
@@ -32,7 +33,9 @@ class AddEditVehicleScreen extends GetView<ProfileController> {
             spacing: 10.w,
             children: [
               Text(
-                argument != null ? AppHeadings.updateVehicle : AppHeadings.addVehicles,
+                argument != null
+                    ? AppHeadings.updateVehicle
+                    : AppHeadings.addVehicles,
                 style: Get.textTheme.headlineMedium,
               ),
               10.verticalSpace,
@@ -41,6 +44,9 @@ class AddEditVehicleScreen extends GetView<ProfileController> {
                 heading: Strings.licensePlate,
                 hintText: "",
                 textInputType: TextInputType.text,
+                onChanged: (value) {
+                  controller.licPlateController.text = value.toUpperCase();
+                },
                 validator:
                     (value) => ValidationHelper.validateNonEmpty(
                       value,
@@ -71,10 +77,12 @@ class AddEditVehicleScreen extends GetView<ProfileController> {
                 heading: AppHeadings.modelYear,
                 textInputType: TextInputType.number,
                 hintText: "",
+                readOnly: true,
+                onTap: () => controller.showYearPicker(context),
                 validator:
                     (value) => ValidationHelper.validateNonEmpty(
                       value,
-                      "Vehicle Model",
+                      "Vehicle year",
                     ),
               ),
               AppHeadingTextField(
@@ -82,6 +90,8 @@ class AddEditVehicleScreen extends GetView<ProfileController> {
                 heading: AppHeadings.vehicleColor,
                 hintText: "",
                 textInputType: TextInputType.name,
+                readOnly: true,
+                onTap: () => controller.pickColor(context),
                 validator:
                     (value) => ValidationHelper.validateNonEmpty(
                       value,

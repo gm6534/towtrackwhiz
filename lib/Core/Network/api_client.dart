@@ -248,40 +248,91 @@ class ApiClient {
     }
   }
 
+
   ApiResponse<T> _handleResponse<T>(http.Response response) {
     final int statusCode = response.statusCode;
     final String responseBody = response.body;
+    String? errorMsg;
 
     try {
       final decoded = responseBody.isNotEmpty ? jsonDecode(responseBody) : null;
 
+      if (decoded != null && decoded is Map<String, dynamic>) {
+        if (decoded.containsKey("errors")) {
+          final errors = decoded["errors"];
+
+          if (errors is List) {
+            errorMsg = errors.join(", ");
+          } else {
+            errorMsg = errors.toString();
+          }
+        }
+      }
+
       if (statusCode >= 200 && statusCode < 300) {
         return ApiResponse.success(decoded as T, statusCode: statusCode);
       } else if (statusCode == 401 || statusCode == 403) {
-        // 🔐 Handle auth expiry
         _authController.logout();
         return ApiResponse.error(
-          ErrorCode.unAuthorizedAccess,
+          errorMsg ?? decoded?["errors"] ?? ErrorCode.unAuthorizedAccess,
           statusCode: statusCode,
         );
       } else if (statusCode == 422) {
         return ApiResponse.error(
-          ErrorCode.validationError,
+          errorMsg ?? decoded?["errors"] ?? ErrorCode.validationError,
           statusCode: statusCode,
         );
       } else if (statusCode >= 500) {
-        return ApiResponse.error(ErrorCode.serverError, statusCode: statusCode);
+        return ApiResponse.error(
+          errorMsg ?? decoded?["errors"] ?? ErrorCode.serverError,
+          statusCode: statusCode,
+        );
       } else {
         return ApiResponse.error(
-          ErrorCode.unexpectedError,
+          errorMsg ?? decoded?["errors"] ?? ErrorCode.unexpectedError,
           statusCode: statusCode,
         );
       }
-    } catch (_) {
-      return ApiResponse.error(
-        ErrorCode.failedToParseResponse,
-        statusCode: statusCode,
-      );
+    } catch (e) {
+      return ApiResponse.error(e.toString(), statusCode: statusCode);
     }
   }
+
+
+// ApiResponse<T> _handleResponse<T>(http.Response response) {
+  //   final int statusCode = response.statusCode;
+  //   final String responseBody = response.body;
+  //
+  //   try {
+  //     final decoded = responseBody.isNotEmpty ? jsonDecode(responseBody) : null;
+  //
+  //     if (statusCode >= 200 && statusCode < 300) {
+  //       return ApiResponse.success(decoded as T, statusCode: statusCode);
+  //     } else if (statusCode == 401 || statusCode == 403) {
+  //       // 🔐 Handle auth expiry
+  //       _authController.logout();
+  //       return ApiResponse.error(
+  //         decoded["message"] ?? ErrorCode.unAuthorizedAccess,
+  //         statusCode: statusCode,
+  //       );
+  //     } else if (statusCode == 422) {
+  //       return ApiResponse.error(
+  //         decoded["message"] ?? ErrorCode.validationError,
+  //         statusCode: statusCode,
+  //       );
+  //     } else if (statusCode >= 500) {
+  //       return ApiResponse.error(
+  //         decoded["message"] ?? ErrorCode.serverError,
+  //         statusCode: statusCode,
+  //       );
+  //     } else {
+  //       return ApiResponse.error(
+  //         decoded["message"] ?? ErrorCode.unexpectedError,
+  //         statusCode: statusCode,
+  //       );
+  //     }
+  //   } catch (e) {
+  //     return ApiResponse.error(e.toString(), statusCode: statusCode);
+  //   }
+  // }
 }

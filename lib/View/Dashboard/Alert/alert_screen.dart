@@ -37,7 +37,8 @@ class AlertScreen extends GetView<CommunityAlertController> {
               itemBuilder: (context, index) {
                 final alert = controller.communityAlertsList[index];
                 controller.submitVoteModel.value.upvotes = alert.upVoteCount;
-                controller.submitVoteModel.value.downvotes = alert.downVoteCount;
+                controller.submitVoteModel.value.downvotes =
+                    alert.downVoteCount;
                 return AlertCardWidget(
                   title: alert.alertType ?? "",
                   location: alert.location ?? "",
@@ -60,6 +61,8 @@ class AlertScreen extends GetView<CommunityAlertController> {
                       id: alert.id,
                     );
                   },
+                  latitude: alert.latitude!,
+                  longitude: alert.longitude!,
                 );
               },
             );

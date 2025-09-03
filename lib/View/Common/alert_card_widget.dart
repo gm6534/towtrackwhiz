@@ -1,13 +1,19 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:towtrackwhiz/Core/Common/Widgets/enlarge_image_view.dart';
 import 'package:towtrackwhiz/Core/Common/helper.dart';
 import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AlertCardWidget extends StatelessWidget {
   final String title;
   final String location;
+  final String latitude;
+  final String longitude;
   final String imgUrl;
   final String time;
   final String upVote;
@@ -25,6 +31,8 @@ class AlertCardWidget extends StatelessWidget {
     this.downVote = "0",
     this.onTapUpVote,
     this.onTapDownVote,
+    required this.latitude,
+    required this.longitude,
   });
 
   @override
@@ -72,16 +80,24 @@ class AlertCardWidget extends StatelessWidget {
                   TowEventExtension.fromValue(title)!.label,
                   style: Get.textTheme.labelLarge,
                 ),
-                Row(
-                  spacing: 5.w,
-                  children: [
-                    Text(location, style: Get.textTheme.bodyMedium),
-                    Image.asset(
-                      ImgPath.locationIcon,
-                      height: 15.w,
-                      width: 15.w,
-                    ),
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    openMap(double.parse(latitude), double.parse(longitude));
+                  },
+                  child: Row(
+                    spacing: 5.w,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Flexible(
+                        child: Text(location, style: Get.textTheme.bodyMedium),
+                      ),
+                      Image.asset(
+                        ImgPath.locationIcon,
+                        height: 15.w,
+                        width: 15.w,
+                      ),
+                    ],
+                  ),
                 ),
                 Row(
                   spacing: 10.w,
@@ -148,7 +164,12 @@ class AlertCardWidget extends StatelessWidget {
                 ),
               ),
               if (imgUrl.isNotEmpty)
-                Image.network(imgUrl, height: 70.w, width: 70.w)
+                GestureDetector(
+                  onTap: () {
+                    Get.to(() => EnlargeImageView(path: imgUrl));
+                  },
+                  child: Image.network(imgUrl, height: 70.w, width: 70.w),
+                ),
               // else
               //   Image.asset(ImgPath.tow1Png, height: 70.w, width: 70.w),
             ],
@@ -156,5 +177,19 @@ class AlertCardWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> openMap(double latitude, double longitude) async {
+    final String googleUrl =
+        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+    final String appleUrl = 'https://maps.apple.com/?q=$latitude,$longitude';
+
+    final Uri url = Uri.parse(Platform.isIOS ? appleUrl : googleUrl);
+
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not open the map.';
+    }
   }
 }

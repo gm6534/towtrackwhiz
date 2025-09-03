@@ -46,6 +46,8 @@ class MyAlertScreen extends GetView<ProfileController> {
                     downVote: alert.downvotes.toString(),
                     imgUrl: alert.imagePath ?? "",
                     time: alert.createdAt ?? "",
+                    latitude: alert.latitude!,
+                    longitude: alert.longitude!,
                   );
                 },
               ),

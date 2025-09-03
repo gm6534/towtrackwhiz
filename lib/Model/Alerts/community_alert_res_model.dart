@@ -34,8 +34,6 @@ class CommunityAlertsModel {
   String? comments;
   String? imagePath;
   int? verified;
-  int? upvotes;
-  int? downvotes;
   int? votes;
   int? upVoteCount;
   int? downVoteCount;
@@ -47,6 +45,10 @@ class CommunityAlertsModel {
   String? vehicleId;
   String? distance;
 
+  /// New lists to store who voted
+  List<VoteModel>? upvotes;
+  List<VoteModel>? downvotes;
+
   CommunityAlertsModel({
     this.id,
     this.userId,
@@ -57,8 +59,6 @@ class CommunityAlertsModel {
     this.comments,
     this.imagePath,
     this.verified,
-    this.upvotes,
-    this.downvotes,
     this.votes,
     this.expiresAt,
     this.createdAt,
@@ -69,6 +69,8 @@ class CommunityAlertsModel {
     this.distance,
     this.upVoteCount,
     this.downVoteCount,
+    this.upvotes,
+    this.downvotes,
   });
 
   CommunityAlertsModel.fromJson(Map<String, dynamic> json) {
@@ -81,8 +83,6 @@ class CommunityAlertsModel {
     comments = json['comments'];
     imagePath = json['image_path'];
     verified = int.parse(json['verified'].toString());
-    upvotes = int.parse(json['upvotes'].toString());
-    downvotes = int.parse(json['downvotes'].toString());
     votes = int.parse(json['votes'].toString());
     expiresAt = json['expires_at'];
     createdAt = json['created_at'];
@@ -94,6 +94,18 @@ class CommunityAlertsModel {
 
     upVoteCount = int.parse(json['upvotes_count'].toString());
     downVoteCount = int.parse(json['downvotes_count'].toString());
+
+    /// Parse lists of votes
+    if (json['upvotes'] != null) {
+      upvotes =
+          (json['upvotes'] as List).map((e) => VoteModel.fromJson(e)).toList();
+    }
+    if (json['downvotes'] != null) {
+      downvotes =
+          (json['downvotes'] as List)
+              .map((e) => VoteModel.fromJson(e))
+              .toList();
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -107,8 +119,6 @@ class CommunityAlertsModel {
     data['comments'] = comments;
     data['image_path'] = imagePath;
     data['verified'] = verified;
-    data['upvotes'] = upvotes;
-    data['downvotes'] = downvotes;
     data['votes'] = votes;
     data['expires_at'] = expiresAt;
     data['created_at'] = createdAt;
@@ -117,6 +127,44 @@ class CommunityAlertsModel {
     data['date'] = date;
     data['vehicle_id'] = vehicleId;
     data['distance'] = distance;
+    data['upvotes_count'] = upVoteCount;
+    data['downvotes_count'] = downVoteCount;
+
+    if (upvotes != null) {
+      data['upvotes'] = upvotes!.map((e) => e.toJson()).toList();
+    }
+    if (downvotes != null) {
+      data['downvotes'] = downvotes!.map((e) => e.toJson()).toList();
+    }
+
+    return data;
+  }
+
+  /// Helpers to check if my user has already voted
+  bool isUpVoted(String myUserId) {
+    return upvotes?.any((v) => v.userId == myUserId) ?? false;
+  }
+
+  bool isDownVoted(String myUserId) {
+    return downvotes?.any((v) => v.userId == myUserId) ?? false;
+  }
+}
+
+class VoteModel {
+  String? userId;
+  String? alertId;
+
+  VoteModel({this.userId, this.alertId});
+
+  VoteModel.fromJson(Map<String, dynamic> json) {
+    userId = json['user_id'];
+    alertId = json['alert_id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['alert_id'] = alertId;
+    data['user_id'] = userId;
     return data;
   }
 }

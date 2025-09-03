@@ -18,6 +18,7 @@ class AlertCardWidget extends StatelessWidget {
   final String time;
   final String upVote;
   final String downVote;
+  final Color? tileColor;
   final Function()? onTapUpVote;
   final Function()? onTapDownVote;
 
@@ -33,6 +34,7 @@ class AlertCardWidget extends StatelessWidget {
     this.onTapDownVote,
     required this.latitude,
     required this.longitude,
+    this.tileColor,
   });
 
   @override
@@ -41,7 +43,7 @@ class AlertCardWidget extends StatelessWidget {
       padding: EdgeInsets.all(10.w),
       margin: EdgeInsets.symmetric(vertical: 3.w),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: tileColor ?? AppColors.white,
         borderRadius: BorderRadius.circular(10.r),
       ),
       child: Row(

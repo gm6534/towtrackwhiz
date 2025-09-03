@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/toasts.dart';
 import 'package:towtrackwhiz/Model/Alerts/community_alert_res_model.dart';
 import 'package:towtrackwhiz/Model/Alerts/submit_vote_res_model.dart';
@@ -64,12 +65,19 @@ class CommunityAlertController extends GetxController {
         // });
         ToastAndDialog.showCustomSnackBar(result.message!);
       }
-    } catch (e) {
-      Log.d("submitAlertVote - CommunityAlertController", e.toString());
-    } finally {
       if (Get.isDialogOpen ?? false) {
         Get.back();
       }
+    } catch (e) {
+      if (Get.isDialogOpen ?? false) {
+        Get.back();
+      }
+      if (e is ClientException) {
+        ToastAndDialog.errorDialog(e.message);
+      } else {
+        ToastAndDialog.showCustomSnackBar(e.toString());
+      }
+      Log.d("submitAlertVote - CommunityAlertController", e.toString());
     }
   }
 }

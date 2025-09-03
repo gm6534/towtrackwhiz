@@ -12,142 +12,147 @@ class ProfileScreen extends GetView<ProfileController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      if (controller.isProfileLoading.value) {
-        return Center(child: CircularProgressIndicator());
-      }
-      return SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: 120.w,
-              width: 120.w,
-              decoration: BoxDecoration(
-                color: AppColors.secondary,
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.fitWidth,
-                  image: NetworkImage(controller.currentUser.value.avatar!),
+    return RefreshIndicator(
+      backgroundColor: AppColors.white,
+      color: AppColors.primary,
+      onRefresh: () => controller.firstApiCall(),
+      child: Obx(() {
+        if (controller.isProfileLoading.value) {
+          return Center(child: CircularProgressIndicator());
+        }
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: 120.w,
+                width: 120.w,
+                decoration: BoxDecoration(
+                  color: AppColors.secondary,
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    fit: BoxFit.fitWidth,
+                    image: NetworkImage(controller.currentUser.value.avatar!),
+                  ),
+                ),
+                // child: Icon(Icons.person, size: 50.w, color: AppColors.redColor),
+              ),
+              10.verticalSpace,
+              Text(
+                controller.currentUser.value.name!,
+                style: Get.textTheme.headlineMedium,
+              ),
+              Text(
+                controller.currentUser.value.email!,
+                style: Get.textTheme.bodyLarge,
+              ),
+              Text(
+                "${Strings.memberSince} ${DateFormat("yyyy").format(DateTime.parse(controller.currentUser.value.createdAt!))}",
+                style: Get.textTheme.bodyMedium?.copyWith(
+                  color: AppColors.greyColor.withValues(alpha: 0.9),
                 ),
               ),
-              // child: Icon(Icons.person, size: 50.w, color: AppColors.redColor),
-            ),
-            10.verticalSpace,
-            Text(
-              controller.currentUser.value.name!,
-              style: Get.textTheme.headlineMedium,
-            ),
-            Text(
-              controller.currentUser.value.email!,
-              style: Get.textTheme.bodyLarge,
-            ),
-            Text(
-              "${Strings.memberSince} ${DateFormat("yyyy").format(DateTime.parse(controller.currentUser.value.createdAt!))}",
-              style: Get.textTheme.bodyMedium?.copyWith(
-                color: AppColors.greyColor.withValues(alpha: 0.9),
-              ),
-            ),
-            10.verticalSpace,
-            if (controller.analyticsResModel.value.totalVehicles != null)
-              Row(
-                spacing: 8.w,
-                children: [
-                  SelectionCard(
-                    icon: ImgPath.alertIcon,
-                    title: Strings.alertRequire,
-                    value: "${controller.analyticsResModel.value.totalAlerts}",
-                    bgColor: AppColors.lightPrimary,
-                    onTap: controller.getMyAlertList,
-                  ),
-                  SelectionCard(
-                    icon: ImgPath.verifyBadge,
-                    title: Strings.verified,
-                    value:
-                        "${controller.analyticsResModel.value.verifiedAlerts}",
-                    bgColor: AppColors.lightPrimary,
-                  ),
-                  SelectionCard(
-                    icon: ImgPath.myVehicleIcon,
-                    title: Strings.carsRegistered,
-                    value:
-                        "${controller.analyticsResModel.value.totalVehicles}",
-                    bgColor: AppColors.lightPrimary,
-                  ),
-                ],
-              ),
-            10.verticalSpace,
-            Container(
-              padding: EdgeInsets.all(12.w),
-              decoration: BoxDecoration(
-                color: AppColors.lightYellowColor,
-                borderRadius: BorderRadius.circular(10.r),
-              ),
-              child: Row(
-                spacing: 10.w,
-                children: [
-                  Image.asset(ImgPath.badgeIcon, height: 30.w, width: 30.w),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      // spacing: 5.w,
-                      children: [
-                        Text(
-                          AppHeadings.communityHelper,
-                          style: Get.textTheme.titleMedium,
-                        ),
-                        Text(
-                          "${Strings.youHaveHelpedVerify} ${int.parse(controller.currentUser.value.verified!) > 0 ? controller.currentUser.value.verified : 0} ${Strings.communityAlerts}",
-                          style: Get.textTheme.bodySmall?.copyWith(
-                            color: AppColors.hintColor,
+              10.verticalSpace,
+              if (controller.analyticsResModel.value.totalVehicles != null)
+                Row(
+                  spacing: 8.w,
+                  children: [
+                    SelectionCard(
+                      icon: ImgPath.alertIcon,
+                      title: Strings.alertRequire,
+                      value: "${controller.analyticsResModel.value.totalAlerts}",
+                      bgColor: AppColors.lightPrimary,
+                      onTap: controller.getMyAlertList,
+                    ),
+                    SelectionCard(
+                      icon: ImgPath.verifyBadge,
+                      title: Strings.verified,
+                      value:
+                          "${controller.analyticsResModel.value.verifiedAlerts}",
+                      bgColor: AppColors.lightPrimary,
+                    ),
+                    SelectionCard(
+                      icon: ImgPath.myVehicleIcon,
+                      title: Strings.carsRegistered,
+                      value:
+                          "${controller.analyticsResModel.value.totalVehicles}",
+                      bgColor: AppColors.lightPrimary,
+                    ),
+                  ],
+                ),
+              10.verticalSpace,
+              Container(
+                padding: EdgeInsets.all(12.w),
+                decoration: BoxDecoration(
+                  color: AppColors.lightYellowColor,
+                  borderRadius: BorderRadius.circular(10.r),
+                ),
+                child: Row(
+                  spacing: 10.w,
+                  children: [
+                    Image.asset(ImgPath.badgeIcon, height: 30.w, width: 30.w),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        // spacing: 5.w,
+                        children: [
+                          Text(
+                            AppHeadings.communityHelper,
+                            style: Get.textTheme.titleMedium,
                           ),
-                        ),
-                      ],
+                          Text(
+                            "${Strings.youHaveHelpedVerify} ${int.parse(controller.currentUser.value.verified!) > 0 ? controller.currentUser.value.verified : 0} ${Strings.communityAlerts}",
+                            style: Get.textTheme.bodySmall?.copyWith(
+                              color: AppColors.hintColor,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 10.w,
-                      vertical: 4.h,
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10.w,
+                        vertical: 4.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.yellowColor,
+                        borderRadius: BorderRadius.circular(20.r),
+                      ),
+                      child: Text(
+                        "${Strings.level} ${controller.currentUser.value.level}",
+                        style: Get.textTheme.labelLarge,
+                      ),
                     ),
-                    decoration: BoxDecoration(
-                      color: AppColors.yellowColor,
-                      borderRadius: BorderRadius.circular(20.r),
-                    ),
-                    child: Text(
-                      "${Strings.level} ${controller.currentUser.value.level}",
-                      style: Get.textTheme.labelLarge,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            10.verticalSpace,
-            _menuTile(
-              ImgPath.myVehicleIcon,
-              AppHeadings.myVehicles,
-              onTap: () => controller.getVehicleList(),
-            ),
-            _menuTile(
-              ImgPath.notificationIcon,
-              AppHeadings.notificationSettings,
-              onTap: () => Get.toNamed(AppRoute.notificationSettingScreen),
-            ),
-            _menuTile(
-              ImgPath.settingIcon,
-            AppHeadings.accountSettings,
-              onTap: () => Get.toNamed(AppRoute.accountSettingsScreen),
-            ),
-            // _menuTile(ImgPath.payMethodIcon, "Payout Method"),
-            _menuTile(
-              ImgPath.logoutIcon,
-              ActionText.logout,
-              color: Colors.red,
-              onTap: controller.authController?.logout,
-            ),
-          ],
-        ),
-      );
-    });
+              10.verticalSpace,
+              _menuTile(
+                ImgPath.myVehicleIcon,
+                AppHeadings.myVehicles,
+                onTap: () => controller.getVehicleList(),
+              ),
+              _menuTile(
+                ImgPath.notificationIcon,
+                AppHeadings.notificationSettings,
+                onTap: () => Get.toNamed(AppRoute.notificationSettingScreen),
+              ),
+              _menuTile(
+                ImgPath.settingIcon,
+              AppHeadings.accountSettings,
+                onTap: () => Get.toNamed(AppRoute.accountSettingsScreen),
+              ),
+              // _menuTile(ImgPath.payMethodIcon, "Payout Method"),
+              _menuTile(
+                ImgPath.logoutIcon,
+                ActionText.logout,
+                color: Colors.red,
+                onTap: controller.authController?.logout,
+              ),
+            ],
+          ),
+        );
+      }),
+    );
   }
 
   Widget _menuTile(

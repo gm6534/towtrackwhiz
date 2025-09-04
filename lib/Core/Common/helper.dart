@@ -196,4 +196,24 @@ class Helper {
       return '${(diff.inDays / 365).floor()}y ago';
     }
   }
+
+  static String getOrdinal(int number) {
+    if (number <= 0) return number.toString();
+
+    // Handle special cases 11th, 12th, 13th
+    if (number % 100 >= 11 && number % 100 <= 13) {
+      return "${number}th";
+    }
+
+    switch (number % 10) {
+      case 1:
+        return "${number}st";
+      case 2:
+        return "${number}nd";
+      case 3:
+        return "${number}rd";
+      default:
+        return "${number}th";
+    }
+  }
 }

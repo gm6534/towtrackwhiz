@@ -36,6 +36,8 @@ class AlertsModel {
   String? verified;
   String? upvotes;
   String? downvotes;
+  int? upVoteCount;
+  int? downVoteCount;
   String? votes;
   dynamic expiresAt;
   String? createdAt;
@@ -44,25 +46,28 @@ class AlertsModel {
   String? date;
   String? vehicleId;
 
-  AlertsModel(
-      {this.id,
-        this.userId,
-        this.alertType,
-        this.latitude,
-        this.longitude,
-        this.location,
-        this.comments,
-        this.imagePath,
-        this.verified,
-        this.upvotes,
-        this.downvotes,
-        this.votes,
-        this.expiresAt,
-        this.createdAt,
-        this.updatedAt,
-        this.status,
-        this.date,
-        this.vehicleId});
+  AlertsModel({
+    this.id,
+    this.userId,
+    this.alertType,
+    this.latitude,
+    this.longitude,
+    this.location,
+    this.comments,
+    this.imagePath,
+    this.verified,
+    this.upvotes,
+    this.downvotes,
+    this.upVoteCount,
+    this.downVoteCount,
+    this.votes,
+    this.expiresAt,
+    this.createdAt,
+    this.updatedAt,
+    this.status,
+    this.date,
+    this.vehicleId,
+  });
 
   AlertsModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -83,6 +88,8 @@ class AlertsModel {
     status = json['status'];
     date = json['date'];
     vehicleId = json['vehicle_id'];
+    upVoteCount = int.parse(json['upvotes_count'].toString());
+    downVoteCount = int.parse(json['downvotes_count'].toString());
   }
 
   Map<String, dynamic> toJson() {
@@ -105,6 +112,8 @@ class AlertsModel {
     data['status'] = status;
     data['date'] = date;
     data['vehicle_id'] = vehicleId;
+    data['upvotes_count'] = upVoteCount;
+    data['downvotes_count'] = downVoteCount;
     return data;
   }
 }

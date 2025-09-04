@@ -47,6 +47,7 @@ class ImgPath {
   static const String verifyBadge = "${png}verifyBadge.png";
   static const String mapImg = "${png}mapImg.png";
   static const String downArrow = "${png}down-arrow.png";
+  static const String truckIcon = "${png}truck.png";
 
   /////////////////<<<<<-- SVG IMAGES -->>>>///////////////////////
   static const String appLogoSvg = "${svg}towTrackLogo.svg";
@@ -76,7 +77,7 @@ class AppHeadings {
   static const notificationSettings = "Notification Settings";
   static const accountSettings = "Account Settings";
   static const paymentMethod = "Payment Method";
-  static const payoutMethod = "Payout Method";
+  static const payoutMethod = "Payouts";
   static const notificationSetting = "Notification Setting";
   static const vehicleDetail = "Vehicle Detail";
 

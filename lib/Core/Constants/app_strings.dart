@@ -46,6 +46,7 @@ class ImgPath {
   static const String badgeIcon = "${png}badgeIcon.png";
   static const String verifyBadge = "${png}verifyBadge.png";
   static const String mapImg = "${png}mapImg.png";
+  static const String downArrow = "${png}down-arrow.png";
 
   /////////////////<<<<<-- SVG IMAGES -->>>>///////////////////////
   static const String appLogoSvg = "${svg}towTrackLogo.svg";
@@ -74,6 +75,8 @@ class AppHeadings {
   static const myVehicles = "My Vehicles";
   static const notificationSettings = "Notification Settings";
   static const accountSettings = "Account Settings";
+  static const paymentMethod = "Payment Method";
+  static const payoutMethod = "Payout Method";
   static const notificationSetting = "Notification Setting";
   static const vehicleDetail = "Vehicle Detail";
 
@@ -138,6 +141,7 @@ class Strings {
   static const String camera = "Camera";
   static const String gallery = "Gallery";
   static const String noRecordFound = "No record found";
+  static const String noEarning = "You have no earnings yet.";
   static const String availabilityOfNotification =
       "Availability of notification";
   static const String memberSince = "Member Since";

@@ -9,5 +9,6 @@ class AppRoute {
   static const String addVehicles = '/addVehicles';
   static const String notificationSettingScreen = '/notificationSettingScreen';
   static const String accountSettingsScreen = '/accountSettingsScreen';
-  static const String myAlertScreen = '/MyAlertScreen';
+  static const String myAlertScreen = '/myAlertScreen';
+  static const String payoutScreen = '/payoutScreen';
 }

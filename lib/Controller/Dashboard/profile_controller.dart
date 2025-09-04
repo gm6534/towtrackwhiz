@@ -22,6 +22,7 @@ import '../../Core/Common/helper.dart';
 import '../../Core/Constants/app_strings.dart';
 import '../../Model/Auth/login_req_model.dart';
 import '../../Model/Vehicle/vehicle_list_model.dart';
+import '../../Model/earning_res_model.dart';
 
 class ProfileController extends GetxController {
   var isNotificationEnabled = true.obs;
@@ -37,6 +38,7 @@ class ProfileController extends GetxController {
   TextEditingController confirmPasswordC = TextEditingController();
 
   RxBool isProfileLoading = false.obs;
+  RxBool isPayoutLoading = false.obs;
   RxBool isVehicleLoading = true.obs;
   RxBool isAlertRequireLoading = true.obs;
   RxList<AlertsModel> myAlertsList = <AlertsModel>[].obs;
@@ -47,7 +49,7 @@ class ProfileController extends GetxController {
   RxList<VehiclesListModel> vehiclesList = <VehiclesListModel>[].obs;
   DashboardRepo? dashboardRepo;
   AuthRepo? authRepo;
-
+  var earningResModel = EarningResModel().obs;
   AuthController? authController;
 
   @override
@@ -469,7 +471,7 @@ class ProfileController extends GetxController {
                   },
                   children: List.generate(
                     itemCount,
-                        (index) => Center(
+                    (index) => Center(
                       child: Text(
                         (startYear + index).toString(),
                         style: const TextStyle(fontSize: 20),
@@ -553,6 +555,26 @@ class ProfileController extends GetxController {
       return Color(int.parse("0x$cleaned"));
     } catch (e) {
       return fallback; // In case parsing fails
+    }
+  }
+
+  Future<void> getEarnings() async {
+    try {
+      isPayoutLoading.value = true;
+      Get.toNamed(AppRoute.payoutScreen);
+      final result = await dashboardRepo?.getEarningApi();
+      if (result != null) {
+        earningResModel.value = result;
+      }
+    } catch (e) {
+      if (e is ClientException) {
+        ToastAndDialog.showCustomSnackBar(e.message);
+      } else {
+        ToastAndDialog.showCustomSnackBar(e.toString());
+      }
+      Log.d("getEarnings - ProfileController", e.toString());
+    } finally {
+      isPayoutLoading.value = false;
     }
   }
 }

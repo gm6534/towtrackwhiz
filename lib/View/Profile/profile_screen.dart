@@ -59,7 +59,8 @@ class ProfileScreen extends GetView<ProfileController> {
                     SelectionCard(
                       icon: ImgPath.alertIcon,
                       title: Strings.alertRequire,
-                      value: "${controller.analyticsResModel.value.totalAlerts}",
+                      value:
+                          "${controller.analyticsResModel.value.totalAlerts}",
                       bgColor: AppColors.lightPrimary,
                       onTap: controller.getMyAlertList,
                     ),
@@ -138,10 +139,14 @@ class ProfileScreen extends GetView<ProfileController> {
               ),
               _menuTile(
                 ImgPath.settingIcon,
-              AppHeadings.accountSettings,
+                AppHeadings.accountSettings,
                 onTap: () => Get.toNamed(AppRoute.accountSettingsScreen),
               ),
-              // _menuTile(ImgPath.payMethodIcon, "Payout Method"),
+              _menuTile(
+                ImgPath.payMethodIcon,
+                AppHeadings.payoutMethod,
+                onTap: controller.getEarnings,
+              ),
               _menuTile(
                 ImgPath.logoutIcon,
                 ActionText.logout,
@@ -170,9 +175,9 @@ class ProfileScreen extends GetView<ProfileController> {
       child: ListTile(
         leading: Image.asset(icon, color: color, height: 20.w, width: 20.w),
         title: Text(title, style: TextStyle(fontSize: 14.sp)),
-        trailing: Icon(
-          Icons.arrow_forward_ios,
-          size: 14.sp,
+        trailing: Image.asset(
+          ImgPath.downArrow,
+          height: 18.w,
           color: AppColors.primary,
         ),
         onTap: onTap,

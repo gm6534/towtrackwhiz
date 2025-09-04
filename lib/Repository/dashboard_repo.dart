@@ -8,6 +8,7 @@ import 'package:towtrackwhiz/Model/Vehicle/add_vehicle_req_model.dart';
 import 'package:towtrackwhiz/Model/Vehicle/add_vehicle_res_model.dart';
 import 'package:towtrackwhiz/Model/Vehicle/vehicle_list_res_model.dart';
 import 'package:towtrackwhiz/Model/analytics_res_model.dart';
+import 'package:towtrackwhiz/Model/earning_res_model.dart';
 
 import '../Core/Utils/log_util.dart';
 import '../Model/Alerts/community_alert_res_model.dart';
@@ -26,6 +27,24 @@ class DashboardRepo extends ApiClient {
       return analyticsResModel;
     } catch (e) {
       Log.e("getAnalytics: DashboardRepo- ", e.toString());
+
+      rethrow;
+    }
+  }
+
+  Future<EarningResModel?> getEarningApi() async {
+    try {
+      var response = await get("payment");
+
+      EarningResModel? resModel;
+      if (response.data != null) {
+        resModel = EarningResModel.fromJson(response.data);
+      } else {
+        throw http.ClientException(response.message!);
+      }
+      return resModel;
+    } catch (e) {
+      Log.e("getEarningApi: DashboardRepo- ", e.toString());
 
       rethrow;
     }

@@ -1,12 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:towtrackwhiz/Controller/Auth/auth_controller.dart';
+import 'package:towtrackwhiz/Controller/Dashboard/home_controller.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/toasts.dart';
 import 'package:towtrackwhiz/Model/Alerts/community_alert_res_model.dart';
 import 'package:towtrackwhiz/Model/Alerts/submit_vote_res_model.dart';
 import 'package:towtrackwhiz/Repository/dashboard_repo.dart';
 
-import '../../Core/Common/helper.dart';
 import '../../Core/Utils/log_util.dart';
 
 class CommunityAlertController extends GetxController {
@@ -17,27 +18,25 @@ class CommunityAlertController extends GetxController {
   var communityAlertsModel = CommunityAlertsModel().obs;
   RxBool isCommunityAlertLoading = false.obs;
   var submitVoteModel = SubmitVoteResModel().obs;
+  HomeController? homeController;
 
   @override
   void onInit() {
     dashboardRepo = DashboardRepo();
     authController = Get.find<AuthController>();
-    getCommunityAlertList();
+    homeController = Get.find<HomeController>();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      getCommunityAlertScreenList();
+    });
     super.onInit();
   }
 
-  Future<void> getCommunityAlertList() async {
+  Future<void> getCommunityAlertScreenList() async {
     try {
       isCommunityAlertLoading.value = true;
       communityAlertsList.value = [];
-      final pos = await Helper.getCurrentLocation();
-      final result = await dashboardRepo?.getCommunityAlertList(
-        latitude: pos?.latitude,
-        longitude: pos?.longitude,
-      );
-      if (result != null) {
-        communityAlertsList.value = result.alerts ?? [];
-      }
+      await homeController?.refreshZones();
+      communityAlertsList.value = homeController?.allAlertsList ?? [];
     } catch (e) {
       Log.d("getCommunityAlertList - CommunityAlertController", e.toString());
     } finally {
@@ -64,15 +63,17 @@ class CommunityAlertController extends GetxController {
 
             // push my vote locally
             communityAlertsList[index].upvotes ??= [];
-            communityAlertsList[index].upvotes!
-                .add(VoteModel(userId: myUserId, alertId: id.toString()));
+            communityAlertsList[index].upvotes!.add(
+              VoteModel(userId: myUserId, alertId: id.toString()),
+            );
           } else if (type == "downvote") {
             communityAlertsList[index].upVoteCount = result.upvotes ?? 0;
             communityAlertsList[index].downVoteCount = result.downvotes ?? 0;
 
             communityAlertsList[index].downvotes ??= [];
-            communityAlertsList[index].downvotes!
-                .add(VoteModel(userId: myUserId, alertId: id.toString()));
+            communityAlertsList[index].downvotes!.add(
+              VoteModel(userId: myUserId, alertId: id.toString()),
+            );
           }
 
           communityAlertsList.refresh(); // 🔑 forces UI update
@@ -97,8 +98,7 @@ class CommunityAlertController extends GetxController {
     }
   }
 
-
-// Future<void> submitAlertVote({String? type, int? id}) async {
+  // Future<void> submitAlertVote({String? type, int? id}) async {
   //   try {
   //     ToastAndDialog.progressIndicator();
   //     final result = await dashboardRepo?.submitVote(

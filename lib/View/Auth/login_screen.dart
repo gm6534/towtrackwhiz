@@ -84,7 +84,7 @@ class LoginScreen extends GetView<LoginController> {
                         Get.to(
                           () => AppWebView(
                             fileUrl:
-                                "https://towtrackwhiz.dynamicdev.tech/forgot-password",
+                                "https://towtrack.devdioxide.com/forgot-password",
                             barTitle: AppHeadings.forgetPassTitle,
                           ),
                         );

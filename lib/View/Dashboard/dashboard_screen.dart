@@ -39,7 +39,11 @@ class DashboardScreen extends GetView<DashboardController> {
           body:
               controller.isDashboardLoading.value
                   ? Center(child: CircularProgressIndicator())
-                  : controller.pages[controller.currentIndex.value],
+                  : IndexedStack(
+                    index: controller.currentIndex.value,
+                    children: controller.pages,
+                  ),
+          // : controller.pages[controller.currentIndex.value],
           floatingActionButton:
               controller.isDashboardLoading.value
                   ? null

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:towtrackwhiz/Core/Common/Widgets/common_cache_image.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/enlarge_image_view.dart';
 import 'package:towtrackwhiz/Core/Common/helper.dart';
 import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
@@ -170,7 +171,11 @@ class AlertCardWidget extends StatelessWidget {
                   onTap: () {
                     Get.to(() => EnlargeImageView(path: imgUrl));
                   },
-                  child: Image.network(imgUrl, height: 70.w, width: 70.w),
+                  child: CommonCacheImage(
+                    imgUrl: imgUrl,
+                    height: 70.w,
+                    width: 70.w,
+                  ),
                 ),
               // else
               //   Image.asset(ImgPath.tow1Png, height: 70.w, width: 70.w),

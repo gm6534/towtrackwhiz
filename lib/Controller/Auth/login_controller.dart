@@ -53,19 +53,67 @@ class LoginController extends GetxController {
   //   Get.offAllNamed(AppRoute.dashboard);
   // }
 
+  // Future<void> login() async {
+  //   if (loginFormKey.currentState!.validate()) {
+  //     final authController = Get.find<AuthController>();
+  //
+  //     final email = emailController.text.toString();
+  //     final password = passwordController.text.toString();
+  //     // _deviceToken = "eSkWfILmQX-MjLx3boWeCE:APA91bEi4mst6ffUoDl6PPkh1qDrZK0ilFH4j2cISOoBYEvCABujuzfc-aajYX7-UCCTNuRC3zJrD8T1zqiH1teB9O9nvVrei_LVtILnvUY-3sm4uV0e-rQ";
+  //     // ✅ Ensure iOS has an APNs token before requesting FCM token
+  //     String? apnsToken = await firebaseMessaging.getAPNSToken();
+  //     if (apnsToken == null && GetPlatform.isIOS) {
+  //       // Wait for APNs to be registered
+  //       await Future.delayed(const Duration(seconds: 2));
+  //       apnsToken = await firebaseMessaging.getAPNSToken();
+  //     }
+  //     _deviceToken = await firebaseMessaging.getToken();
+  //     final loginResponse = await authController.login(
+  //       userName: email,
+  //       password: password,
+  //       deviceToken: _deviceToken ?? "",
+  //     );
+  //     if (loginResponse != null) {
+  //       if (isRememberMe.value) {
+  //         // await _storage!.write(GetStorageKeys.credentials,
+  //         //     email + AppInfo.splitSeparator + password);
+  //       } else {
+  //         await _storage!.write(GetStorageKeys.credentials, null);
+  //       }
+  //       await _storage!.write(GetStorageKeys.authInfo, loginResponse.toJson());
+  //     }
+  //   }
+  // }
+
   Future<void> login() async {
     if (loginFormKey.currentState!.validate()) {
       final authController = Get.find<AuthController>();
 
-      final email = emailController.text.toString();
-      final password = passwordController.text.toString();
-      // _deviceToken = "eSkWfILmQX-MjLx3boWeCE:APA91bEi4mst6ffUoDl6PPkh1qDrZK0ilFH4j2cISOoBYEvCABujuzfc-aajYX7-UCCTNuRC3zJrD8T1zqiH1teB9O9nvVrei_LVtILnvUY-3sm4uV0e-rQ";
-      _deviceToken = await firebaseMessaging.getToken();
+      final email = emailController.text.trim();
+      final password = passwordController.text.trim();
+
+      try {
+        if (GetPlatform.isIOS) {
+          final apnsToken = await firebaseMessaging.getAPNSToken();
+          if (apnsToken != null) {
+            // only safe to call getToken() after APNS exists
+            await Future.delayed(const Duration(seconds: 2));
+            _deviceToken = await firebaseMessaging.getToken();
+          }
+        } else {
+          // Android is safe
+          _deviceToken = await firebaseMessaging.getToken();
+        }
+      } catch (e) {
+        debugPrint("⚠️ Skipping device token: $e");
+      }
+
       final loginResponse = await authController.login(
         userName: email,
         password: password,
-        deviceToken: _deviceToken ?? "",
+        deviceToken: _deviceToken ?? "", // fallback if no token
       );
+
       if (loginResponse != null) {
         if (isRememberMe.value) {
           // await _storage!.write(GetStorageKeys.credentials,

@@ -1,3 +1,5 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 class CommunityAlertResModel {
   bool? success;
   List<CommunityAlertsModel>? alerts;
@@ -147,6 +149,11 @@ class CommunityAlertsModel {
 
   bool isDownVoted(String myUserId) {
     return downvotes?.any((v) => v.userId == myUserId) ?? false;
+  }
+
+  LatLng? get latLng {
+    if (latitude == null || longitude == null) return null;
+    return LatLng(double.parse(latitude!), double.parse(longitude!));
   }
 }
 

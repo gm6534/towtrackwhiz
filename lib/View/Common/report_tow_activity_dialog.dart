@@ -103,64 +103,64 @@ class ReportTowActivityDialog extends GetView<HomeController> {
                   ],
                 );
               }),
-              Obx(() {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 10.w,
-                  children: [
-                    Text("Vehicle", style: Get.textTheme.titleLarge),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 12.w),
-                      decoration: BoxDecoration(
-                        color: AppColors.scaffoldBgColor,
-                        borderRadius: BorderRadius.circular(8.r),
-                        border:
-                            controller.isVehicleSelected.value
-                                ? null
-                                : Border.all(
-                                  width: 1.5,
-                                  color: AppColors.redColor,
-                                ),
-                      ),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<VehiclesListModel>(
-                          dropdownColor: AppColors.white,
-                          hint: Text(
-                            Strings.selectType,
-                            style: Get.textTheme.bodySmall,
-                          ),
-                          isExpanded: true,
-                          value: controller.selectedVehicle.value,
-                          icon: Transform.rotate(
-                            angle: -math.pi / 2,
-                            child: Icon(
-                              Icons.arrow_back_ios,
-                              color: AppColors.primary,
-                              size: 18.w,
-                            ),
-                          ),
-                          items:
-                              controller.vehiclesList.map((vehicle) {
-                                return DropdownMenuItem<VehiclesListModel>(
-                                  value: vehicle,
-                                  child: Text(
-                                    vehicle.licensePlate ?? "Unknown",
-                                  ),
-                                );
-                              }).toList(),
-                          onChanged: (value) {
-                            if (value != null) {
-                              controller.selectedVehicle.value = value;
-                            }
-                            controller.isVehicleSelected.value = true;
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              }),
+              // Obx(() {
+              //   return Column(
+              //     mainAxisSize: MainAxisSize.min,
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     spacing: 10.w,
+              //     children: [
+              //       Text("Vehicle", style: Get.textTheme.titleLarge),
+              //       Container(
+              //         padding: EdgeInsets.symmetric(horizontal: 12.w),
+              //         decoration: BoxDecoration(
+              //           color: AppColors.scaffoldBgColor,
+              //           borderRadius: BorderRadius.circular(8.r),
+              //           border:
+              //               controller.isVehicleSelected.value
+              //                   ? null
+              //                   : Border.all(
+              //                     width: 1.5,
+              //                     color: AppColors.redColor,
+              //                   ),
+              //         ),
+              //         child: DropdownButtonHideUnderline(
+              //           child: DropdownButton<VehiclesListModel>(
+              //             dropdownColor: AppColors.white,
+              //             hint: Text(
+              //               Strings.selectType,
+              //               style: Get.textTheme.bodySmall,
+              //             ),
+              //             isExpanded: true,
+              //             value: controller.selectedVehicle.value,
+              //             icon: Transform.rotate(
+              //               angle: -math.pi / 2,
+              //               child: Icon(
+              //                 Icons.arrow_back_ios,
+              //                 color: AppColors.primary,
+              //                 size: 18.w,
+              //               ),
+              //             ),
+              //             items:
+              //                 controller.vehiclesList.map((vehicle) {
+              //                   return DropdownMenuItem<VehiclesListModel>(
+              //                     value: vehicle,
+              //                     child: Text(
+              //                       vehicle.licensePlate ?? "Unknown",
+              //                     ),
+              //                   );
+              //                 }).toList(),
+              //             onChanged: (value) {
+              //               if (value != null) {
+              //                 controller.selectedVehicle.value = value;
+              //               }
+              //               controller.isVehicleSelected.value = true;
+              //             },
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   );
+              // }),
               Obx(() {
                 return Column(
                   mainAxisSize: MainAxisSize.min,

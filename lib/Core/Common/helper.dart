@@ -125,36 +125,37 @@ class Helper {
       return null;
     }
   }
+
   //
-  // static Future<Stream<Position>?> getCurrentLocationStream() async {
-  //   try {
-  //     PermissionStatus permissionStatus = await requestPermission(
-  //       Permission.location,
-  //       message: ToastMessages.allowLocationAccess,
-  //     );
-  //
-  //     if (permissionStatus != PermissionStatus.granted) {
-  //       return null;
-  //     }
-  //     LocationSettings? locationSettings;
-  //     if (GetPlatform.isAndroid) {
-  //       locationSettings = AndroidSettings(accuracy: LocationAccuracy.high);
-  //     } else if (GetPlatform.isIOS) {
-  //       locationSettings = AppleSettings(accuracy: LocationAccuracy.high);
-  //     } else {
-  //       locationSettings = const LocationSettings(
-  //         accuracy: LocationAccuracy.high,
-  //       );
-  //     }
-  //     Stream<Position> positionStream = Geolocator.getPositionStream(
-  //       locationSettings: locationSettings,
-  //     );
-  //     return positionStream;
-  //   } catch (e) {
-  //     Log.e("Error on Current Location Stream - Helper", e.toString());
-  //     return null;
-  //   }
-  // }
+  static Future<Stream<Position>?> getCurrentLocationStream() async {
+    try {
+      PermissionStatus permissionStatus = await requestPermission(
+        Permission.location,
+        message: ToastMsg.allowLocationAccess,
+      );
+
+      if (permissionStatus != PermissionStatus.granted) {
+        return null;
+      }
+      LocationSettings? locationSettings;
+      if (GetPlatform.isAndroid) {
+        locationSettings = AndroidSettings(accuracy: LocationAccuracy.high);
+      } else if (GetPlatform.isIOS) {
+        locationSettings = AppleSettings(accuracy: LocationAccuracy.high);
+      } else {
+        locationSettings = const LocationSettings(
+          accuracy: LocationAccuracy.high,
+        );
+      }
+      Stream<Position> positionStream = Geolocator.getPositionStream(
+        locationSettings: locationSettings,
+      );
+      return positionStream;
+    } catch (e) {
+      Log.e("Error on Current Location Stream - Helper", e.toString());
+      return null;
+    }
+  }
 
   static Future<String?> getIPAddress() async {
     try {

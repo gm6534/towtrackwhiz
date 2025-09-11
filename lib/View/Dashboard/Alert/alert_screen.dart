@@ -24,7 +24,7 @@ class AlertScreen extends GetView<CommunityAlertController> {
           child: RefreshIndicator(
             backgroundColor: AppColors.white,
             color: AppColors.primary,
-            onRefresh: () => controller.getCommunityAlertList(),
+            onRefresh: () => controller.getCommunityAlertScreenList(),
             child: Obx(() {
               if (controller.isCommunityAlertLoading.value) {
                 return Center(child: CircularProgressIndicator());

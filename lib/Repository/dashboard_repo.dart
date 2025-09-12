@@ -4,14 +4,19 @@ import 'package:towtrackwhiz/Model/Alerts/my_alerts_res_model.dart';
 import 'package:towtrackwhiz/Model/Alerts/report_tow_req_model.dart';
 import 'package:towtrackwhiz/Model/Alerts/report_tow_res_model.dart';
 import 'package:towtrackwhiz/Model/Alerts/submit_vote_res_model.dart';
+import 'package:towtrackwhiz/Model/Profile/pay_method_list_res_model.dart';
+import 'package:towtrackwhiz/Model/Profile/payout_history_res_model.dart';
+import 'package:towtrackwhiz/Model/Profile/submit_payout_res_model.dart';
 import 'package:towtrackwhiz/Model/Vehicle/add_vehicle_req_model.dart';
 import 'package:towtrackwhiz/Model/Vehicle/add_vehicle_res_model.dart';
 import 'package:towtrackwhiz/Model/Vehicle/vehicle_list_res_model.dart';
 import 'package:towtrackwhiz/Model/analytics_res_model.dart';
 import 'package:towtrackwhiz/Model/earning_res_model.dart';
+import 'package:towtrackwhiz/Model/lookup_res_model.dart';
 
 import '../Core/Utils/log_util.dart';
 import '../Model/Alerts/community_alert_res_model.dart';
+import '../Model/Profile/submit_payout_request_model.dart';
 
 class DashboardRepo extends ApiClient {
   Future<AnalyticsResModel?> getAnalytics() async {
@@ -207,6 +212,100 @@ class DashboardRepo extends ApiClient {
       return resModel;
     } catch (e) {
       Log.e("reportTowApi: AuthRepo- ", e.toString());
+
+      rethrow;
+    }
+  }
+
+  Future<List<LookupResModel>?> getLookups() async {
+    try {
+      var response = await get("lookups");
+
+      List<LookupResModel>? resModel;
+      if (response.data != null) {
+        resModel =
+            (response.data as List)
+                .map(
+                  (item) =>
+                      LookupResModel.fromJson(item as Map<String, dynamic>),
+                )
+                .toList();
+      } else {
+        throw http.ClientException(response.message!);
+      }
+      return resModel;
+    } catch (e) {
+      Log.e("getLookups: DashboardRepo- ", e.toString());
+
+      rethrow;
+    }
+  }
+
+  Future<List<PayMethodListResModel>?> getPayMethodApi() async {
+    try {
+      var response = await get("methods");
+
+      List<PayMethodListResModel>? resModel;
+      if (response.data != null) {
+        resModel =
+            (response.data as List)
+                .map(
+                  (item) => PayMethodListResModel.fromJson(
+                    item as Map<String, dynamic>,
+                  ),
+                )
+                .toList();
+      } else {
+        throw http.ClientException(response.message!);
+      }
+      return resModel;
+    } catch (e) {
+      Log.e("getPayMethodApi: DashboardRepo- ", e.toString());
+
+      rethrow;
+    }
+  }
+
+  Future<List<PayoutHistoryResModel>?> getPayoutHistoryApi() async {
+    try {
+      var response = await get("payouts/list");
+
+      List<PayoutHistoryResModel>? resModel;
+      if (response.data != null) {
+        resModel =
+            (response.data as List)
+                .map(
+                  (item) => PayoutHistoryResModel.fromJson(
+                    item as Map<String, dynamic>,
+                  ),
+                )
+                .toList();
+      } else {
+        throw http.ClientException(response.message!);
+      }
+      return resModel;
+    } catch (e) {
+      Log.e("getPayMethodApi: DashboardRepo- ", e.toString());
+
+      rethrow;
+    }
+  }
+
+  Future<SubmitPayoutResModel?> submitPayoutRequest({
+    required SubmitPayoutReqModel model,
+  }) async {
+    try {
+      var response = await post("payouts/submit", body: model);
+
+      SubmitPayoutResModel? resModel;
+      if (response.data != null) {
+        resModel = SubmitPayoutResModel.fromJson(response.data);
+      } else {
+        throw http.ClientException(response.message!);
+      }
+      return resModel;
+    } catch (e) {
+      Log.e("submitPayoutRequest: DashboardRepo- ", e.toString());
 
       rethrow;
     }

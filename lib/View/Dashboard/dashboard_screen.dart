@@ -39,17 +39,16 @@ class DashboardScreen extends GetView<DashboardController> {
           body:
               controller.isDashboardLoading.value
                   ? Center(child: CircularProgressIndicator())
-                  : IndexedStack(
-                    index: controller.currentIndex.value,
-                    children: controller.pages,
-                  ),
-          // : controller.pages[controller.currentIndex.value],
+                  // : IndexedStack(
+                  //   index: controller.currentIndex.value,
+                  //   children: controller.pages,
+                  // ),
+                  : controller.pages[controller.currentIndex.value],
           floatingActionButton:
               controller.isDashboardLoading.value
                   ? null
-                  : ((controller.currentIndex.value == 3)
-                      ? null
-                      : FloatingActionButton.extended(
+                  : ((controller.currentIndex.value == 0)
+                      ? FloatingActionButton.extended(
                         backgroundColor: AppColors.primary,
                         icon: Image.asset(
                           ImgPath.announcementIcon,
@@ -63,7 +62,8 @@ class DashboardScreen extends GetView<DashboardController> {
                           ),
                         ),
                         onPressed: controller.showReportTowActivityDialog,
-                      )),
+                      )
+                      : null),
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           bottomNavigationBar:
               controller.isDashboardLoading.value

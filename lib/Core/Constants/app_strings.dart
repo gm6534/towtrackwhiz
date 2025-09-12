@@ -48,6 +48,7 @@ class ImgPath {
   static const String mapImg = "${png}mapImg.png";
   static const String downArrow = "${png}down-arrow.png";
   static const String truckIcon = "${png}truck.png";
+  static const String circleTick = "${png}circle_tick.png";
 
   /////////////////<<<<<-- SVG IMAGES -->>>>///////////////////////
   static const String appLogoSvg = "${svg}towTrackLogo.svg";
@@ -146,6 +147,7 @@ class Strings {
   static const String availabilityOfNotification =
       "Availability of notification";
   static const String memberSince = "Member Since";
+  static const String chooseYourCity = "Choose Your City";
 }
 
 class ActionText {
@@ -245,7 +247,9 @@ String filterLabel(TaskFilter filter) {
   }
 }
 
-enum TowEvent { tow_truck_seen, car_being_towed, signage_posted }
+enum TowEvent { tow_truck_seen, car_being_towed
+  // , signage_posted
+}
 
 extension TowEventExtension on TowEvent {
   String get label {
@@ -254,8 +258,8 @@ extension TowEventExtension on TowEvent {
         return 'Tow truck seen';
       case TowEvent.car_being_towed:
         return 'Car being towed';
-      case TowEvent.signage_posted:
-        return 'Tow signage posted';
+      // case TowEvent.signage_posted:
+      //   return 'Tow signage posted';
     }
   }
 
@@ -265,8 +269,8 @@ extension TowEventExtension on TowEvent {
         return TowEvent.tow_truck_seen;
       case 'car_being_towed':
         return TowEvent.car_being_towed;
-      case 'signage_posted':
-        return TowEvent.signage_posted;
+      // case 'signage_posted':
+      //   return TowEvent.signage_posted;
       default:
         return null;
     }

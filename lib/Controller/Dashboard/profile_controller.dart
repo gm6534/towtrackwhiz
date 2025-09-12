@@ -13,6 +13,7 @@ import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
 import 'package:towtrackwhiz/Core/Utils/log_util.dart';
 import 'package:towtrackwhiz/Model/Alerts/my_alerts_res_model.dart';
 import 'package:towtrackwhiz/Model/Auth/auth_response_model.dart';
+import 'package:towtrackwhiz/Model/Profile/pay_method_list_res_model.dart';
 import 'package:towtrackwhiz/Model/Vehicle/add_vehicle_req_model.dart';
 import 'package:towtrackwhiz/Model/analytics_res_model.dart';
 import 'package:towtrackwhiz/Repository/auth_repo.dart';
@@ -21,10 +22,12 @@ import 'package:towtrackwhiz/Repository/dashboard_repo.dart';
 import '../../Core/Common/helper.dart';
 import '../../Core/Constants/app_strings.dart';
 import '../../Model/Auth/login_req_model.dart';
+import '../../Model/Profile/submit_payout_request_model.dart';
 import '../../Model/Vehicle/vehicle_list_model.dart';
 import '../../Model/earning_res_model.dart';
 
 class ProfileController extends GetxController {
+  final payoutFormKey = GlobalKey<FormState>();
   var isNotificationEnabled = true.obs;
   final GlobalKey<FormState> addVehicleFormKey = GlobalKey<FormState>();
   final TextEditingController licPlateController = TextEditingController();
@@ -37,11 +40,19 @@ class ProfileController extends GetxController {
   TextEditingController passwordC = TextEditingController();
   TextEditingController confirmPasswordC = TextEditingController();
 
+  Rx<PayMethodListResModel?> selectedPayoutMethod = Rx<PayMethodListResModel?>(
+    null,
+  );
+  final PayMethodListResModel defaultPayMethod = PayMethodListResModel(
+    name: "Select Payment Method",
+  );
+
   RxBool isProfileLoading = false.obs;
   RxBool isPayoutLoading = false.obs;
   RxBool isVehicleLoading = true.obs;
   RxBool isAlertRequireLoading = true.obs;
   RxList<AlertsModel> myAlertsList = <AlertsModel>[].obs;
+  RxList<PayMethodListResModel> payMethodList = <PayMethodListResModel>[].obs;
   late UserModel originalUser;
   var currentUser = UserModel().obs;
   RxBool isChanged = false.obs;
@@ -52,11 +63,25 @@ class ProfileController extends GetxController {
   var earningResModel = EarningResModel().obs;
   AuthController? authController;
 
+  // form controllers
+  final amountController = TextEditingController();
+  final notesController = TextEditingController();
+  final paypalEmailController = TextEditingController();
+  final payoneerEmailController = TextEditingController();
+  final payoneerCustomerIdController = TextEditingController();
+  final accountHolderController = TextEditingController();
+  final bankNameController = TextEditingController();
+  final accountNumberController = TextEditingController();
+  final routingNumberController = TextEditingController();
+  final accountTypeController = TextEditingController();
+  final payoutHandleController = TextEditingController();
+
   @override
   void onInit() {
     dashboardRepo = DashboardRepo();
     authRepo = AuthRepo();
     authController = Get.find<AuthController>();
+    selectedPayoutMethod.value = defaultPayMethod;
     firstApiCall();
     super.onInit();
   }
@@ -565,6 +590,12 @@ class ProfileController extends GetxController {
       final result = await dashboardRepo?.getEarningApi();
       if (result != null) {
         earningResModel.value = result;
+        final totalEarning = double.parse(
+          earningResModel.value.totalEarning ?? "0",
+        );
+        if (totalEarning >= 10) {
+          await getPayMethodList();
+        }
       }
     } catch (e) {
       if (e is ClientException) {
@@ -576,5 +607,91 @@ class ProfileController extends GetxController {
     } finally {
       isPayoutLoading.value = false;
     }
+  }
+
+  String get methodCode => selectedPayoutMethod.value?.code ?? "";
+
+  Future<void> getPayMethodList() async {
+    try {
+      // ToastAndDialog.progressIndicator();
+      payMethodList.clear();
+      final result = await dashboardRepo?.getPayMethodApi();
+      if (result != null) {
+        payMethodList.assignAll([defaultPayMethod, ...result]);
+      }
+      // if (Get.isDialogOpen ?? false) {
+      //   Get.back();
+      // }
+    } catch (e) {
+      // if (Get.isDialogOpen ?? false) {
+      //   Get.back();
+      // }
+      if (e is ClientException) {
+        ToastAndDialog.showCustomSnackBar(e.message);
+      } else {
+        ToastAndDialog.showCustomSnackBar(e.toString());
+      }
+      Log.d("getPayMethodList - ProfileController", e.toString());
+    }
+  }
+
+  Future<void> submitPayoutRequest() async {
+    try {
+      if (!payoutFormKey.currentState!.validate()) return;
+      if (methodCode == "") {
+        ToastAndDialog.showCustomSnackBar("Please select a payout method");
+        return;
+      }
+      bool isYes = await ToastAndDialog.confirmation(
+        message: "Are you sure? You want to make a payout request?",
+      );
+      if (!isYes) return;
+      ToastAndDialog.progressIndicator();
+      SubmitPayoutReqModel model = SubmitPayoutReqModel();
+      model.payoutMethodId = selectedPayoutMethod.value?.id;
+      model.amount = double.parse(amountController.text);
+      // model.notes = notesController.text;
+      model.paypalEmail = paypalEmailController.text;
+      model.payoneerEmail = payoneerEmailController.text;
+      model.payoneerCustomerId = payoneerCustomerIdController.text;
+      model.accountHolder = accountHolderController.text;
+      model.bankName = bankNameController.text;
+      model.accountNumber = accountNumberController.text;
+      model.routingNumber = routingNumberController.text;
+      model.accountType = accountTypeController.text;
+      model.payoutHandle = payoutHandleController.text;
+      final result = await dashboardRepo?.submitPayoutRequest(model: model);
+      if (result != null) {
+        if (Get.isDialogOpen ?? false) {
+          Get.close(2);
+        }
+        ToastAndDialog.showCustomSnackBar(result.message!);
+      } else {
+        if (Get.isDialogOpen ?? false) {
+          Get.back();
+        }
+      }
+    } catch (e) {
+      if (Get.isDialogOpen ?? false) {
+        Get.back();
+      }
+      if (e is ClientException) {
+        ToastAndDialog.showCustomSnackBar(e.message);
+      }
+    }
+  }
+
+  void clearPayoutForm() {
+    amountController.clear();
+    notesController.clear();
+    paypalEmailController.clear();
+    payoneerEmailController.clear();
+    payoneerCustomerIdController.clear();
+    accountHolderController.clear();
+    bankNameController.clear();
+    accountNumberController.clear();
+    routingNumberController.clear();
+    accountTypeController.clear();
+    payoutHandleController.clear();
   }
 }

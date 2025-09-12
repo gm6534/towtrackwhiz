@@ -119,17 +119,22 @@
 //   }
 // }
 
-import 'dart:math';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:towtrackwhiz/Core/Common/Widgets/app_button.dart';
 import 'package:towtrackwhiz/Core/Common/helper.dart';
 import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
+import 'package:towtrackwhiz/Model/Profile/pay_method_list_res_model.dart';
 import 'package:towtrackwhiz/Model/earning_res_model.dart';
 
 import '../../Controller/Dashboard/profile_controller.dart';
+import '../../Core/Common/Widgets/app_heading_text_field.dart';
 import '../../Core/Common/Widgets/base_scaffold.dart';
+import '../../Core/Common/validation_helper.dart';
 import '../../core/Utils/app_colors.dart';
 
 class PayoutScreen extends GetView<ProfileController> {
@@ -288,53 +293,12 @@ class PayoutScreen extends GetView<ProfileController> {
               ),
 
               if (amount >= maxPayout) ...[
+                buildPayoutForm(),
                 20.verticalSpace,
-                ListTile(
-                  tileColor: AppColors.white,
-                  minLeadingWidth: 0,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 5.w),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.r),
-                  ),
-                  title: Text(
-                    "Select Payment Method",
-                    style: context.textTheme.titleLarge,
-                  ),
-                  trailing: Transform.rotate(
-                    angle: 90 * pi / 180,
-                    child: Image.asset(ImgPath.downArrow, height: 20.w),
-                  ),
-                ),
-                10.verticalSpace,
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 10.w,
-                    vertical: 5.w,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(10.r),
-                  ),
-                  child: Column(
-                    spacing: 10.w,
-                    children: [
-                      _buildPaymentOption(
-                        icon: Icons.account_balance_wallet,
-                        title: 'Venmo',
-                        color: AppColors.black,
-                      ),
-                      _buildPaymentOption(
-                        icon: Icons.payment,
-                        title: 'PayPal',
-                        color: AppColors.black,
-                      ),
-                      _buildPaymentOption(
-                        icon: Icons.mobile_friendly,
-                        title: 'Cash App',
-                        color: AppColors.black,
-                      ),
-                    ],
-                  ),
+
+                AppButton(
+                  onPressed: controller.submitPayoutRequest,
+                  title: "Make Payout Request",
                 ),
               ],
             ],
@@ -357,21 +321,217 @@ class PayoutScreen extends GetView<ProfileController> {
     );
   }
 
-  Widget _buildPaymentOption({
-    required IconData icon,
-    required String title,
-    required Color color,
-  }) {
-    return Row(
-      spacing: 10.w,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          padding: EdgeInsets.all(4.w),
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-        ),
-        Flexible(child: Text(title, style: Get.textTheme.titleMedium)),
-      ],
+  Widget buildPayoutForm() {
+    return Form(
+      key: controller.payoutFormKey,
+      child: Column(
+        children: [
+          20.verticalSpace,
+          DropdownButtonFormField<PayMethodListResModel>(
+            dropdownColor: AppColors.white,
+            value: controller.selectedPayoutMethod.value,
+            items:
+                controller.payMethodList.map((pay) {
+                  return DropdownMenuItem(
+                    value: pay,
+                    child: Text("${pay.name}", style: Get.textTheme.titleSmall),
+                  );
+                }).toList(),
+            onChanged: (value) {
+              if (value != controller.selectedPayoutMethod.value) {
+                controller.clearPayoutForm();
+              }
+              controller.selectedPayoutMethod.value = value;
+            },
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.all(12.w),
+              filled: true,
+              fillColor: AppColors.white,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.greyColor),
+              ),
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.greyColor),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.greyColor),
+              ),
+            ),
+            icon: Transform.rotate(
+              angle: -math.pi / 2,
+              child: Icon(Icons.arrow_back_ios, color: Colors.cyan, size: 18.w),
+            ),
+            isExpanded: true,
+          ),
+          16.verticalSpace,
+          if (controller.methodCode != "") ...[
+            /// Amount
+            // AppHeadingTextField(
+            //   heading: "Amount",
+            //   controller: controller.amountController,
+            //   hintText: "Enter amount",
+            //   textInputType: TextInputType.number,
+            //   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            //   validator:
+            //       (value) => ValidationHelper.validateNonEmpty(value, "Amount"),
+            // ),
+            AppHeadingTextField(
+              heading: "Amount",
+              controller: controller.amountController,
+              hintText: "Enter amount",
+              textInputType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+              ],
+              validator: (value) {
+                // 1. Required check
+                final requiredError = ValidationHelper.validateNonEmpty(
+                  value,
+                  "Amount",
+                );
+                if (requiredError != null) return requiredError;
+
+                // 2. Numeric + Balance check
+                final entered = double.tryParse(value ?? "0") ?? 0;
+                final available = double.parse(
+                  controller.earningResModel.value.data!.amount.toString(),
+                );
+
+                if (entered < 1) {
+                  return "Minimum amount is 1";
+                } else if (entered > available) {
+                  return "Amount exceeds available balance ($available)";
+                }
+
+                return null;
+              },
+            ),
+
+            // 16.verticalSpace,
+            //
+            // /// Notes
+            // AppHeadingTextField(
+            //   heading: "Notes",
+            //   controller: controller.notesController,
+            //   hintText: "Optional notes",
+            // ),
+            16.verticalSpace,
+          ],
+
+          /// Dynamic fields
+          Obx(() {
+            switch (controller.methodCode) {
+              case "paypal":
+                return AppHeadingTextField(
+                  heading: "PayPal Email",
+                  controller: controller.paypalEmailController,
+                  textInputType: TextInputType.emailAddress,
+                  hintText: "Enter PayPal email",
+                  validator: (v) => ValidationHelper.validateEmail(v),
+                );
+
+              case "payoneer":
+                return Column(
+                  children: [
+                    AppHeadingTextField(
+                      heading: "Payoneer Email",
+                      controller: controller.payoneerEmailController,
+                      hintText: "Enter Payoneer email",
+                      textInputType: TextInputType.emailAddress,
+                      validator: (v) => ValidationHelper.validateEmail(v),
+                    ),
+                    12.verticalSpace,
+                    AppHeadingTextField(
+                      heading: "Payoneer Customer ID",
+                      controller: controller.payoneerCustomerIdController,
+                      hintText: "Optional",
+                    ),
+                  ],
+                );
+
+              case "bank":
+                return Column(
+                  children: [
+                    AppHeadingTextField(
+                      heading: "Account Holder",
+                      controller: controller.accountHolderController,
+                      hintText: "Enter account holder name",
+                      textInputType: TextInputType.name,
+                      validator:
+                          (value) => ValidationHelper.validateNonEmpty(
+                            value,
+                            "Account Holder",
+                          ),
+                    ),
+                    12.verticalSpace,
+                    AppHeadingTextField(
+                      heading: "Bank Name",
+                      controller: controller.bankNameController,
+                      hintText: "Enter bank name",
+                      textInputType: TextInputType.name,
+                      validator:
+                          (value) => ValidationHelper.validateNonEmpty(
+                            value,
+                            "Bank Name",
+                          ),
+                    ),
+                    12.verticalSpace,
+                    AppHeadingTextField(
+                      heading: "Account Number",
+                      controller: controller.accountNumberController,
+                      hintText: "Enter account number",
+                      textInputType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      validator:
+                          (value) => ValidationHelper.validateNonEmpty(
+                            value,
+                            "Account Number",
+                          ),
+                    ),
+                    12.verticalSpace,
+                    AppHeadingTextField(
+                      heading: "Routing Number",
+                      controller: controller.routingNumberController,
+                      hintText: "Enter routing number",
+                      validator:
+                          (value) => ValidationHelper.validateNonEmpty(
+                            value,
+                            "Routing Number",
+                          ),
+                    ),
+                    12.verticalSpace,
+                    AppHeadingTextField(
+                      heading: "Account Type",
+                      controller: controller.accountTypeController,
+                      hintText: "Checking / Savings",
+                      validator:
+                          (value) => ValidationHelper.validateNonEmpty(
+                            value,
+                            "Account Type",
+                          ),
+                    ),
+                  ],
+                );
+
+              case "zelle":
+              case "cashapp":
+                return AppHeadingTextField(
+                  heading: "Payout Handle",
+                  controller: controller.payoutHandleController,
+                  hintText: "Enter username/handle",
+                  validator:
+                      (value) => ValidationHelper.validateNonEmpty(
+                        value,
+                        "Payout Handle",
+                      ),
+                );
+
+              default:
+                return const SizedBox.shrink();
+            }
+          }),
+        ],
+      ),
     );
   }
 }

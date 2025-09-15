@@ -24,7 +24,7 @@ class ReportTowResModel {
 
 class Data {
   int? userId;
-  int? vehicleId;
+  String? vehicleId;
   String? date;
   String? location;
   String? latitude;
@@ -53,7 +53,7 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
-    vehicleId = int.parse(json['vehicle_id'].toString());
+    vehicleId = json['vehicle_id']?.toString();
     date = json['date'];
     location = json['location'];
     latitude = json['latitude'];

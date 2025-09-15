@@ -40,14 +40,7 @@ class SignUpScreen extends GetView<SignUpController> {
                   AppHeadingTextField(
                     heading: AppHeadings.name,
                     controller: controller.nameController,
-                    prefix: Container(
-                      margin: EdgeInsets.all(12.w),
-                      child: Image.asset(
-                        ImgPath.msgIcon,
-                        height: 10.w,
-                        width: 10.w,
-                      ),
-                    ),
+                    prefix: Icon(Icons.person, color: AppColors.primary),
                     hintText: Strings.enterNameHere,
                     validator:
                         (value) => ValidationHelper.validateName(value, "Name"),
@@ -127,6 +120,68 @@ class SignUpScreen extends GetView<SignUpController> {
                   AppButton(
                     onPressed: controller.signUp,
                     title: ActionText.singUp,
+                  ),
+                  Row(
+                    spacing: 16.w,
+                    children: [
+                      const Expanded(child: Divider(height: 0, thickness: 1)),
+                      Center(
+                        child: Text(
+                          Strings.orContinueWithText,
+                          style: context.textTheme.bodyMedium,
+                        ),
+                      ),
+                      const Expanded(child: Divider(height: 0, thickness: 1)),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    spacing: 5.w,
+                    children: [
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: controller.signInWithGoogle,
+                          child: Row(
+                            spacing: 10.w,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                Strings.continueWith,
+                                style: context.textTheme.titleMedium?.copyWith(
+                                  color: AppColors.primary,
+                                ),
+                              ),
+                              Image.asset(
+                                ImgPath.googleIcon,
+                                height: context.height * 0.03,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      if (GetPlatform.isIOS)
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: controller.signInWithApple,
+                            child: Row(
+                              spacing: 10.w,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  Strings.continueWith,
+                                  style: context.textTheme.titleMedium
+                                      ?.copyWith(color: AppColors.primary),
+                                ),
+                                Image.asset(
+                                  ImgPath.appleIcon,
+                                  height: context.height * 0.03,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

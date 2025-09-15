@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 import 'package:towtrackwhiz/Controller/Dashboard/profile_controller.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/app_button.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/base_scaffold.dart';
+import 'package:towtrackwhiz/Core/Common/Widgets/common_app_bar.dart';
 import 'package:towtrackwhiz/Core/Routes/app_route.dart';
 import 'package:towtrackwhiz/View/Profile/vehicle_detail_page.dart';
 
 import '../../Core/Common/Widgets/toasts.dart';
 import '../../Core/Constants/app_strings.dart';
-import '../../Core/Utils/app_colors.dart';
 import '../Common/vehicle_card.dart';
 
 class VehicleScreen extends GetView<ProfileController> {
@@ -18,12 +18,13 @@ class VehicleScreen extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return BaseScaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: AppColors.primary),
-        backgroundColor: AppColors.scaffoldBgColor,
-        surfaceTintColor: AppColors.scaffoldBgColor,
-        title: Image.asset(ImgPath.appLogo, width: context.width * 0.5),
-      ),
+      appBar: commonAppBar,
+      // appBar: AppBar(
+      //   iconTheme: IconThemeData(color: AppColors.primary),
+      //   backgroundColor: AppColors.scaffoldBgColor,
+      //   surfaceTintColor: AppColors.scaffoldBgColor,
+      //   title: Image.asset(ImgPath.appLogo, width: context.width * 0.5),
+      // ),
       body: Obx(() {
         if (controller.isVehicleLoading.value) {
           return Center(child: CircularProgressIndicator());
@@ -33,7 +34,10 @@ class VehicleScreen extends GetView<ProfileController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 10.w,
             children: [
-              Text(AppHeadings.registeredVehicles, style: Get.textTheme.headlineMedium),
+              Text(
+                AppHeadings.registeredVehicles,
+                style: Get.textTheme.headlineMedium,
+              ),
               10.verticalSpace,
               Expanded(
                 child: Center(
@@ -57,7 +61,10 @@ class VehicleScreen extends GetView<ProfileController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 10.w,
           children: [
-            Text(AppHeadings.registeredVehicles, style: Get.textTheme.headlineMedium),
+            Text(
+              AppHeadings.registeredVehicles,
+              style: Get.textTheme.headlineMedium,
+            ),
             10.verticalSpace,
             Expanded(
               child: ListView.separated(
@@ -72,8 +79,7 @@ class VehicleScreen extends GetView<ProfileController> {
                     onDelete: () async {
                       var response = await ToastAndDialog.confirmation(
                         title: ToastMsg.deleteVehicle,
-                        message:
-                            ToastMsg.areYouSureToDelVehicle,
+                        message: ToastMsg.areYouSureToDelVehicle,
                       );
                       if (response) {
                         controller.deleteVehicle(vId: vehicle.id!);

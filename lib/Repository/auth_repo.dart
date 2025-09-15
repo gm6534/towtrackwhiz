@@ -24,6 +24,24 @@ class AuthRepo extends ApiClient {
     }
   }
 
+  Future<AuthResponseModel?> socialLogin({SignupReqModel? model}) async {
+    try {
+      var response = await post("social/login", body: model?.toJson());
+
+      AuthResponseModel authResponseModel;
+      if (response.data != null) {
+        authResponseModel = AuthResponseModel.fromJson(response.data);
+      } else {
+        throw http.ClientException(response.message!);
+      }
+      return authResponseModel;
+    } catch (e) {
+      Log.e("socialLogin: AuthRepo- ", e.toString());
+
+      rethrow;
+    }
+  }
+
   Future<String?> toggleNotification({int toggleValue = 0}) async {
     try {
       var response = await post(

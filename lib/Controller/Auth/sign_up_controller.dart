@@ -1,9 +1,13 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/toasts.dart';
 
 import '../../Core/Constants/app_strings.dart';
+import '../../Core/Utils/log_util.dart';
 import 'auth_controller.dart';
 
 class SignUpController extends GetxController {
@@ -13,6 +17,8 @@ class SignUpController extends GetxController {
   var isConfirmVisible = false.obs;
   var isRememberMe = true.obs;
   GetStorage? _storage;
+  final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+  String? _deviceToken;
 
   final nameController = TextEditingController();
   final emailController = TextEditingController();
@@ -66,6 +72,100 @@ class SignUpController extends GetxController {
         }
         await _storage!.write(GetStorageKeys.authInfo, signUpResponse.toJson());
       }
+    }
+  }
+
+  Future<void> signInWithGoogle() async {
+    try {
+      try {
+        if (GetPlatform.isIOS) {
+          final apnsToken = await firebaseMessaging.getAPNSToken();
+          if (apnsToken != null) {
+            // only safe to call getToken() after APNS exists
+            await Future.delayed(const Duration(seconds: 2));
+            _deviceToken = await firebaseMessaging.getToken();
+          }
+        } else {
+          // Android is safe
+          _deviceToken = await firebaseMessaging.getToken();
+        }
+      } catch (e) {
+        debugPrint("⚠️ Skipping device token: $e");
+      }
+
+      final GoogleSignIn googleSignIn = GoogleSignIn(scopes: <String>['email']);
+      await googleSignIn.signOut();
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      // final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      if (googleUser != null) {
+        final authController = Get.find<AuthController>();
+        final email = googleUser.email;
+        final name = googleUser.displayName ?? "";
+        final loginResponse = await authController.socialLogin(
+          userName: name,
+          email: email,
+          authType: 'google',
+          deviceToken: _deviceToken ?? "",
+        );
+        if (loginResponse != null) {
+          // await _storage!.write(GetStorageKeys.credentials, null);
+          await _storage!.write(
+            GetStorageKeys.authInfo,
+            loginResponse.toJson(),
+          );
+        }
+      }
+    } on Exception catch (e) {
+      Log.d('signInWithGoogle:', '$e');
+    }
+  }
+
+  Future<void> signInWithApple() async {
+    try {
+      try {
+        if (GetPlatform.isIOS) {
+          final apnsToken = await firebaseMessaging.getAPNSToken();
+          if (apnsToken != null) {
+            // only safe to call getToken() after APNS exists
+            await Future.delayed(const Duration(seconds: 2));
+            _deviceToken = await firebaseMessaging.getToken();
+          }
+        } else {
+          // Android is safe
+          _deviceToken = await firebaseMessaging.getToken();
+        }
+      } catch (e) {
+        debugPrint("⚠️ Skipping device token: $e");
+      }
+      final credential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+      );
+      final userName = credential.givenName ?? "";
+      final email = credential.email ?? "";
+      if (userName.isEmpty || email.isEmpty) {
+        ToastAndDialog.errorDialog("User name or email cannot be empty");
+        return;
+      }
+      if (credential.userIdentifier != null) {
+        final authController = Get.find<AuthController>();
+        final loginResponse = await authController.socialLogin(
+          userName: userName,
+          email: email,
+          authType: 'apple',
+          deviceToken: _deviceToken ?? "",
+        );
+        if (loginResponse != null) {
+          await _storage!.write(
+            GetStorageKeys.authInfo,
+            loginResponse.toJson(),
+          );
+        }
+      }
+    } on Exception catch (e) {
+      Log.d('signInWithApple:', '$e');
     }
   }
 }

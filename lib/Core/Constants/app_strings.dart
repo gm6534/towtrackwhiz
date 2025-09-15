@@ -1,5 +1,5 @@
 class AppInfo {
-  static const String appTitle = "TowTrack";
+  static const String appTitle = "Tow Track Whiz";
 }
 
 class GetStorageKeys {
@@ -18,7 +18,8 @@ class ImgPath {
   static const String svg = "assets/svg/";
 
   /////////////////<<<<<-- PNG IMAGES -->>>>///////////////////////
-  static const String appLogo = "${png}towTrackLogo.png";
+  // static const String appLogo = "${png}towTrackLogo.png";
+  static const String appLogo = "${png}app_new_logo.png";
   static const String tow1Png = "${png}tow1.png";
   static const String tow2Png = "${png}tow2.png";
   static const String tow3Png = "${png}tow3.png";
@@ -49,6 +50,8 @@ class ImgPath {
   static const String downArrow = "${png}down-arrow.png";
   static const String truckIcon = "${png}truck.png";
   static const String circleTick = "${png}circle_tick.png";
+  static const String googleIcon = "${png}google_icon.png";
+  static const String appleIcon = "${png}apple_icon.png";
 
   /////////////////<<<<<-- SVG IMAGES -->>>>///////////////////////
   static const String appLogoSvg = "${svg}towTrackLogo.svg";
@@ -116,6 +119,9 @@ class AppHeadings {
 }
 
 class Strings {
+  static const String orLoginWithText = "Or login with";
+  static const String orContinueWithText = "Or continue with";
+  static const String continueWith = "Continue with";
   static const String alertRequire = "Alert Require";
   static const String verified = "Verified";
   static const String carsRegistered = "Cars Registered";

@@ -12,7 +12,20 @@
           "package_name": "com.gmprod.towtrackwhiz"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "421783246913-b49e2mbpvlhqm3vkvf9ln2ejnre4l126.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gmprod.towtrackwhiz",
+            "certificate_hash": "9e7a35b1dc8c58690c4d83256a156a482beb83d2"
+          }
+        },
+        {
+          "client_id": "421783246913-3r83njifk23eqb4c1gd40t5bqrqu5ujc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBj2Nad_suLPnLbjU4EOzmKVbTBTetaxd4"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "421783246913-3r83njifk23eqb4c1gd40t5bqrqu5ujc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "421783246913-73a3abh2feju20l0bdf64kkoa2ucs0bk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gmprod.towtrackwhiz"
+              }
+            }
+          ]
         }
       }
     }

@@ -26,7 +26,7 @@ class LoginScreen extends GetView<LoginController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 20.w,
                 children: [
-                  30.verticalSpace,
+                  20.verticalSpace,
                   Image.asset(ImgPath.appLogo, width: 300.w),
                   Text(
                     AppHeadings.signInTitle,
@@ -92,10 +92,72 @@ class LoginScreen extends GetView<LoginController> {
                       child: Text(AppHeadings.forgetPassBtnTitle),
                     ),
                   ),
-                  SizedBox(height: context.width * 0.1),
+                  // SizedBox(height: context.width * 0.1),
                   AppButton(
                     onPressed: controller.login,
                     title: ActionText.signIn,
+                  ),
+                  Row(
+                    spacing: 16.w,
+                    children: [
+                      const Expanded(child: Divider(height: 0, thickness: 1)),
+                      Center(
+                        child: Text(
+                          Strings.orContinueWithText,
+                          style: context.textTheme.bodyMedium,
+                        ),
+                      ),
+                      const Expanded(child: Divider(height: 0, thickness: 1)),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    spacing: 5.w,
+                    children: [
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: controller.signInWithGoogle,
+                          child: Row(
+                            spacing: 10.w,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                Strings.continueWith,
+                                style: context.textTheme.titleMedium?.copyWith(
+                                  color: AppColors.primary,
+                                ),
+                              ),
+                              Image.asset(
+                                ImgPath.googleIcon,
+                                height: context.height * 0.03,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      if (GetPlatform.isIOS)
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: controller.signInWithApple,
+                            child: Row(
+                              spacing: 10.w,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  Strings.continueWith,
+                                  style: context.textTheme.titleMedium
+                                      ?.copyWith(color: AppColors.primary),
+                                ),
+                                Image.asset(
+                                  ImgPath.appleIcon,
+                                  height: context.height * 0.03,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

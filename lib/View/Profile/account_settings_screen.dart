@@ -65,17 +65,34 @@ class AccountSettingsScreen extends GetView<ProfileController> {
                   heading: AppHeadings.email,
                   initialValue: user.email ?? '',
                   enabled: false,
+                  prefix: Container(
+                    margin: EdgeInsets.all(15.w),
+                    child: Image.asset(
+                      ImgPath.msgIcon,
+                      height: 10.w,
+                      width: 10.w,
+                    ),
+                  ),
                 ),
                 AppHeadingTextField(
                   heading: AppHeadings.name,
                   initialValue: user.name ?? '',
                   onChanged: (value) => controller.updateField(name: value),
+                  prefix: Icon(Icons.person, color: AppColors.primary),
                 ),
                 AppHeadingTextField(
                   heading: AppHeadings.password,
                   controller: controller.passwordC,
                   textInputType: TextInputType.phone,
                   onChanged: (value) => controller.checkChanges(),
+                  prefix: Container(
+                    margin: EdgeInsets.all(15.w),
+                    child: Image.asset(
+                      ImgPath.passIcon,
+                      height: 10.w,
+                      width: 10.w,
+                    ),
+                  ),
                   // validator:
                   //     (password) => ValidationHelper.validatePassword(password),
                 ),
@@ -84,6 +101,14 @@ class AccountSettingsScreen extends GetView<ProfileController> {
                   controller: controller.confirmPasswordC,
                   textInputType: TextInputType.phone,
                   onChanged: (value) => controller.checkChanges(),
+                  prefix: Container(
+                    margin: EdgeInsets.all(15.w),
+                    child: Image.asset(
+                      ImgPath.passIcon,
+                      height: 10.w,
+                      width: 10.w,
+                    ),
+                  ),
                   // validator:
                   //     (confirmPassword) =>
                   //         ValidationHelper.validateConfirmPassword(

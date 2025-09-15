@@ -4,13 +4,26 @@ class SignupReqModel {
   String? name;
   String? confirmPassword;
 
-  SignupReqModel({this.email, this.password, this.name, this.confirmPassword});
+  String? authType;
+  String? deviceToken;
+
+  SignupReqModel({
+    this.email,
+    this.password,
+    this.name,
+    this.confirmPassword,
+    this.deviceToken,
+    this.authType,
+  });
 
   SignupReqModel.fromJson(Map<String, dynamic> json) {
     email = json['email'];
     password = json['password'];
     name = json['name'];
     confirmPassword = json['confirm_password'];
+
+    authType = json['auth_type'];
+    deviceToken = json['device_token'];
   }
 
   Map<String, dynamic> toJson() {
@@ -19,6 +32,9 @@ class SignupReqModel {
     data['password'] = password;
     data['name'] = name;
     data['confirm_password'] = confirmPassword;
+
+    data['auth_type'] = authType;
+    data['device_token'] = deviceToken;
     return data;
   }
 }

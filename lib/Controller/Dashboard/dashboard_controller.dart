@@ -58,6 +58,6 @@ class DashboardController extends GetxController {
     //     return;
     //   }
     // }
-    Get.dialog(ReportTowActivityDialog());
+    Get.dialog(ReportTowActivityDialog(), barrierDismissible: false);
   }
 }

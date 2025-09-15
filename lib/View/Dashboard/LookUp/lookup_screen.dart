@@ -20,6 +20,8 @@ class LookupScreen extends StatelessWidget {
       init: LookupController(),
       builder: (controller) {
         return RefreshIndicator(
+          backgroundColor: AppColors.scaffoldBgColor,
+          color: AppColors.primary,
           onRefresh: controller.getLookupData,
           child: Obx(() {
             if (controller.isLookupLoading.value) {

@@ -1,11 +1,11 @@
-import 'package:towtrackwhiz/Core/Routes/app_route.dart';
-import 'package:towtrackwhiz/Model/Auth/login_req_model.dart';
-import 'package:towtrackwhiz/Model/Auth/auth_response_model.dart';
-import 'package:towtrackwhiz/Model/Auth/signup_req_model.dart';
-import 'package:towtrackwhiz/Repository/auth_repo.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart';
+import 'package:towtrackwhiz/Core/Routes/app_route.dart';
+import 'package:towtrackwhiz/Model/Auth/auth_response_model.dart';
+import 'package:towtrackwhiz/Model/Auth/login_req_model.dart';
+import 'package:towtrackwhiz/Model/Auth/signup_req_model.dart';
+import 'package:towtrackwhiz/Repository/auth_repo.dart';
 
 import '../../Core/Common/Widgets/toasts.dart';
 import '../../Core/Constants/app_strings.dart';
@@ -121,6 +121,36 @@ class AuthController extends GetxController {
       loginModel.deviceToken = deviceToken;
 
       authInfo = await _authRepo?.login(model: loginModel);
+      Get.back();
+      return authInfo;
+    } catch (e) {
+      if (Get.isDialogOpen!) {
+        Get.back();
+      }
+      if (e is ClientException) {
+        ToastAndDialog.errorDialog(e.message);
+      } else {
+        ToastAndDialog.errorDialog(e.toString());
+      }
+    }
+    return null;
+  }
+
+  Future<AuthResponseModel?> socialLogin({
+    required String userName,
+    required String deviceToken,
+    required String authType,
+    required String email,
+  }) async {
+    try {
+      ToastAndDialog.progressIndicator();
+      SignupReqModel loginModel = SignupReqModel();
+      loginModel.email = email;
+      loginModel.name = userName;
+      loginModel.authType = authType;
+      loginModel.deviceToken = deviceToken;
+
+      authInfo = await _authRepo?.socialLogin(model: loginModel);
       Get.back();
       return authInfo;
     } catch (e) {

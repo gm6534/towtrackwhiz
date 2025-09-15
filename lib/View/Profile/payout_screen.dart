@@ -126,6 +126,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/app_button.dart';
+import 'package:towtrackwhiz/Core/Common/Widgets/common_app_bar.dart';
 import 'package:towtrackwhiz/Core/Common/helper.dart';
 import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 import 'package:towtrackwhiz/Model/Profile/pay_method_list_res_model.dart';
@@ -143,13 +144,14 @@ class PayoutScreen extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return BaseScaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: AppColors.primary),
-        backgroundColor: AppColors.scaffoldBgColor,
-        surfaceTintColor: AppColors.scaffoldBgColor,
-        title: Image.asset(ImgPath.appLogo, width: context.width * 0.5),
-        centerTitle: true,
-      ),
+      appBar: commonAppBar,
+      // appBar: AppBar(
+      //   iconTheme: IconThemeData(color: AppColors.primary),
+      //   backgroundColor: AppColors.scaffoldBgColor,
+      //   surfaceTintColor: AppColors.scaffoldBgColor,
+      //   title: Image.asset(ImgPath.appLogo, width: context.width * 0.5),
+      //   centerTitle: true,
+      // ),
       body: Obx(() {
         if (controller.isPayoutLoading.value) {
           return const Center(child: CircularProgressIndicator());

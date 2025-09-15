@@ -5,6 +5,7 @@ import 'package:towtrackwhiz/Controller/Dashboard/profile_controller.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/app_button.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/app_heading_text_field.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/base_scaffold.dart';
+import 'package:towtrackwhiz/Core/Common/Widgets/common_app_bar.dart';
 import 'package:towtrackwhiz/Core/Common/validation_helper.dart';
 import 'package:towtrackwhiz/Model/Vehicle/vehicle_list_model.dart';
 
@@ -19,12 +20,13 @@ class AddEditVehicleScreen extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return BaseScaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: AppColors.primary),
-        backgroundColor: AppColors.scaffoldBgColor,
-        surfaceTintColor: AppColors.scaffoldBgColor,
-        title: Image.asset(ImgPath.appLogo, width: context.width * 0.5),
-      ),
+      appBar: commonAppBar,
+      // appBar: AppBar(
+      //   iconTheme: IconThemeData(color: AppColors.primary),
+      //   backgroundColor: AppColors.scaffoldBgColor,
+      //   surfaceTintColor: AppColors.scaffoldBgColor,
+      //   title: Image.asset(ImgPath.appLogo, width: context.width * 0.5),
+      // ),
       body: Form(
         key: controller.addVehicleFormKey,
         child: SingleChildScrollView(

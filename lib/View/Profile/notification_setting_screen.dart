@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:towtrackwhiz/Controller/Dashboard/profile_controller.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/base_scaffold.dart';
+import 'package:towtrackwhiz/Core/Common/Widgets/common_app_bar.dart';
 import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
 
@@ -12,12 +13,13 @@ class NotificationSettingScreen extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return BaseScaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: AppColors.primary),
-        backgroundColor: AppColors.scaffoldBgColor,
-        surfaceTintColor: AppColors.scaffoldBgColor,
-        title: Image.asset(ImgPath.appLogo, width: context.width * 0.5),
-      ),
+      appBar: commonAppBar,
+      // appBar: AppBar(
+      //   iconTheme: IconThemeData(color: AppColors.primary),
+      //   backgroundColor: AppColors.scaffoldBgColor,
+      //   surfaceTintColor: AppColors.scaffoldBgColor,
+      //   title: Image.asset(ImgPath.appLogo, width: context.width * 0.5),
+      // ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
         child: Column(

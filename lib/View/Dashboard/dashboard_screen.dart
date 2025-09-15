@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/base_scaffold.dart';
+import 'package:towtrackwhiz/Core/Common/Widgets/common_app_bar.dart';
 import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
 
@@ -29,13 +30,7 @@ class DashboardScreen extends GetView<DashboardController> {
       },
       child: Obx(
         () => BaseScaffold(
-          appBar: AppBar(
-            leading: SizedBox.shrink(),
-            leadingWidth: 0,
-            backgroundColor: AppColors.scaffoldBgColor,
-            surfaceTintColor: AppColors.scaffoldBgColor,
-            title: Image.asset(ImgPath.appLogo, width: context.width * 0.5),
-          ),
+          appBar: commonAppBar,
           body:
               controller.isDashboardLoading.value
                   ? Center(child: CircularProgressIndicator())

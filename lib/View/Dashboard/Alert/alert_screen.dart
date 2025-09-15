@@ -30,11 +30,20 @@ class AlertScreen extends GetView<CommunityAlertController> {
                 return Center(child: CircularProgressIndicator());
               }
               if (controller.communityAlertsList.isEmpty) {
-                return Center(
-                  child: Text(
-                    Strings.noRecordFound,
-                    style: context.textTheme.titleLarge,
-                  ),
+                // ✅ Still need scrollable wrapper here for RefreshIndicator
+                return ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    SizedBox(
+                      height: context.height * 0.7,
+                      child: Center(
+                        child: Text(
+                          Strings.noRecordFound,
+                          style: context.textTheme.titleLarge,
+                        ),
+                      ),
+                    ),
+                  ],
                 );
               }
               return ListView.builder(

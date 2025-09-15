@@ -27,14 +27,14 @@ class LoginScreen extends GetView<LoginController> {
                 spacing: 20.w,
                 children: [
                   20.verticalSpace,
-                  Image.asset(ImgPath.appLogo, width: 300.w),
+                  Image.asset(ImgPath.appLogo, height: 80.w),
                   Text(
                     AppHeadings.signInTitle,
                     textAlign: TextAlign.center,
-                    style: Get.textTheme.headlineSmall,
+                    style: Get.textTheme.labelLarge,
                   ),
 
-                  40.verticalSpace,
+                  20.verticalSpace,
                   AppHeadingTextField(
                     heading: AppHeadings.email,
                     controller: controller.emailController,

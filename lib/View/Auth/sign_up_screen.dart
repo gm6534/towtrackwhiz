@@ -26,17 +26,17 @@ class SignUpScreen extends GetView<SignUpController> {
                 spacing: 15.w,
                 children: [
                   5.verticalSpace,
-                  Image.asset(ImgPath.appLogo),
+                  Image.asset(ImgPath.appLogo, height: 80.w),
                   Text(
                     AppHeadings.signUpTitle,
                     textAlign: TextAlign.center,
-                    style: Get.textTheme.headlineSmall?.copyWith(
+                    style: Get.textTheme.labelLarge?.copyWith(
                       color: AppColors.black,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
 
-                  10.verticalSpace,
+                  5.verticalSpace,
                   AppHeadingTextField(
                     heading: AppHeadings.name,
                     controller: controller.nameController,

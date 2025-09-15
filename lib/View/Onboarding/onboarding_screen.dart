@@ -42,7 +42,7 @@ class OnboardingScreen extends GetView<OnboardingController> {
                 ),
               ),
               30.verticalSpace,
-              Image.asset(ImgPath.appLogo, width: 300.w),
+              Image.asset(ImgPath.appLogo, width: 200.w),
               Flexible(
                 child: PageView.builder(
                   controller: controller.pageController,

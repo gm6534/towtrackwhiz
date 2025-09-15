@@ -220,7 +220,7 @@ class ErrorCode {
   static const String invalidHtml = "<!DOCTYPE html>";
   static const String unexpectedError = "Unexpected error";
   static const String validationError = "Validation error";
-  static const String serverError = "Server error";
+  static const String serverError = "Internal Server error";
   static const String failedToParseResponse = "Failed to parse response";
   static const String invalidHTTPMethod = "Invalid HTTP method";
   static const String unAuthorizedAccess =

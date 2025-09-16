@@ -586,13 +586,13 @@ class ProfileController extends GetxController {
   Future<void> getEarnings() async {
     try {
       isPayoutLoading.value = true;
+      selectedPayoutMethod.value = defaultPayMethod;
       Get.toNamed(AppRoute.payoutScreen);
       final result = await dashboardRepo?.getEarningApi();
       if (result != null) {
         earningResModel.value = result;
-        final totalEarning = double.parse(
-          earningResModel.value.totalEarning ?? "0",
-        );
+        // amountController.text = "${earningResModel.value.data?.amount ?? 0}";
+        final totalEarning = earningResModel.value.totalEarning ?? 0;
         if (totalEarning >= 10) {
           await getPayMethodList();
         }
@@ -649,14 +649,17 @@ class ProfileController extends GetxController {
       ToastAndDialog.progressIndicator();
       SubmitPayoutReqModel model = SubmitPayoutReqModel();
       model.payoutMethodId = selectedPayoutMethod.value?.id;
-      model.amount = double.parse(amountController.text);
+      model.amount =
+          amountController.text.isNotEmpty
+              ? double.parse(amountController.text)
+              : earningResModel.value.data?.amount ?? 0;
       // model.notes = notesController.text;
       model.paypalEmail = paypalEmailController.text;
       model.payoneerEmail = payoneerEmailController.text;
       model.payoneerCustomerId = payoneerCustomerIdController.text;
       model.accountHolder = accountHolderController.text;
       model.bankName = bankNameController.text;
-      model.accountNumber = accountNumberController.text;
+      // model.accountNumber = accountNumberController.text;
       model.routingNumber = routingNumberController.text;
       model.accountType = accountTypeController.text;
       model.payoutHandle = payoutHandleController.text;

@@ -145,12 +145,12 @@ class SignUpScreen extends GetView<SignUpController> {
                             spacing: 10.w,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                Strings.continueWith,
-                                style: context.textTheme.titleMedium?.copyWith(
-                                  color: AppColors.primary,
-                                ),
-                              ),
+                              // Text(
+                              //   Strings.continueWith,
+                              //   style: context.textTheme.titleMedium?.copyWith(
+                              //     color: AppColors.primary,
+                              //   ),
+                              // ),
                               Image.asset(
                                 ImgPath.googleIcon,
                                 height: context.height * 0.03,
@@ -168,11 +168,11 @@ class SignUpScreen extends GetView<SignUpController> {
                               spacing: 10.w,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
-                                  Strings.continueWith,
-                                  style: context.textTheme.titleMedium
-                                      ?.copyWith(color: AppColors.primary),
-                                ),
+                                // Text(
+                                //   Strings.continueWith,
+                                //   style: context.textTheme.titleMedium
+                                //       ?.copyWith(color: AppColors.primary),
+                                // ),
                                 Image.asset(
                                   ImgPath.appleIcon,
                                   height: context.height * 0.03,

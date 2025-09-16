@@ -165,9 +165,9 @@ class PayoutScreen extends GetView<ProfileController> {
           );
         }
 
-        final amount = double.tryParse(data.amount ?? "0") ?? 0.0;
+        final amount = data.amount ?? 0;
         // final amount = 10;
-        final lifetime = double.tryParse(earnings.totalEarning ?? "0") ?? 0.0;
+        final lifetime = earnings.totalEarning ?? 0;
         const maxPayout = 10.0;
 
         final progress = (amount / maxPayout).clamp(0.0, 1.0);
@@ -379,9 +379,13 @@ class PayoutScreen extends GetView<ProfileController> {
             // ),
             AppHeadingTextField(
               heading: "Amount",
-              controller: controller.amountController,
+              // controller: controller.amountController,
+              initialValue:
+                  controller.earningResModel.value.data?.amount.toString(),
               hintText: "Enter amount",
               textInputType: TextInputType.number,
+              // readOnly: true,
+              enabled: false,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
               ],
@@ -395,9 +399,8 @@ class PayoutScreen extends GetView<ProfileController> {
 
                 // 2. Numeric + Balance check
                 final entered = double.tryParse(value ?? "0") ?? 0;
-                final available = double.parse(
-                  controller.earningResModel.value.data!.amount.toString(),
-                );
+                final available =
+                    controller.earningResModel.value.data?.amount ?? 0;
 
                 if (entered < 1) {
                   return "Minimum amount is 1";
@@ -477,19 +480,19 @@ class PayoutScreen extends GetView<ProfileController> {
                             "Bank Name",
                           ),
                     ),
-                    12.verticalSpace,
-                    AppHeadingTextField(
-                      heading: "Account Number",
-                      controller: controller.accountNumberController,
-                      hintText: "Enter account number",
-                      textInputType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      validator:
-                          (value) => ValidationHelper.validateNonEmpty(
-                            value,
-                            "Account Number",
-                          ),
-                    ),
+                    // 12.verticalSpace,
+                    // AppHeadingTextField(
+                    //   heading: "Account Number",
+                    //   controller: controller.accountNumberController,
+                    //   hintText: "Enter account number",
+                    //   textInputType: TextInputType.number,
+                    //   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    //   validator:
+                    //       (value) => ValidationHelper.validateNonEmpty(
+                    //         value,
+                    //         "Account Number",
+                    //       ),
+                    // ),
                     12.verticalSpace,
                     AppHeadingTextField(
                       heading: "Routing Number",

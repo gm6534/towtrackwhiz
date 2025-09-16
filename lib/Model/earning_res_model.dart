@@ -3,8 +3,8 @@ class EarningResModel {
   String? message;
   Earnings? data;
   int? rank;
-  String? totalEarning;
-  String? cycleEarning;
+  double? totalEarning;
+  double? cycleEarning;
 
   EarningResModel({
     this.status,
@@ -20,8 +20,14 @@ class EarningResModel {
     message = json['message'];
     data = json['data'] != null ? Earnings.fromJson(json['data']) : null;
     rank = json['rank'];
-    totalEarning = json['total_earning'];
-    cycleEarning = json['cycle_earning'];
+    totalEarning =
+        json['total_earning'] != null
+            ? double.parse(json['total_earning'].toString())
+            : null;
+    cycleEarning =
+        json['cycle_earning'] != null
+            ? double.parse(json['cycle_earning'].toString())
+            : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -42,7 +48,7 @@ class Earnings {
   int? id;
   String? userId;
   String? cycle;
-  String? amount;
+  double? amount;
   String? eligible;
   dynamic rank;
   String? createdAt;
@@ -63,7 +69,7 @@ class Earnings {
     id = json['id'];
     userId = json['user_id'];
     cycle = json['cycle'];
-    amount = json['amount'];
+    amount = json['amount'] != null ? double.parse(json['amount'].toString()) : null;
     eligible = json['eligible'];
     rank = json['rank'];
     createdAt = json['created_at'];

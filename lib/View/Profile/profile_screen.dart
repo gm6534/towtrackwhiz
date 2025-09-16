@@ -145,7 +145,7 @@ class ProfileScreen extends GetView<ProfileController> {
               _menuTile(
                 ImgPath.payMethodIcon,
                 AppHeadings.payoutMethod,
-                onTap: controller.getEarnings,
+                onTap: controller.goToPayOut,
               ),
               _menuTile(
                 ImgPath.logoutIcon,

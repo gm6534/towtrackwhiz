@@ -126,188 +126,269 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/app_button.dart';
+import 'package:towtrackwhiz/Core/Common/Widgets/base_scaffold.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/common_app_bar.dart';
 import 'package:towtrackwhiz/Core/Common/helper.dart';
 import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 import 'package:towtrackwhiz/Model/Profile/pay_method_list_res_model.dart';
 import 'package:towtrackwhiz/Model/earning_res_model.dart';
+import 'package:towtrackwhiz/View/Profile/payout_history_screen.dart';
 
 import '../../Controller/Dashboard/profile_controller.dart';
 import '../../Core/Common/Widgets/app_heading_text_field.dart';
-import '../../Core/Common/Widgets/base_scaffold.dart';
 import '../../Core/Common/validation_helper.dart';
 import '../../core/Utils/app_colors.dart';
+
+class TabSwitchScreen extends GetView<ProfileController> {
+  const TabSwitchScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BaseScaffold(
+      appBar: commonAppBar,
+      body: Column(
+        children: [
+          /// Buttons (Tabs)
+          Obx(
+            () => Container(
+              padding: EdgeInsets.all(3.w),
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                borderRadius: BorderRadius.circular(40.r),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => controller.changeTab(0),
+                      child: Container(
+                        padding: EdgeInsets.all(5.w),
+                        decoration: BoxDecoration(
+                          color:
+                              controller.selectedIndex.value == 0
+                                  ? AppColors.white
+                                  : AppColors.primary,
+                          borderRadius: BorderRadius.circular(40.r),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Earnings",
+                            style: context.textTheme.headlineSmall?.copyWith(
+                              color:
+                                  controller.selectedIndex.value == 0
+                                      ? AppColors.primary
+                                      : AppColors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => controller.changeTab(1),
+                      child: Container(
+                        padding: EdgeInsets.all(5.w),
+                        decoration: BoxDecoration(
+                          color:
+                              controller.selectedIndex.value == 1
+                                  ? AppColors.white
+                                  : AppColors.primary,
+                          borderRadius: BorderRadius.circular(40.r),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "History",
+                            style: context.textTheme.headlineSmall?.copyWith(
+                              color:
+                                  controller.selectedIndex.value == 1
+                                      ? AppColors.primary
+                                      : AppColors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          /// Content Area
+          Expanded(
+            child: Obx(
+              () =>
+                  controller.selectedIndex.value == 0
+                      ? PayoutScreen()
+                      : PayoutHistoryScreen(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class PayoutScreen extends GetView<ProfileController> {
   const PayoutScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BaseScaffold(
-      appBar: commonAppBar,
-      // appBar: AppBar(
-      //   iconTheme: IconThemeData(color: AppColors.primary),
-      //   backgroundColor: AppColors.scaffoldBgColor,
-      //   surfaceTintColor: AppColors.scaffoldBgColor,
-      //   title: Image.asset(ImgPath.appLogo, width: context.width * 0.5),
-      //   centerTitle: true,
-      // ),
-      body: Obx(() {
-        if (controller.isPayoutLoading.value) {
-          return const Center(child: CircularProgressIndicator());
-        }
+    return Obx(() {
+      if (controller.isPayoutLoading.value) {
+        return const Center(child: CircularProgressIndicator());
+      }
 
-        final earnings = controller.earningResModel.value;
-        Earnings? data = earnings.data;
-        if (data == null) {
-          return Center(
-            child: Text(Strings.noEarning, style: context.textTheme.titleLarge),
-          );
-        }
+      final earnings = controller.earningResModel.value;
+      Earnings? data = earnings.data;
+      if (data == null) {
+        return Center(
+          child: Text(Strings.noEarning, style: context.textTheme.titleLarge),
+        );
+      }
 
-        final amount = data.amount ?? 0;
-        // final amount = 10;
-        final lifetime = earnings.totalEarning ?? 0;
-        const maxPayout = 10.0;
+      final amount = data.amount ?? 0;
+      // final amount = 10;
+      final lifetime = earnings.totalEarning ?? 0;
+      const maxPayout = 10.0;
 
-        final progress = (amount / maxPayout).clamp(0.0, 1.0);
+      final progress = (amount / maxPayout).clamp(0.0, 1.0);
 
-        return SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                AppHeadings.payoutMethod,
-                style: Get.textTheme.headlineMedium,
-              ),
-              20.verticalSpace,
-              Center(
-                child: Text(
-                  "You're in ${Helper.getOrdinal(earnings.rank ?? 0)} place to earn the \$10 payout!",
-                  textAlign: TextAlign.center,
-                  style: context.textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+      return SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            10.verticalSpace,
+            Text(AppHeadings.payoutMethod, style: Get.textTheme.headlineMedium),
+            10.verticalSpace,
+            Center(
+              child: Text(
+                "You're in ${Helper.getOrdinal(earnings.rank ?? 0)} place to earn the \$10 payout!",
+                textAlign: TextAlign.center,
+                style: context.textTheme.bodyLarge?.copyWith(
+                  fontWeight: FontWeight.w600,
                 ),
               ),
-              6.verticalSpace,
-              Center(
-                child: Text(
-                  "Remember, only the first 50 users are eligible.",
-                  textAlign: TextAlign.center,
-                  style: context.textTheme.bodySmall?.copyWith(
-                    color: Colors.grey,
-                  ),
+            ),
+            6.verticalSpace,
+            Center(
+              child: Text(
+                "Remember, only the first 50 users are eligible.",
+                textAlign: TextAlign.center,
+                style: context.textTheme.bodySmall?.copyWith(
+                  color: Colors.grey,
                 ),
               ),
-              30.verticalSpace,
+            ),
+            30.verticalSpace,
 
-              // Progress bar with truck
-              // Progress bar with truck (animated)
-              TweenAnimationBuilder<double>(
-                tween: Tween<double>(begin: 0.0, end: progress),
-                duration: const Duration(milliseconds: 800),
-                curve: Curves.easeInOut,
-                builder: (context, value, child) {
-                  return Container(
-                    margin: EdgeInsets.zero,
-                    height: 30.w,
-                    child: Stack(
-                      alignment: Alignment.bottomCenter,
-                      children: [
-                        // Progress bar background
-                        LinearProgressIndicator(
-                          value: value, // <-- use animated value here
-                          backgroundColor: AppColors.lightGreyColor,
-                          valueColor: const AlwaysStoppedAnimation(
-                            AppColors.primary,
-                          ),
-                          minHeight: 12.h,
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-
-                        // Truck icon synced with progress
-                        Positioned(
-                          left: (context.width - 90.w) * value,
-                          child: Image.asset(
-                            ImgPath.truckIcon,
-                            height: 25.w,
-                            width: 50.w,
-                            // color: AppColors.primary,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-
-              30.verticalSpace,
-
-              Center(
-                child: Text(
-                  "\$${amount.toStringAsFixed(2)}",
-                  style: context.textTheme.headlineLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              6.verticalSpace,
-              Center(
-                child: Text(
-                  "Lifetime earned: \$${lifetime.toStringAsFixed(2)}",
-                  style: context.textTheme.titleLarge?.copyWith(
-                    color: AppColors.greyColor,
-                  ),
-                ),
-              ),
-              20.verticalSpace,
-
-              if (amount >= maxPayout)
-                Container(
-                  padding: EdgeInsets.all(12.w),
-                  decoration: BoxDecoration(
-                    color: AppColors.lightYellowColor,
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  child: Row(
-                    spacing: 10.w,
+            // Progress bar with truck
+            // Progress bar with truck (animated)
+            TweenAnimationBuilder<double>(
+              tween: Tween<double>(begin: 0.0, end: progress),
+              duration: const Duration(milliseconds: 800),
+              curve: Curves.easeInOut,
+              builder: (context, value, child) {
+                return Container(
+                  margin: EdgeInsets.zero,
+                  height: 30.w,
+                  child: Stack(
+                    alignment: Alignment.bottomCenter,
                     children: [
-                      Image.asset(ImgPath.badgeIcon, height: 30.w),
-                      Expanded(
-                        child: Text(
-                          "\"You’ve reached \$10! Choose payout method.\"",
-                          style: context.textTheme.bodyMedium,
+                      // Progress bar background
+                      LinearProgressIndicator(
+                        value: value,
+                        // <-- use animated value here
+                        backgroundColor: AppColors.lightGreyColor,
+                        valueColor: const AlwaysStoppedAnimation(
+                          AppColors.primary,
+                        ),
+                        minHeight: 12.h,
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+
+                      // Truck icon synced with progress
+                      Positioned(
+                        left: (context.width - 90.w) * value,
+                        child: Image.asset(
+                          ImgPath.truckIcon,
+                          height: 25.w,
+                          width: 50.w,
+                          // color: AppColors.primary,
                         ),
                       ),
                     ],
                   ),
+                );
+              },
+            ),
+
+            30.verticalSpace,
+
+            Center(
+              child: Text(
+                "\$${amount.toStringAsFixed(2)}",
+                style: context.textTheme.headlineLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
                 ),
-              20.verticalSpace,
-              Column(
-                spacing: 10.w,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  _buildRewardItem("Verified Alert", "\$0.50"),
-                  _buildRewardItem("Unverified Alert (no image)", "\$0.10"),
-                  _buildRewardItem("Max per user", "\$10"),
-                ],
               ),
-
-              if (amount >= maxPayout) ...[
-                buildPayoutForm(),
-                20.verticalSpace,
-
-                AppButton(
-                  onPressed: controller.submitPayoutRequest,
-                  title: "Make Payout Request",
+            ),
+            6.verticalSpace,
+            Center(
+              child: Text(
+                "Lifetime earned: \$${lifetime.toStringAsFixed(2)}",
+                style: context.textTheme.titleLarge?.copyWith(
+                  color: AppColors.greyColor,
                 ),
+              ),
+            ),
+            20.verticalSpace,
+
+            if (amount >= maxPayout)
+              Container(
+                padding: EdgeInsets.all(12.w),
+                decoration: BoxDecoration(
+                  color: AppColors.lightYellowColor,
+                  borderRadius: BorderRadius.circular(8.r),
+                ),
+                child: Row(
+                  spacing: 10.w,
+                  children: [
+                    Image.asset(ImgPath.badgeIcon, height: 30.w),
+                    Expanded(
+                      child: Text(
+                        "\"You’ve reached \$10! Choose payout method.\"",
+                        style: context.textTheme.bodyMedium,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            20.verticalSpace,
+            Column(
+              spacing: 10.w,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _buildRewardItem("Verified Alert", "\$0.50"),
+                _buildRewardItem("Unverified Alert (no image)", "\$0.10"),
+                _buildRewardItem("Max per user", "\$10"),
               ],
+            ),
+
+            if (amount >= maxPayout) ...[
+              buildPayoutForm(),
+              20.verticalSpace,
+
+              AppButton(
+                onPressed: controller.submitPayoutRequest,
+                title: "Make Payout Request",
+              ),
             ],
-          ),
-        );
-      }),
-    );
+          ],
+        ),
+      );
+    });
   }
 
   Widget _buildRewardItem(String title, String value) {

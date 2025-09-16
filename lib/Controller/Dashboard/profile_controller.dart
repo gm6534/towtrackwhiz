@@ -14,6 +14,7 @@ import 'package:towtrackwhiz/Core/Utils/log_util.dart';
 import 'package:towtrackwhiz/Model/Alerts/my_alerts_res_model.dart';
 import 'package:towtrackwhiz/Model/Auth/auth_response_model.dart';
 import 'package:towtrackwhiz/Model/Profile/pay_method_list_res_model.dart';
+import 'package:towtrackwhiz/Model/Profile/payout_history_res_model.dart';
 import 'package:towtrackwhiz/Model/Vehicle/add_vehicle_req_model.dart';
 import 'package:towtrackwhiz/Model/analytics_res_model.dart';
 import 'package:towtrackwhiz/Repository/auth_repo.dart';
@@ -25,8 +26,20 @@ import '../../Model/Auth/login_req_model.dart';
 import '../../Model/Profile/submit_payout_request_model.dart';
 import '../../Model/Vehicle/vehicle_list_model.dart';
 import '../../Model/earning_res_model.dart';
+import '../../View/Profile/payout_screen.dart';
 
 class ProfileController extends GetxController {
+  var selectedIndex = 0.obs;
+
+  void changeTab(int index) {
+    selectedIndex.value = index;
+    if (selectedIndex.value == 0) {
+      getEarnings();
+    } else if (selectedIndex.value == 1) {
+      goToPayoutHistoryScreen();
+    }
+  }
+
   final payoutFormKey = GlobalKey<FormState>();
   var isNotificationEnabled = true.obs;
   final GlobalKey<FormState> addVehicleFormKey = GlobalKey<FormState>();
@@ -51,6 +64,8 @@ class ProfileController extends GetxController {
   RxBool isPayoutLoading = false.obs;
   RxBool isVehicleLoading = true.obs;
   RxBool isAlertRequireLoading = true.obs;
+  RxBool isPayoutHistoryLoading = false.obs;
+  RxList<PayoutHistoryResModel> payoutHistory = <PayoutHistoryResModel>[].obs;
   RxList<AlertsModel> myAlertsList = <AlertsModel>[].obs;
   RxList<PayMethodListResModel> payMethodList = <PayMethodListResModel>[].obs;
   late UserModel originalUser;
@@ -583,11 +598,17 @@ class ProfileController extends GetxController {
     }
   }
 
+  Future<void> goToPayOut() async {
+    selectedIndex.value = 0;
+    Get.to(() => TabSwitchScreen());
+    getEarnings();
+  }
+
   Future<void> getEarnings() async {
     try {
       isPayoutLoading.value = true;
       selectedPayoutMethod.value = defaultPayMethod;
-      Get.toNamed(AppRoute.payoutScreen);
+      // Get.toNamed(AppRoute.payoutScreen);
       final result = await dashboardRepo?.getEarningApi();
       if (result != null) {
         earningResModel.value = result;
@@ -681,6 +702,26 @@ class ProfileController extends GetxController {
       if (e is ClientException) {
         ToastAndDialog.showCustomSnackBar(e.message);
       }
+    }
+  }
+
+  Future<void> goToPayoutHistoryScreen() async {
+    try {
+      isPayoutHistoryLoading.value = true;
+      payoutHistory.clear();
+      // Get.toNamed(AppRoute.payoutHistoryScreen);
+      final result = await dashboardRepo?.getPayoutHistoryApi();
+      if (result != null) {
+        payoutHistory.assignAll(result);
+      }
+    } catch (e) {
+      if (e is ClientException) {
+        ToastAndDialog.showCustomSnackBar(e.message);
+      } else {
+        ToastAndDialog.showCustomSnackBar(e.toString());
+      }
+    } finally {
+      isPayoutHistoryLoading.value = false;
     }
   }
 

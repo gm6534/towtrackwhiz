@@ -11,4 +11,5 @@ class AppRoute {
   static const String accountSettingsScreen = '/accountSettingsScreen';
   static const String myAlertScreen = '/myAlertScreen';
   static const String payoutScreen = '/payoutScreen';
+  static const String payoutHistoryScreen = '/payoutHistoryScreen';
 }

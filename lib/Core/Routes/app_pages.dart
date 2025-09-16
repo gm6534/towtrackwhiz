@@ -18,6 +18,7 @@ import '../../View/Profile/account_settings_screen.dart';
 import '../../View/Profile/add_edit_vehicle_screen.dart';
 import '../../View/Profile/my_alert_screen.dart';
 import '../../View/Profile/notification_setting_screen.dart';
+import '../../View/Profile/payout_history_screen.dart';
 
 class AppPages {
   static List<GetPage> pages = [
@@ -60,5 +61,9 @@ class AppPages {
     ),
     GetPage(name: AppRoute.myAlertScreen, page: () => MyAlertScreen()),
     GetPage(name: AppRoute.payoutScreen, page: () => PayoutScreen()),
+    GetPage(
+      name: AppRoute.payoutHistoryScreen,
+      page: () => PayoutHistoryScreen(),
+    ),
   ];
 }

@@ -285,7 +285,7 @@ class DashboardRepo extends ApiClient {
       }
       return resModel;
     } catch (e) {
-      Log.e("getPayMethodApi: DashboardRepo- ", e.toString());
+      Log.e("getPayoutHistoryApi: DashboardRepo- ", e.toString());
 
       rethrow;
     }

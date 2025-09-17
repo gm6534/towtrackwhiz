@@ -84,12 +84,33 @@ class NotificationService {
   /// Setup FCM
   Future<void> _initFirebaseMessaging() async {
     // iOS FCM permission
-    if (Platform.isIOS) {
-      await _messaging.requestPermission(alert: true, badge: true, sound: true);
+    // if (Platform.isIOS) {
+    //   await _messaging.requestPermission(alert: true, badge: true, sound: true);
+    // }
+    String? token;
+    try {
+      if (GetPlatform.isIOS) {
+        await _messaging.requestPermission(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
+        final apnsToken = await _messaging.getAPNSToken();
+        if (apnsToken != null) {
+          // only safe to call getToken() after APNS exists
+          await Future.delayed(const Duration(seconds: 2));
+          token = await _messaging.getToken();
+        }
+      } else {
+        // Android is safe
+        token = await _messaging.getToken();
+      }
+    } catch (e) {
+      debugPrint("⚠️ Skipping device token: $e");
     }
 
     // Get FCM token
-    String? token = await _messaging.getToken();
+    // String? token = await _messaging.getToken();
     debugPrint("📲 FCM Token: $token");
 
     // Foreground messages

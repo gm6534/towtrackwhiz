@@ -2,9 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:towtrackwhiz/Controller/Dashboard/dashboard_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../Model/Alerts/location_model.dart';
@@ -224,6 +227,39 @@ class Helper {
         return "${number}rd";
       default:
         return "${number}th";
+    }
+  }
+
+  static Future<XFile?> compressMedia(XFile media) async {
+    try {
+      DashboardController? dashboardController =
+          Get.find<DashboardController>();
+      XFile? file;
+      var targetPath =
+          "${dashboardController.tempDirectory?.absolute.path}/${"img_${media.name}"}";
+      final size = await media.readAsBytes();
+      var kb = size.length / 1024;
+      var mb = kb / 1024;
+      Log.d("mb", mb.toString());
+      if (media.name.contains('.png')) {
+        file = media;
+      } else {
+        file = await FlutterImageCompress.compressAndGetFile(
+          media.path,
+          targetPath,
+          quality: 90,
+          minWidth: 1000,
+          minHeight: 1000,
+        );
+      }
+      final newSize = await file?.readAsBytes();
+      var newKb = newSize!.length / 1024;
+      var newMb = newKb / 1024;
+      Log.d("newMb", newMb.toString());
+
+      return file;
+    } catch (e) {
+      rethrow;
     }
   }
 }

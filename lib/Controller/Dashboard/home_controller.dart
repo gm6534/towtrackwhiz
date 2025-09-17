@@ -869,7 +869,8 @@ class HomeController extends GetxController {
       );
 
       if (picked != null) {
-        imagePath.value = picked.path;
+        final file = await Helper.compressMedia(picked);
+        imagePath.value = file!.path;
       }
     } catch (e) {
       if (Get.isDialogOpen == true) {

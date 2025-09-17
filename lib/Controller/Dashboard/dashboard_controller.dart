@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:towtrackwhiz/Controller/Dashboard/home_controller.dart';
 import 'package:towtrackwhiz/View/Common/report_tow_activity_dialog.dart';
 
@@ -12,10 +15,13 @@ class DashboardController extends GetxController {
 
   HomeController? homeController;
   RxBool isDashboardLoading = false.obs;
+  Directory? tempDirectory;
+
 
   @override
   void onInit() {
     homeController = Get.find<HomeController>();
+    setTempDevicePath();
     firstApiCall();
     super.onInit();
   }
@@ -35,6 +41,10 @@ class DashboardController extends GetxController {
 
   void changeTab(int index) {
     currentIndex.value = index;
+  }
+
+  Future<void> setTempDevicePath() async {
+    tempDirectory = await path_provider.getTemporaryDirectory();
   }
 
   Future<void> showReportTowActivityDialog() async {

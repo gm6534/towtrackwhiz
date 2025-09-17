@@ -12,7 +12,7 @@ import 'api_response.dart';
 
 class ApiClient {
   static final String _baseUrl = AppConfig.rootURL ?? "";
-  static const Duration _timeout = Duration(seconds: 15);
+  static const Duration _timeout = Duration(minutes: 3);
 
   AuthController get _authController => Get.find<AuthController>();
 
@@ -248,7 +248,6 @@ class ApiClient {
     }
   }
 
-
   ApiResponse<T> _handleResponse<T>(http.Response response) {
     final int statusCode = response.statusCode;
     final String responseBody = response.body;
@@ -298,8 +297,7 @@ class ApiClient {
     }
   }
 
-
-// ApiResponse<T> _handleResponse<T>(http.Response response) {
+  // ApiResponse<T> _handleResponse<T>(http.Response response) {
   //   final int statusCode = response.statusCode;
   //   final String responseBody = response.body;
   //

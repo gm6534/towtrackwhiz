@@ -1,10 +1,16 @@
-import 'package:towtrackwhiz/core/Constants/app_strings.dart';
+import 'dart:io';
+
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:towtrackwhiz/core/Constants/app_strings.dart';
 
 import 'Controller/Other/connectivity_controller.dart';
+import 'Controller/Scheduler/scheduler_controller.dart';
+import 'Core/Notify/notification_service.dart';
 import 'app_config.dart';
 import 'core/Routes/app_pages.dart';
 import 'core/Routes/app_route.dart';
@@ -16,6 +22,9 @@ Future<void> main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await AppConfig.initialize();
   Get.find<ConnectionManagerController>();
+  Get.put(SchedulerController());
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  await NotificationService().init();
   runApp(const MyApp());
 }
 

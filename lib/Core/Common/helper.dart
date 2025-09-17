@@ -84,16 +84,30 @@ class Helper {
     }
   }
 
+  static Future<bool> _handleLocPermission() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return false; // ❌ denied again
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // ❌ User selected "Don't ask again" → open settings
+      await Geolocator.openAppSettings();
+      return false;
+    }
+
+    return true; // ✅ granted
+  }
+
   static Future<LocationModel?> getCurrentLocation() async {
     try {
-      PermissionStatus permissionStatus = await requestPermission(
-        Permission.location,
-        message: ToastMsg.allowLocationAccess,
-      );
+      bool hasPermission = await _handleLocPermission();
+      if (!hasPermission) return null;
 
-      if (permissionStatus != PermissionStatus.granted) {
-        return null;
-      }
       LocationModel? locationModel = LocationModel();
       // Stream<Position>  position = Geolocator.getPositionStream(
       //   locationSettings: GetPlatform.isAndroid
@@ -129,14 +143,9 @@ class Helper {
   //
   static Future<Stream<Position>?> getCurrentLocationStream() async {
     try {
-      PermissionStatus permissionStatus = await requestPermission(
-        Permission.location,
-        message: ToastMsg.allowLocationAccess,
-      );
+      bool hasPermission = await _handleLocPermission();
+      if (!hasPermission) return null;
 
-      if (permissionStatus != PermissionStatus.granted) {
-        return null;
-      }
       LocationSettings? locationSettings;
       if (GetPlatform.isAndroid) {
         locationSettings = AndroidSettings(accuracy: LocationAccuracy.high);

@@ -248,7 +248,7 @@ class PayoutScreen extends GetView<ProfileController> {
         );
       }
 
-      final amount = data.amount ?? 0;
+      final amount = earnings.cycleEarning ?? 0;
       // final amount = 10;
       final lifetime = earnings.totalEarning ?? 0;
       const maxPayout = 10.0;
@@ -462,7 +462,7 @@ class PayoutScreen extends GetView<ProfileController> {
               heading: "Amount",
               // controller: controller.amountController,
               initialValue:
-                  controller.earningResModel.value.data?.amount.toString(),
+                  controller.earningResModel.value.cycleEarning.toString(),
               hintText: "Enter amount",
               textInputType: TextInputType.number,
               // readOnly: true,
@@ -481,7 +481,7 @@ class PayoutScreen extends GetView<ProfileController> {
                 // 2. Numeric + Balance check
                 final entered = double.tryParse(value ?? "0") ?? 0;
                 final available =
-                    controller.earningResModel.value.data?.amount ?? 0;
+                    controller.earningResModel.value.cycleEarning ?? 0;
 
                 if (entered < 1) {
                   return "Minimum amount is 1";
@@ -585,17 +585,17 @@ class PayoutScreen extends GetView<ProfileController> {
                             "Routing Number",
                           ),
                     ),
-                    12.verticalSpace,
-                    AppHeadingTextField(
-                      heading: "Account Type",
-                      controller: controller.accountTypeController,
-                      hintText: "Checking / Savings",
-                      validator:
-                          (value) => ValidationHelper.validateNonEmpty(
-                            value,
-                            "Account Type",
-                          ),
-                    ),
+                    // 12.verticalSpace,
+                    // AppHeadingTextField(
+                    //   heading: "Account Type",
+                    //   controller: controller.accountTypeController,
+                    //   hintText: "Checking / Savings",
+                    //   validator:
+                    //       (value) => ValidationHelper.validateNonEmpty(
+                    //         value,
+                    //         "Account Type",
+                    //       ),
+                    // ),
                   ],
                 );
 

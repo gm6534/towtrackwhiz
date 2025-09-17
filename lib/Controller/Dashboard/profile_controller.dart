@@ -88,7 +88,7 @@ class ProfileController extends GetxController {
   final bankNameController = TextEditingController();
   final accountNumberController = TextEditingController();
   final routingNumberController = TextEditingController();
-  final accountTypeController = TextEditingController();
+  // final accountTypeController = TextEditingController();
   final payoutHandleController = TextEditingController();
 
   @override
@@ -682,7 +682,7 @@ class ProfileController extends GetxController {
       model.bankName = bankNameController.text;
       // model.accountNumber = accountNumberController.text;
       model.routingNumber = routingNumberController.text;
-      model.accountType = accountTypeController.text;
+      // model.accountType = accountTypeController.text;
       model.payoutHandle = payoutHandleController.text;
       final result = await dashboardRepo?.submitPayoutRequest(model: model);
       if (result != null) {
@@ -735,7 +735,7 @@ class ProfileController extends GetxController {
     bankNameController.clear();
     accountNumberController.clear();
     routingNumberController.clear();
-    accountTypeController.clear();
+    // accountTypeController.clear();
     payoutHandleController.clear();
   }
 }

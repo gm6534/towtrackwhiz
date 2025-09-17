@@ -31,8 +31,10 @@ class PayoutHistoryScreen extends GetView<ProfileController> {
         itemBuilder: (context, index) {
           final payout = controller.payoutHistory[index];
           final statusColor =
-              payout.status?.toLowerCase() == "completed"
+              payout.status?.toLowerCase() == "paid"
                   ? AppColors.greenColor
+                  : payout.status?.toLowerCase() == "denied"
+                  ? AppColors.redColor
                   : AppColors.warningColor;
 
           String formattedDate = "-";

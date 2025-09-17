@@ -7,6 +7,7 @@ AppBar? get commonAppBar {
   return AppBar(
     // leading: SizedBox.shrink(),
     // leadingWidth: 0,
+    centerTitle: false,
     iconTheme: IconThemeData(color: AppColors.primary),
     backgroundColor: AppColors.scaffoldBgColor,
     surfaceTintColor: AppColors.scaffoldBgColor,

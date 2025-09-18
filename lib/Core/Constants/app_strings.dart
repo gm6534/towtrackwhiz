@@ -1,5 +1,5 @@
 class AppInfo {
-  static const String appTitle = "Tow Track Whiz";
+  static const String appTitle = "TowTrackWhiz";
 }
 
 class GetStorageKeys {
@@ -20,6 +20,7 @@ class ImgPath {
   /////////////////<<<<<-- PNG IMAGES -->>>>///////////////////////
   // static const String appLogo = "${png}towTrackLogo.png";
   static const String appLogo = "${png}app_new_logo.png";
+  static const String appLogo1 = "${png}Tow-Track-Whiz.png";
   static const String tow1Png = "${png}tow1.png";
   static const String tow2Png = "${png}tow2.png";
   static const String tow3Png = "${png}tow3.png";

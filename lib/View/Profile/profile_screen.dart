@@ -23,6 +23,7 @@ class ProfileScreen extends GetView<ProfileController> {
         return SingleChildScrollView(
           child: Column(
             children: [
+              20.verticalSpace,
               Container(
                 height: 120.w,
                 width: 120.w,
@@ -90,7 +91,7 @@ class ProfileScreen extends GetView<ProfileController> {
                 child: Row(
                   spacing: 10.w,
                   children: [
-                    Image.asset(ImgPath.badgeIcon, height: 30.w, width: 30.w),
+                    Image.asset(ImgPath.badgeIcon, height: 30.w, width: 30.w, color: AppColors.yellowColor,),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

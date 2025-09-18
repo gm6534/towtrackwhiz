@@ -16,6 +16,7 @@ class HomeScreen extends GetView<HomeController> {
       spacing: 15.w,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        5.verticalSpace,
         Align(
           alignment: AlignmentDirectional.centerStart,
           child: Text(

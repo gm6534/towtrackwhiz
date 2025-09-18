@@ -30,7 +30,7 @@ class DashboardScreen extends GetView<DashboardController> {
       },
       child: Obx(
         () => BaseScaffold(
-          appBar: commonAppBar,
+          // appBar: commonAppBar,
           body:
               controller.isDashboardLoading.value
                   ? Center(child: CircularProgressIndicator())

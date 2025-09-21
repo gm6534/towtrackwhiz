@@ -182,6 +182,14 @@ class ActionText {
 }
 
 class ToastMsg {
+  static const String allowNotificationAccess =
+      "Please allow access to notifications";
+  static const String locationPermissionDenied =
+      "Location permission denied. Please enable it in settings.";
+  static const String locationPermissionPermanentlyDenied =
+      "Location permission permanently denied. Please enable it in settings.";
+  static const String locationServiceDisabled =
+      "Location service disabled. Please enable it in settings.";
   static const String allowCameraAccess = "Please allow access to the Camera";
   static const String allowGalleryAccess = "Please allow access to the Gallery";
   static const String noInternetConnection = "No Internet Connection";

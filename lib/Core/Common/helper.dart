@@ -20,6 +20,7 @@ class Helper {
   static Future<PermissionStatus> requestPermission(
     Permission permission, {
     String? message,
+    int toastDuration = 3,
     bool isContext = false,
   }) async {
     PermissionStatus status = PermissionStatus.denied;
@@ -34,6 +35,7 @@ class Helper {
     if (status == PermissionStatus.denied) {
       ToastAndDialog.showCustomSnackBar(
         message!,
+        duration: toastDuration,
         backgroundColor: AppColors.redColor,
       );
     } else if (status == PermissionStatus.permanentlyDenied) {
@@ -87,29 +89,82 @@ class Helper {
     }
   }
 
-  static Future<bool> _handleLocPermission() async {
-    LocationPermission permission = await Geolocator.checkPermission();
-
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return false; // ❌ denied again
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      // ❌ User selected "Don't ask again" → open settings
-      await Geolocator.openAppSettings();
-      return false;
-    }
-
-    return true; // ✅ granted
-  }
+  // static Future<bool> _handleLocPermission() async {
+  //   // 🔹 Check if location services (GPS) are enabled
+  //   bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  //   if (!serviceEnabled) {
+  //     ToastAndDialog.showCustomSnackBar(ToastMsg.locationServiceDisabled);
+  //     bool userConfirmed = await ToastAndDialog.confirmation(
+  //       message: ToastMsg.locationServiceDisabled,
+  //       okText: "Open Settings",
+  //       cancelText: "Cancel",
+  //     );
+  //     if (userConfirmed) {
+  //       if (Platform.isAndroid) {
+  //         await Geolocator.openAppSettings();
+  //       } else {
+  //         await Geolocator.openLocationSettings();
+  //       }
+  //     }
+  //     // After returning from settings, check again
+  //     serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  //     if (!serviceEnabled) {
+  //       ToastAndDialog.showCustomSnackBar(ToastMsg.locationServiceDisabled);
+  //       return false; // ❌ Still disabled
+  //     }
+  //   }
+  //
+  //   // 🔹 Check current permission status
+  //   LocationPermission permission = await Geolocator.checkPermission();
+  //
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     if (permission == LocationPermission.denied) {
+  //       ToastAndDialog.showCustomSnackBar(ToastMsg.locationPermissionDenied);
+  //       return false;
+  //     }
+  //   }
+  //
+  //   if (permission == LocationPermission.deniedForever) {
+  //     // ❌ User tapped "Don’t ask again"
+  //     bool userConfirmed = await ToastAndDialog.confirmation(
+  //       title: "Permission Required",
+  //       message:
+  //           "Location permission is required to track your trips. Open Settings to enable it?",
+  //       okText: "Open Settings",
+  //       cancelText: "Cancel",
+  //     );
+  //
+  //     if (userConfirmed) {
+  //       await Geolocator.openAppSettings(); // better than openLocationSettings for iOS
+  //     } else {
+  //       ToastAndDialog.showCustomSnackBar(
+  //         ToastMsg.locationPermissionPermanentlyDenied,
+  //         duration: 5,
+  //       );
+  //     }
+  //     return false;
+  //   }
+  //
+  //   // 🔹 Handle background location separately
+  //   if (permission == LocationPermission.whileInUse) {
+  //     // On iOS, you must explicitly request background access
+  //     if (GetPlatform.isIOS) {
+  //       LocationPermission bgPermission = await Geolocator.requestPermission();
+  //       if (bgPermission != LocationPermission.always) {
+  //         Log.w("Location", "Background location not granted");
+  //         // Still usable, but only foreground
+  //       }
+  //     }
+  //   }
+  //
+  //   return true; // ✅ Permission is granted
+  // }
 
   static Future<LocationModel?> getCurrentLocation() async {
     try {
-      bool hasPermission = await _handleLocPermission();
-      if (!hasPermission) return null;
+      // bool hasPermission = await _handleLocPermission();
+      // if (!hasPermission) return null;
 
       LocationModel? locationModel = LocationModel();
       // Stream<Position>  position = Geolocator.getPositionStream(
@@ -146,8 +201,8 @@ class Helper {
   //
   static Future<Stream<Position>?> getCurrentLocationStream() async {
     try {
-      bool hasPermission = await _handleLocPermission();
-      if (!hasPermission) return null;
+      // bool hasPermission = await _handleLocPermission();
+      // if (!hasPermission) return null;
 
       LocationSettings? locationSettings;
       if (GetPlatform.isAndroid) {

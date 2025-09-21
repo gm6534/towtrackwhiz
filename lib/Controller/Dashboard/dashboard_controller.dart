@@ -8,7 +8,11 @@ import 'package:towtrackwhiz/View/Common/report_tow_activity_dialog.dart';
 import '../../../View/Dashboard/Alert/alert_screen.dart';
 import '../../../View/Dashboard/Home/home_screen.dart';
 import '../../../View/Dashboard/LookUp/lookup_screen.dart';
+import '../../Core/Common/Widgets/toasts.dart';
+import '../../Core/Common/permission_manager.dart';
+import '../../Core/Notify/notification_service.dart';
 import '../../View/Profile/profile_screen.dart';
+import '../Scheduler/scheduler_controller.dart';
 
 class DashboardController extends GetxController {
   var currentIndex = 0.obs;
@@ -16,7 +20,6 @@ class DashboardController extends GetxController {
   HomeController? homeController;
   RxBool isDashboardLoading = false.obs;
   Directory? tempDirectory;
-
 
   @override
   void onInit() {
@@ -28,6 +31,8 @@ class DashboardController extends GetxController {
 
   Future<void> firstApiCall() async {
     isDashboardLoading.value = true;
+    await PermissionManager.requestNeedyPermissions();
+    Get.put(SchedulerController());
     await homeController?.firstApiCall();
     isDashboardLoading.value = false;
   }
@@ -48,26 +53,15 @@ class DashboardController extends GetxController {
   }
 
   Future<void> showReportTowActivityDialog() async {
-    homeController?.resetDialogData();
-    // if (homeController!.vehiclesList.isEmpty) {
-    //   ToastAndDialog.progressIndicator(text: "Please wait...\nSetting up".obs);
-    //   var list = await homeController?.getVehicleList();
-    //   if (Get.isDialogOpen ?? false) {
-    //     Get.back();
-    //   }
-    //   if (list == null || list.isEmpty) {
-    //     ToastAndDialog.showCustomSnackBar(
-    //       "Please registered your vehicle first",
-    //       // title: "Alert",
-    //       backgroundColor: AppColors.redColor
-    //     );
-    //
-    //     // ToastAndDialog.showCustomSnackBar(
-    //     //   "Please registered your vehicle first",
-    //     // );
-    //     return;
-    //   }
+    // if (!homeController!.isLocServiceEnabled.value ||
+    //     !homeController!.isLocPermissionGranted.value) {
+    //   ToastAndDialog.showCustomSnackBar(
+    //     "Please enable location services and allow location access",
+    //     duration: 5,
+    //   );
+    //   return;
     // }
+    homeController?.resetDialogData();
     Get.dialog(ReportTowActivityDialog(), barrierDismissible: false);
   }
 }

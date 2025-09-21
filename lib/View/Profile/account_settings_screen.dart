@@ -83,7 +83,7 @@ class AccountSettingsScreen extends GetView<ProfileController> {
                 AppHeadingTextField(
                   heading: AppHeadings.password,
                   controller: controller.passwordC,
-                  textInputType: TextInputType.phone,
+                  textInputType: TextInputType.visiblePassword,
                   onChanged: (value) => controller.checkChanges(),
                   prefix: Container(
                     margin: EdgeInsets.all(15.w),
@@ -99,7 +99,7 @@ class AccountSettingsScreen extends GetView<ProfileController> {
                 AppHeadingTextField(
                   heading: AppHeadings.confirmPassword,
                   controller: controller.confirmPasswordC,
-                  textInputType: TextInputType.phone,
+                  textInputType: TextInputType.visiblePassword,
                   onChanged: (value) => controller.checkChanges(),
                   prefix: Container(
                     margin: EdgeInsets.all(15.w),

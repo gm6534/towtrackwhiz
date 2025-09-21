@@ -674,7 +674,7 @@ class HomeController extends GetxController {
     try {
       // Do not clear earlier list until successful fetch to avoid UI flicker
       // But show loading state
-      isHeatMapLoading.value = true;
+      // isHeatMapLoading.value = true;
 
       // Ensure we have a valid location (try quickly)
       await _ensureLocationAvailable(timeout: const Duration(seconds: 6));
@@ -695,8 +695,6 @@ class HomeController extends GetxController {
       }
     } catch (e) {
       Log.d("getCommunityAlertList - Home Controller", e.toString());
-    } finally {
-      isHeatMapLoading.value = false;
     }
   }
 
@@ -853,7 +851,7 @@ class HomeController extends GetxController {
         permission = Permission.camera;
         permissionMessage = ToastMsg.allowCameraAccess;
       } else {
-        permission = Permission.mediaLibrary;
+        permission = Permission.photos;
         permissionMessage = ToastMsg.allowGalleryAccess;
       }
 
@@ -881,6 +879,9 @@ class HomeController extends GetxController {
   }
 
   ///<<<<<<<<<<<<<::::::::::::::::::::::::::::::::HEAT MAP WIDGET::::::::::::::::::::::::::::::::::::::::>>>>>>>>>>>>>>>///
+
+  RxBool isLocServiceEnabled = true.obs;
+  RxBool isLocPermissionGranted = true.obs;
 
   final heatMapControllerCompleter = Completer<GoogleMapController>();
 
@@ -1108,6 +1109,11 @@ class HomeController extends GetxController {
   Future<void> refreshZones() async {
     try {
       isHeatMapLoading.value = true;
+      isLocServiceEnabled.value = await Geolocator.isLocationServiceEnabled();
+      LocationPermission locPermission = await Geolocator.checkPermission();
+      isLocPermissionGranted.value =
+          locPermission == LocationPermission.always ||
+          locPermission == LocationPermission.whileInUse;
 
       // cancel and restart timer if requested
       _refreshTimer?.cancel();

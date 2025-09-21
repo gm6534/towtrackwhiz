@@ -8,6 +8,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:towtrackwhiz/Core/Common/helper.dart';
 
 import '../../Core/Constants/app_strings.dart';
 import '../../Core/Utils/log_util.dart';
@@ -146,26 +147,25 @@ class SchedulerController extends GetxController with WidgetsBindingObserver {
 
   /// 🔹 iOS continuous background location (Core Location stream)
   Future<void> _startiOSBackgroundUpdates() async {
-    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) return;
-
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied ||
-        permission == LocationPermission.deniedForever) {
-      permission = await Geolocator.requestPermission();
-      if (permission != LocationPermission.always &&
-          permission != LocationPermission.whileInUse) {
-        return;
-      }
-    }
+    // LocationPermission permission = await Geolocator.checkPermission();
+    // if (permission == LocationPermission.denied ||
+    //     permission == LocationPermission.deniedForever) {
+    //   permission = await Geolocator.requestPermission();
+    //   if (permission != LocationPermission.always &&
+    //       permission != LocationPermission.whileInUse) {
+    //     return;
+    //   }
+    // }
 
     _iosBackgroundStream?.cancel();
-    _iosBackgroundStream = Geolocator.getPositionStream(
-      locationSettings: const LocationSettings(
-        accuracy: LocationAccuracy.best,
-        distanceFilter: 10, // update every 10 meters
-      ),
-    ).listen((position) async {
+    Stream<Position>? positionStream = await Helper.getCurrentLocationStream();
+    // _iosBackgroundStream = Geolocator.getPositionStream(
+    //   locationSettings: const LocationSettings(
+    //     accuracy: LocationAccuracy.best,
+    //     distanceFilter: 10, // update every 10 meters
+    //   ),
+    // )
+    _iosBackgroundStream = positionStream?.listen((position) async {
       positionStreamIos = position;
       await locationCallbackTopLevel();
     });

@@ -95,21 +95,12 @@ class LoginController extends GetxController {
 
       final email = emailController.text.trim();
       final password = passwordController.text.trim();
-
-      try {
-        if (GetPlatform.isIOS) {
-          final apnsToken = await firebaseMessaging.getAPNSToken();
-          if (apnsToken != null) {
-            // only safe to call getToken() after APNS exists
-            await Future.delayed(const Duration(seconds: 2));
-            _deviceToken = await firebaseMessaging.getToken();
-          }
-        } else {
-          // Android is safe
-          _deviceToken = await firebaseMessaging.getToken();
-        }
-      } catch (e) {
-        debugPrint("⚠️ Skipping device token: $e");
+      String? deviceToken = await authController.getDeviceToken(
+        firebaseMessaging: firebaseMessaging,
+      );
+      _deviceToken = deviceToken;
+      if (_deviceToken == null) {
+        return;
       }
 
       final loginResponse = await authController.login(
@@ -132,22 +123,6 @@ class LoginController extends GetxController {
 
   Future<void> signInWithGoogle() async {
     try {
-      try {
-        if (GetPlatform.isIOS) {
-          final apnsToken = await firebaseMessaging.getAPNSToken();
-          if (apnsToken != null) {
-            // only safe to call getToken() after APNS exists
-            await Future.delayed(const Duration(seconds: 2));
-            _deviceToken = await firebaseMessaging.getToken();
-          }
-        } else {
-          // Android is safe
-          _deviceToken = await firebaseMessaging.getToken();
-        }
-      } catch (e) {
-        debugPrint("⚠️ Skipping device token: $e");
-      }
-
       final GoogleSignIn googleSignIn = GoogleSignIn(scopes: <String>['email']);
       await googleSignIn.signOut();
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
@@ -156,6 +131,15 @@ class LoginController extends GetxController {
         final authController = Get.find<AuthController>();
         final email = googleUser.email;
         final name = googleUser.displayName ?? "";
+
+        String? deviceToken = await authController.getDeviceToken(
+          firebaseMessaging: firebaseMessaging,
+        );
+        _deviceToken = deviceToken;
+        if (_deviceToken == null) {
+          return;
+        }
+
         final loginResponse = await authController.socialLogin(
           userName: name,
           email: email,
@@ -177,21 +161,6 @@ class LoginController extends GetxController {
 
   Future<void> signInWithApple() async {
     try {
-      try {
-        if (GetPlatform.isIOS) {
-          final apnsToken = await firebaseMessaging.getAPNSToken();
-          if (apnsToken != null) {
-            // only safe to call getToken() after APNS exists
-            await Future.delayed(const Duration(seconds: 2));
-            _deviceToken = await firebaseMessaging.getToken();
-          }
-        } else {
-          // Android is safe
-          _deviceToken = await firebaseMessaging.getToken();
-        }
-      } catch (e) {
-        debugPrint("⚠️ Skipping device token: $e");
-      }
       final credential = await SignInWithApple.getAppleIDCredential(
         scopes: [
           AppleIDAuthorizationScopes.email,
@@ -206,6 +175,13 @@ class LoginController extends GetxController {
       }
       if (credential.userIdentifier != null) {
         final authController = Get.find<AuthController>();
+        String? deviceToken = await authController.getDeviceToken(
+          firebaseMessaging: firebaseMessaging,
+        );
+        _deviceToken = deviceToken;
+        if (_deviceToken == null) {
+          return;
+        }
         final loginResponse = await authController.socialLogin(
           userName: userName,
           email: email,

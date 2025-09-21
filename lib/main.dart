@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:towtrackwhiz/core/Constants/app_strings.dart';
 
 import 'Controller/Other/connectivity_controller.dart';
-import 'Controller/Scheduler/scheduler_controller.dart';
 import 'Core/Notify/notification_service.dart';
 import 'app_config.dart';
 import 'core/Routes/app_pages.dart';
@@ -19,10 +18,10 @@ Future<void> main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await AppConfig.initialize();
   Get.find<ConnectionManagerController>();
-  Get.put(SchedulerController());
+  // Get.put(SchedulerController());
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-  await NotificationService().init();
   runApp(const MyApp());
+  NotificationService().init();
 }
 
 class MyApp extends StatelessWidget {

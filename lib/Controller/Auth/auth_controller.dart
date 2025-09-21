@@ -1,6 +1,9 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:towtrackwhiz/Core/Routes/app_route.dart';
 import 'package:towtrackwhiz/Model/Auth/auth_response_model.dart';
 import 'package:towtrackwhiz/Model/Auth/login_req_model.dart';
@@ -8,6 +11,7 @@ import 'package:towtrackwhiz/Model/Auth/signup_req_model.dart';
 import 'package:towtrackwhiz/Repository/auth_repo.dart';
 
 import '../../Core/Common/Widgets/toasts.dart';
+import '../../Core/Common/helper.dart';
 import '../../Core/Constants/app_strings.dart';
 import '../../Core/Utils/log_util.dart';
 
@@ -171,6 +175,7 @@ class AuthController extends GetxController {
     required String password,
     required String confirmPassword,
     required String name,
+    required String deviceToken,
   }) async {
     try {
       ToastAndDialog.progressIndicator();
@@ -179,6 +184,7 @@ class AuthController extends GetxController {
       reqModel.confirmPassword = confirmPassword;
       reqModel.email = email;
       reqModel.name = name;
+      reqModel.deviceToken = deviceToken;
 
       authInfo = await _authRepo?.signUp(model: reqModel);
       Get.back();
@@ -245,6 +251,49 @@ class AuthController extends GetxController {
         Get.back();
       }
     }
+  }
+
+  Future<String?> getDeviceToken({
+    required FirebaseMessaging firebaseMessaging,
+  }) async {
+    String? token;
+    try {
+      // 🔹 Step 1: request notification permission
+      final status = await Helper.requestPermission(
+        Permission.notification,
+        toastDuration: 5,
+        message: "Notification permission is required to receive updates",
+      );
+
+      if (status != PermissionStatus.granted) {
+        return null;
+      }
+
+      if (GetPlatform.isIOS) {
+        // 🔹 Step 2: wait for APNs token
+        final apnsToken = await firebaseMessaging.getAPNSToken();
+        if (apnsToken == null) {
+          debugPrint("❌ APNs token not available");
+          return null;
+        }
+
+        // 🔹 Step 3: FCM token after APNs
+        await Future.delayed(const Duration(seconds: 2));
+        token = await firebaseMessaging.getToken();
+      } else {
+        // Always safe to request FCM token
+        token = await firebaseMessaging.getToken();
+      }
+
+      if (token == null) {
+        debugPrint("⚠️ Failed to retrieve FCM token");
+      } else {
+        debugPrint("✅ Device FCM token: $token");
+      }
+    } catch (e, st) {
+      debugPrint("⚠️ Error retrieving device token: $e\n$st");
+    }
+    return token;
   }
 
   Future<void> logout({bool justToClear = true}) async {

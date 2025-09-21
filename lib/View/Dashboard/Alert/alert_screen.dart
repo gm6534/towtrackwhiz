@@ -57,36 +57,34 @@ class AlertScreen extends GetView<CommunityAlertController> {
                   final isUpVoted = alert.isUpVoted(myUserId!);
                   final isDownVoted = alert.isDownVoted(myUserId);
 
-                  return Opacity(
-                    opacity: (isUpVoted || isDownVoted) ? 0.3 : 1,
-                    child: AlertCardWidget(
-                      // tileColor:
-                      //     (isUpVoted || isDownVoted)
-                      //         ? AppColors.greyColor.withValues(alpha: 0.2)
-                      //         : null,
-                      title: alert.alertType ?? "",
-                      location: alert.location ?? "",
-                      imgUrl: alert.imagePath ?? "",
-                      time: alert.createdAt ?? "",
-                      upVote: alert.upVoteCount.toString(),
-                      downVote: alert.downVoteCount.toString(),
-                      onTapUpVote: () async {
-                        if (isUpVoted || isDownVoted) return;
-                        await controller.submitAlertVote(
-                          type: "upvote",
-                          id: alert.id,
-                        );
-                      },
-                      onTapDownVote: () async {
-                        if (isUpVoted || isDownVoted) return;
-                        await controller.submitAlertVote(
-                          type: "downvote",
-                          id: alert.id,
-                        );
-                      },
-                      latitude: alert.latitude!,
-                      longitude: alert.longitude!,
-                    ),
+                  return AlertCardWidget(
+                    // tileColor:
+                    //     (isUpVoted || isDownVoted)
+                    //         ? AppColors.greyColor.withValues(alpha: 0.2)
+                    //         : null,
+                    status: alert.status ?? "",
+                    title: alert.alertType ?? "",
+                    location: alert.location ?? "",
+                    imgUrl: alert.imagePath ?? "",
+                    time: alert.createdAt ?? "",
+                    upVote: alert.upVoteCount.toString(),
+                    downVote: alert.downVoteCount.toString(),
+                    onTapUpVote: () async {
+                      if (isUpVoted || isDownVoted) return;
+                      await controller.submitAlertVote(
+                        type: "upvote",
+                        id: alert.id,
+                      );
+                    },
+                    onTapDownVote: () async {
+                      if (isUpVoted || isDownVoted) return;
+                      await controller.submitAlertVote(
+                        type: "downvote",
+                        id: alert.id,
+                      );
+                    },
+                    latitude: alert.latitude!,
+                    longitude: alert.longitude!,
                   );
                 },
               );

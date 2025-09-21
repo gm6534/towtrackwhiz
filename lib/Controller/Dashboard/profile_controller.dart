@@ -41,6 +41,7 @@ class ProfileController extends GetxController {
   }
 
   final payoutFormKey = GlobalKey<FormState>();
+  final profileFormKey = GlobalKey<FormState>();
   var isNotificationEnabled = true.obs;
   final GlobalKey<FormState> addVehicleFormKey = GlobalKey<FormState>();
   final TextEditingController licPlateController = TextEditingController();
@@ -198,6 +199,7 @@ class ProfileController extends GetxController {
   }
 
   Future<void> updateUserProfile() async {
+    if (!profileFormKey.currentState!.validate()) return;
     if (passwordC.text.isNotEmpty && confirmPasswordC.text.isEmpty) {
       ToastAndDialog.showCustomSnackBar("Both Password will be the same");
       return;

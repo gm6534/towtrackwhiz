@@ -44,7 +44,7 @@ class AddEditVehicleScreen extends GetView<ProfileController> {
               AppHeadingTextField(
                 controller: controller.licPlateController,
                 heading: Strings.licensePlate,
-                hintText: "",
+                hintText: "ABC 123",
                 textInputType: TextInputType.text,
                 onChanged: (value) {
                   controller.licPlateController.text = value.toUpperCase();
@@ -59,14 +59,14 @@ class AddEditVehicleScreen extends GetView<ProfileController> {
                 controller: controller.makeController,
                 heading: AppHeadings.make,
                 textInputType: TextInputType.name,
-                hintText: "",
+                hintText: "Honda",
                 validator:
                     (value) => ValidationHelper.validateNonEmpty(value, "Make"),
               ),
               AppHeadingTextField(
                 controller: controller.modelController,
                 heading: AppHeadings.vehicleModel,
-                hintText: "",
+                hintText: "C180",
                 textInputType: TextInputType.name,
                 validator:
                     (value) => ValidationHelper.validateNonEmpty(
@@ -78,7 +78,7 @@ class AddEditVehicleScreen extends GetView<ProfileController> {
                 controller: controller.modelYearController,
                 heading: AppHeadings.modelYear,
                 textInputType: TextInputType.number,
-                hintText: "",
+                hintText: "2025",
                 readOnly: true,
                 onTap: () => controller.showYearPicker(context),
                 validator:
@@ -90,7 +90,7 @@ class AddEditVehicleScreen extends GetView<ProfileController> {
               AppHeadingTextField(
                 controller: controller.colorController,
                 heading: AppHeadings.vehicleColor,
-                hintText: "",
+                hintText: "Pick Color",
                 textInputType: TextInputType.name,
                 readOnly: true,
                 onTap: () => controller.pickColor(context),
@@ -104,7 +104,7 @@ class AddEditVehicleScreen extends GetView<ProfileController> {
                 controller: controller.registerStateController,
                 heading: AppHeadings.registrationState,
                 textInputType: TextInputType.name,
-                hintText: "",
+                hintText: "Enter State",
                 validator:
                     (value) => ValidationHelper.validateNonEmpty(
                       value,

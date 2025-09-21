@@ -11,6 +11,7 @@ import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AlertCardWidget extends StatelessWidget {
+  final String status;
   final String title;
   final String location;
   final String latitude;
@@ -25,6 +26,7 @@ class AlertCardWidget extends StatelessWidget {
 
   const AlertCardWidget({
     super.key,
+    required this.status,
     required this.title,
     required this.location,
     required this.imgUrl,
@@ -40,6 +42,7 @@ class AlertCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isVerified = status.toLowerCase() == "verified";
     return Container(
       padding: EdgeInsets.all(10.w),
       margin: EdgeInsets.symmetric(vertical: 3.w),
@@ -53,9 +56,17 @@ class AlertCardWidget extends StatelessWidget {
         spacing: 10.w,
         children: [
           CircleAvatar(
-            backgroundColor: AppColors.lightRed,
+            backgroundColor:
+                isVerified ? AppColors.greenColor : AppColors.lightRed,
             child: Center(
-              child: Image.asset(ImgPath.alertIcon, height: 20.w, width: 20.w),
+              child:
+                  isVerified
+                      ? Icon(Icons.check, color: AppColors.white, size: 20.w)
+                      : Image.asset(
+                        ImgPath.alertIcon,
+                        height: 20.w,
+                        width: 20.w,
+                      ),
             ),
           ),
           Expanded(
@@ -69,13 +80,19 @@ class AlertCardWidget extends StatelessWidget {
                     horizontal: 10.w,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.lightRed,
+                    color:
+                        isVerified
+                            ? AppColors.lightGreenColor
+                            : AppColors.lightRed,
                     borderRadius: BorderRadius.circular(20.r),
                   ),
                   child: Text(
-                    Strings.emergency,
+                    isVerified ? Strings.verified : Strings.emergency,
                     style: Get.textTheme.bodyMedium?.copyWith(
-                      color: AppColors.redColor,
+                      color:
+                          isVerified
+                              ? AppColors.greenColor
+                              : AppColors.redColor,
                     ),
                   ),
                 ),
@@ -129,28 +146,28 @@ class AlertCardWidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Row(
-                      spacing: 3.w,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onTap: onTapDownVote,
-                          child: Icon(
-                            Icons.keyboard_arrow_down,
-                            color: AppColors.redColor,
-                            size: 28.w,
-                          ),
-                        ),
-                        Text(
-                          downVote,
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                            color: Colors.black54,
-                          ),
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   spacing: 3.w,
+                    //   crossAxisAlignment: CrossAxisAlignment.center,
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     GestureDetector(
+                    //       onTap: onTapDownVote,
+                    //       child: Icon(
+                    //         Icons.keyboard_arrow_down,
+                    //         color: AppColors.redColor,
+                    //         size: 28.w,
+                    //       ),
+                    //     ),
+                    //     Text(
+                    //       downVote,
+                    //       style: TextStyle(
+                    //         fontSize: 18.sp,
+                    //         color: Colors.black54,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                   ],
                 ),
               ],

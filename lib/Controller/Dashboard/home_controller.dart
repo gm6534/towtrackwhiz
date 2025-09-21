@@ -605,7 +605,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
 import 'package:towtrackwhiz/Model/Alerts/location_model.dart';
 import 'package:towtrackwhiz/Repository/dashboard_repo.dart';
@@ -844,22 +843,22 @@ class HomeController extends GetxController {
 
   Future<void> pickImageFromSource(ImageSource source) async {
     try {
-      Permission permission;
-      String permissionMessage;
+      // Permission permission;
+      // String permissionMessage;
+      //
+      // if (source == ImageSource.camera) {
+      //   permission = Permission.camera;
+      //   permissionMessage = ToastMsg.allowCameraAccess;
+      // } else {
+      //   permission = Permission.photos;
+      //   permissionMessage = ToastMsg.allowGalleryAccess;
+      // }
 
-      if (source == ImageSource.camera) {
-        permission = Permission.camera;
-        permissionMessage = ToastMsg.allowCameraAccess;
-      } else {
-        permission = Permission.photos;
-        permissionMessage = ToastMsg.allowGalleryAccess;
-      }
-
-      final status = await Helper.requestPermission(
-        permission,
-        message: permissionMessage,
-      );
-      if (!status.isGranted) return;
+      // final status = await Helper.requestPermission(
+      //   permission,
+      //   message: permissionMessage,
+      // );
+      // if (!status.isGranted) return;
 
       final picked = await ImagePicker().pickImage(
         source: source,

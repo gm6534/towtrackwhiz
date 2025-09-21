@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:towtrackwhiz/Core/Routes/app_route.dart';
 import 'package:towtrackwhiz/Model/Auth/auth_response_model.dart';
 import 'package:towtrackwhiz/Model/Auth/login_req_model.dart';
@@ -11,7 +10,6 @@ import 'package:towtrackwhiz/Model/Auth/signup_req_model.dart';
 import 'package:towtrackwhiz/Repository/auth_repo.dart';
 
 import '../../Core/Common/Widgets/toasts.dart';
-import '../../Core/Common/helper.dart';
 import '../../Core/Constants/app_strings.dart';
 import '../../Core/Utils/log_util.dart';
 
@@ -258,16 +256,16 @@ class AuthController extends GetxController {
   }) async {
     String? token;
     try {
-      // 🔹 Step 1: request notification permission
-      final status = await Helper.requestPermission(
-        Permission.notification,
-        toastDuration: 5,
-        message: "Notification permission is required to receive updates",
-      );
-
-      if (status != PermissionStatus.granted) {
-        return null;
-      }
+      // // 🔹 Step 1: request notification permission
+      // final status = await Helper.requestPermission(
+      //   Permission.notification,
+      //   toastDuration: 5,
+      //   message: "Notification permission is required to receive updates",
+      // );
+      //
+      // if (status != PermissionStatus.granted) {
+      //   return null;
+      // }
 
       if (GetPlatform.isIOS) {
         // 🔹 Step 2: wait for APNs token

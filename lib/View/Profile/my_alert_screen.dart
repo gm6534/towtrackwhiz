@@ -41,6 +41,7 @@ class MyAlertScreen extends GetView<ProfileController> {
                   final alert = controller.myAlertsList[index];
                   return AlertCardWidget(
                     title: alert.alertType ?? "",
+                    status: alert.status ?? "",
                     location: alert.location ?? "",
                     upVote: alert.upVoteCount.toString(),
                     downVote: alert.downVoteCount.toString(),

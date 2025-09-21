@@ -95,6 +95,9 @@ class AppHeadingTextField extends StatelessWidget {
             fillColor: fillColor,
             // label: heading.isNotEmpty ? Text(heading) : null,
             hintText: hintText,
+            hintStyle: Get.textTheme.bodyLarge?.copyWith(
+              color: AppColors.lightGreyColor,
+            ),
             prefixIcon: prefix,
             suffixIcon: suffix,
           ),

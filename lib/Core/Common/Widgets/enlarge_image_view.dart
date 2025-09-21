@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
+
+import 'common_cache_image.dart';
 
 class EnlargeImageView extends StatelessWidget {
   final String? path;
@@ -23,7 +26,12 @@ class EnlargeImageView extends StatelessWidget {
           panEnabled: true,
           minScale: 1.0,
           maxScale: 10.0,
-          child: Image.network(path!, fit: BoxFit.contain),
+          child: CommonCacheImage(
+            imgUrl: path!,
+            boxFit: BoxFit.contain,
+            height: context.height,
+            width: context.width,
+          ),
         ),
       ),
     );

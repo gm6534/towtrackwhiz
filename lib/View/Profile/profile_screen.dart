@@ -30,20 +30,34 @@ class ProfileScreen extends GetView<ProfileController> {
                 decoration: BoxDecoration(
                   color: AppColors.secondary,
                   shape: BoxShape.circle,
-                  image: DecorationImage(
-                    fit: BoxFit.fitWidth,
-                    image: NetworkImage(controller.currentUser.value.avatar!),
-                  ),
+                  image:
+                      controller.currentUser.value.avatar == null
+                          ? null
+                          : DecorationImage(
+                            fit: BoxFit.fitWidth,
+                            image: NetworkImage(
+                              controller.currentUser.value.avatar!,
+                            ),
+                          ),
                 ),
-                // child: Icon(Icons.person, size: 50.w, color: AppColors.redColor),
+                child:
+                    controller.currentUser.value.avatar == null
+                        ? Center(
+                          child: Icon(
+                            Icons.person,
+                            size: 100.w,
+                            color: AppColors.white,
+                          ),
+                        )
+                        : null,
               ),
               10.verticalSpace,
               Text(
-                controller.currentUser.value.name!,
+                controller.currentUser.value.name ?? "",
                 style: Get.textTheme.headlineMedium,
               ),
               Text(
-                controller.currentUser.value.email!,
+                controller.currentUser.value.email ?? "",
                 style: Get.textTheme.bodyLarge,
               ),
               Text(
@@ -91,7 +105,12 @@ class ProfileScreen extends GetView<ProfileController> {
                 child: Row(
                   spacing: 10.w,
                   children: [
-                    Image.asset(ImgPath.badgeIcon, height: 30.w, width: 30.w, color: AppColors.yellowColor,),
+                    Image.asset(
+                      ImgPath.badgeIcon,
+                      height: 30.w,
+                      width: 30.w,
+                      color: AppColors.yellowColor,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

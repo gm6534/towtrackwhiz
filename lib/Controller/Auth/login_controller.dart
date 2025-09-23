@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:towtrackwhiz/Controller/Auth/auth_controller.dart';
+import 'package:towtrackwhiz/Core/Common/helper.dart';
 import 'package:towtrackwhiz/Core/Routes/app_route.dart';
 import 'package:towtrackwhiz/Model/Auth/auth_response_model.dart';
 import 'package:towtrackwhiz/Repository/auth_repo.dart';
@@ -167,12 +168,21 @@ class LoginController extends GetxController {
           AppleIDAuthorizationScopes.fullName,
         ],
       );
-      final userName = credential.givenName ?? "";
-      final email = credential.email ?? "";
-      if (userName.isEmpty || email.isEmpty) {
-        ToastAndDialog.errorDialog("User name or email cannot be empty");
+      String? email = '';
+      final payLoad = Helper.parseJwt(credential.identityToken ?? '');
+
+      final appleToken = credential.userIdentifier ?? "";
+      final userName = credential.givenName;
+      if (credential.email != null) {
+        email = credential.email;
+      } else if (payLoad['email'] != null) {
+        email = payLoad['email'].toString().trim();
+      }
+      if (appleToken.isEmpty) {
+        ToastAndDialog.errorDialog("Signing user token is invalid.");
         return;
       }
+
       if (credential.userIdentifier != null) {
         final authController = Get.find<AuthController>();
         String? deviceToken = await authController.getDeviceToken(
@@ -182,11 +192,12 @@ class LoginController extends GetxController {
         if (_deviceToken == null) {
           return;
         }
-        final loginResponse = await authController.socialLogin(
+        final loginResponse = await authController.appleLogin(
           userName: userName,
           email: email,
           authType: 'apple',
           deviceToken: _deviceToken ?? "",
+          userIdentifier: appleToken,
         );
         if (loginResponse != null) {
           await _storage!.write(

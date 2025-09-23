@@ -168,6 +168,41 @@ class AuthController extends GetxController {
     return null;
   }
 
+  Future<AuthResponseModel?> appleLogin({
+    String? userName,
+    String? email,
+    required String userIdentifier,
+    required String deviceToken,
+    required String authType,
+  }) async {
+    try {
+      ToastAndDialog.progressIndicator();
+      SignupReqModel loginModel = SignupReqModel();
+      loginModel.email = email;
+      loginModel.userIdentifier = userIdentifier;
+      loginModel.name = userName;
+      loginModel.authType = authType;
+      loginModel.deviceToken = deviceToken;
+
+      var result = await _authRepo?.appleLoginApi(model: loginModel);
+      if (result != null) {
+        authInfo = result;
+      }
+      Get.back();
+      return authInfo;
+    } catch (e) {
+      if (Get.isDialogOpen!) {
+        Get.back();
+      }
+      if (e is ClientException) {
+        ToastAndDialog.errorDialog(e.message);
+      } else {
+        ToastAndDialog.errorDialog(e.toString());
+      }
+    }
+    return null;
+  }
+
   Future<AuthResponseModel?> signup({
     required String email,
     required String password,

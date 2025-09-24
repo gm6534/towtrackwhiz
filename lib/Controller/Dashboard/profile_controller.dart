@@ -105,6 +105,7 @@ class ProfileController extends GetxController {
   Future<void> firstApiCall() async {
     isProfileLoading.value = true;
     getAnalyticsData();
+    getEarnings();
     currentUser.value = (await authController?.getUserProfile())!;
     isNotificationEnabled.value = currentUser.value.isNotify ?? false;
     originalUser = currentUser.value;

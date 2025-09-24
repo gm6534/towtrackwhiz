@@ -6,6 +6,7 @@ import 'package:towtrackwhiz/Controller/Dashboard/profile_controller.dart';
 import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 import 'package:towtrackwhiz/Core/Routes/app_route.dart';
 import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
+import 'package:towtrackwhiz/View/Common/earning_progress_card.dart';
 
 class ProfileScreen extends GetView<ProfileController> {
   const ProfileScreen({super.key});
@@ -146,6 +147,8 @@ class ProfileScreen extends GetView<ProfileController> {
                   ],
                 ),
               ),
+              10.verticalSpace,
+              EarningProgressCard(),
               10.verticalSpace,
               _menuTile(
                 ImgPath.myVehicleIcon,

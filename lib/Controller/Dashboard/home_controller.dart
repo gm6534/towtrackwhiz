@@ -886,6 +886,7 @@ class HomeController extends GetxController {
 
   final polygons = <Polygon>{}.obs;
   final zones = <HeatZone>[].obs;
+  HeatZone? _lastAlertedZone;
   final currentMarker = Rxn<LatLng>();
   final isCheckingLocation = false.obs;
 
@@ -1068,15 +1069,46 @@ class HomeController extends GetxController {
     }
   }
 
+  // void _onLocationUpdate(LatLng point) {
+  //   if (isCheckingLocation.value) return;
+  //   isCheckingLocation.value = true;
+  //   try {
+  //     for (final zone in zones) {
+  //       if (zone.score >= 15 && zone.containsPoint(point)) {
+  //         _showImmediateAlert(zone);
+  //         break;
+  //       }
+  //     }
+  //   } finally {
+  //     Future.delayed(
+  //       const Duration(seconds: 3),
+  //       () => isCheckingLocation.value = false,
+  //     );
+  //   }
+  // }
+
   void _onLocationUpdate(LatLng point) {
     if (isCheckingLocation.value) return;
     isCheckingLocation.value = true;
+
     try {
       for (final zone in zones) {
         if (zone.score >= 15 && zone.containsPoint(point)) {
-          _showImmediateAlert(zone);
+          // ✅ only alert if it's a different zone
+          if (_lastAlertedZone == null || _lastAlertedZone!.id != zone.id) {
+            _showImmediateAlert(zone);
+            _lastAlertedZone = zone;
+          }
           break;
         }
+      }
+
+      // ✅ reset when user leaves all red zones
+      final insideAnyZone = zones.any(
+        (z) => z.score >= 15 && z.containsPoint(point),
+      );
+      if (!insideAnyZone) {
+        _lastAlertedZone = null;
       }
     } finally {
       Future.delayed(

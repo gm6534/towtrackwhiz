@@ -62,7 +62,7 @@ class ProfileScreen extends GetView<ProfileController> {
                 style: Get.textTheme.bodyLarge,
               ),
               Text(
-                "${Strings.memberSince} ${DateFormat("yyyy").format(DateTime.parse(controller.currentUser.value.createdAt!))}",
+                "${Strings.memberSince} ${DateFormat("MMM yyyy").format(DateTime.parse(controller.currentUser.value.createdAt!))}",
                 style: Get.textTheme.bodyMedium?.copyWith(
                   color: AppColors.greyColor.withValues(alpha: 0.9),
                 ),
@@ -74,7 +74,7 @@ class ProfileScreen extends GetView<ProfileController> {
                   children: [
                     SelectionCard(
                       icon: ImgPath.alertIcon,
-                      title: Strings.alertRequire,
+                      title: Strings.alertsReported,
                       value:
                           "${controller.analyticsResModel.value.totalAlerts}",
                       bgColor: AppColors.lightPrimary,

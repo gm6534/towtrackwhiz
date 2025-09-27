@@ -30,6 +30,7 @@ class AppHeadingTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final bool obscureText;
   final AutovalidateMode? autoValidateMode;
+  final EdgeInsetsGeometry? contentPadding;
 
   const AppHeadingTextField({
     super.key,
@@ -56,6 +57,7 @@ class AppHeadingTextField extends StatelessWidget {
     this.enabled,
     this.filled,
     this.fillColor,
+    this.contentPadding,
   });
 
   @override
@@ -91,6 +93,7 @@ class AppHeadingTextField extends StatelessWidget {
           ),
           enabled: enabled,
           decoration: InputDecoration(
+            contentPadding: contentPadding,
             filled: filled,
             fillColor: fillColor,
             // label: heading.isNotEmpty ? Text(heading) : null,

@@ -11,8 +11,6 @@ import 'package:towtrackwhiz/Core/Common/Widgets/app_heading_text_field.dart';
 import 'package:towtrackwhiz/Core/Constants/app_strings.dart';
 import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
 
-import '../../Model/Vehicle/vehicle_list_model.dart';
-
 class ReportTowActivityDialog extends GetView<HomeController> {
   const ReportTowActivityDialog({super.key});
 
@@ -213,6 +211,12 @@ class ReportTowActivityDialog extends GetView<HomeController> {
                 );
               }),
               AppHeadingTextField(
+                contentPadding: EdgeInsets.only(
+                  left: 12.w,
+                  right: 12.w,
+                  top: 5.w,
+                  bottom: 5.w,
+                ),
                 controller: controller.commentController,
                 heading: AppHeadings.comments,
                 hintText: Strings.typeComment,

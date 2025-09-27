@@ -383,12 +383,13 @@ class NotesCard extends StatelessWidget {
                 /// Tips List
                 ...tips.map(
                   (tip) => Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 8.w,
                     children: [
                       Container(
                         height: 5.w,
                         width: 5.w,
+                        margin: EdgeInsets.only(top: 8.w),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: AppColors.warningColor,

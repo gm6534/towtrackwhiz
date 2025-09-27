@@ -123,7 +123,7 @@ class Strings {
   static const String orLoginWithText = "Or login with";
   static const String orContinueWithText = "Or continue with";
   static const String continueWith = "Continue with";
-  static const String alertRequire = "Alert Require";
+  static const String alertsReported = "Alerts Reported";
   static const String verified = "Verified";
   static const String carsRegistered = "Cars Registered";
   static const String youHaveHelpedVerify = "You’ve helped verify";

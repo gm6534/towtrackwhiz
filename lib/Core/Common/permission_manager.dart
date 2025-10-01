@@ -100,7 +100,6 @@ class PermissionManager {
       } else {
         ToastAndDialog.showCustomSnackBar(
           ToastMsg.locationPermissionPermanentlyDenied,
-          duration: 5,
         );
       }
       return false;
@@ -178,7 +177,6 @@ class PermissionManager {
     ToastAndDialog.showCustomSnackBar(
       message,
       backgroundColor: AppColors.redColor,
-      duration: long ? 5 : 2,
     );
   }
 }

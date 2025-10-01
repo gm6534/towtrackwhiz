@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:towtrackwhiz/Controller/Dashboard/home_controller.dart';
+import 'package:towtrackwhiz/Core/Common/Widgets/app_button.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/base_scaffold.dart';
+import 'package:towtrackwhiz/Core/Utils/app_colors.dart';
 
 class MapPickerScreen extends GetView<HomeController> {
   final CameraPosition? initialCameraPos;
@@ -57,15 +60,45 @@ class MapPickerScreen extends GetView<HomeController> {
             /// Bottom Button
             if (controller.tempLocation.value != null)
               Positioned(
-                bottom: 20,
-                left: 20,
-                right: 20,
-                child: ElevatedButton(
-                  onPressed: () async {
-                    await controller.setMarker();
-                    Get.back(); // Close map and save marker
-                  },
-                  child: const Text("Set Location"),
+                bottom: 10,
+                left: 10,
+                right: 10,
+                child: Container(
+                  padding: EdgeInsets.all(10.w),
+                  decoration: BoxDecoration(
+                    color: AppColors.scaffoldBgColor,
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 10.w,
+                    children: [
+                      Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "Location: ",
+                              style: context.textTheme.titleSmall?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            TextSpan(
+                              text: controller.showPickedAddressOnMap.value,
+                              style: context.textTheme.labelMedium,
+                            ),
+                          ],
+                        ),
+                      ),
+                      10.verticalSpace,
+                      AppButton(
+                        onPressed: () async {
+                          await controller.setMarker();
+                          Get.back(); // Close map and save marker
+                        },
+                        title: "Set Location",
+                      ),
+                    ],
+                  ),
                 ),
               ),
           ],

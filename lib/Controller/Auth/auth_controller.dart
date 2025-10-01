@@ -291,17 +291,6 @@ class AuthController extends GetxController {
   }) async {
     String? token;
     try {
-      // // 🔹 Step 1: request notification permission
-      // final status = await Helper.requestPermission(
-      //   Permission.notification,
-      //   toastDuration: 5,
-      //   message: "Notification permission is required to receive updates",
-      // );
-      //
-      // if (status != PermissionStatus.granted) {
-      //   return null;
-      // }
-
       if (GetPlatform.isIOS) {
         // 🔹 Step 2: wait for APNs token
         final apnsToken = await firebaseMessaging.getAPNSToken();

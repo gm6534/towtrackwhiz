@@ -126,8 +126,8 @@ class Strings {
   static const String alertsReported = "Alerts Reported";
   static const String verified = "Verified";
   static const String carsRegistered = "Cars Registered";
-  static const String youHaveHelpedVerify = "You’ve helped verify";
-  static const String communityAlerts = "Community alerts";
+  static const String youHaveHelpedVerify = "You have";
+  static const String communityAlerts = "verified alerts";
   static const String level = "Level";
 
   static const String permissionRequired = "Permission Required";
@@ -137,7 +137,7 @@ class Strings {
   static const String dontHaveAccount = "Don’t have an account? ";
   static const String haveAnAccount = "Have an account? ";
   static const String selectType = "Select Type....";
-  static const String emergency = "Emergency";
+  static const String emergency = "Basic";
   static const String gasLeakReported = "Gas Leak Reported";
   static const String chooseOnMap = "Choose on map";
   static const String attachFile = "Attach file";

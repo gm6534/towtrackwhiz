@@ -36,7 +36,6 @@ class Helper {
     if (status == PermissionStatus.denied) {
       ToastAndDialog.showCustomSnackBar(
         message!,
-        duration: toastDuration,
         backgroundColor: AppColors.redColor,
       );
     } else if (status == PermissionStatus.permanentlyDenied) {
@@ -56,7 +55,6 @@ class Helper {
         ToastAndDialog.showCustomSnackBar(
           message!,
           backgroundColor: AppColors.redColor,
-          duration: 5,
         );
       }
     } else if (status == PermissionStatus.limited) {

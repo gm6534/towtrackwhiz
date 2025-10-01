@@ -33,7 +33,7 @@ class MyAlertScreen extends GetView<ProfileController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 15.w,
           children: [
-            Text("Alert Require", style: Get.textTheme.displaySmall),
+            Text("Alerts Reported", style: Get.textTheme.displaySmall),
             Expanded(
               child: ListView.builder(
                 itemCount: controller.myAlertsList.length,

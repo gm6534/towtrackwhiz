@@ -191,12 +191,19 @@ class ReportTowActivityDialog extends GetView<HomeController> {
                           () => Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              // Expanded(
+                              //   child: Text(
+                              //     controller.pickedLocation.value?.latitude !=
+                              //             null
+                              //         ? "${controller.pickedLocation.value?.latitude.toStringAsFixed(3)}, ${controller.pickedLocation.value?.longitude.toStringAsFixed(3)}"
+                              //         : Strings.chooseOnMap,
+                              //     overflow: TextOverflow.ellipsis,
+                              //     style: TextStyle(color: Colors.grey),
+                              //   ),
+                              // ),
                               Expanded(
                                 child: Text(
-                                  controller.pickedLocation.value?.latitude !=
-                                          null
-                                      ? "${controller.pickedLocation.value?.latitude.toStringAsFixed(3)}, ${controller.pickedLocation.value?.longitude.toStringAsFixed(3)}"
-                                      : Strings.chooseOnMap,
+                                  controller.pickedAddress.value,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(color: Colors.grey),
                                 ),

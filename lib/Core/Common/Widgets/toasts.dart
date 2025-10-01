@@ -72,7 +72,6 @@ class ToastAndDialog {
     String? title,
     Color? backgroundColor,
     double borderRadius = 10,
-    int duration = 3,
     Widget? titleWidget,
     // SnackPosition position = SnackPosition.TOP,
     ToastGravity? gravity,

@@ -648,10 +648,33 @@ class HomeController extends GetxController {
   Rxn<LatLng> pickedLocation = Rxn<LatLng>(); // confirmed location
   Rxn<LatLng> tempLocation = Rxn<LatLng>(); // temporary preview marker
   RxString pickedAddress = "Tap on map to get location".obs;
+  RxString showPickedAddressOnMap = "Tap on map to get location address".obs;
 
   /// Preview marker only
-  void previewMarker(LatLng latLng) {
+  // void previewMarker(LatLng latLng) {
+  //   tempLocation.value = latLng;
+  // }
+
+  /// Preview marker only (with reverse geocoding)
+  void previewMarker(LatLng latLng) async {
     tempLocation.value = latLng;
+    showPickedAddressOnMap.value = "Fetching address...";
+
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        latLng.latitude,
+        latLng.longitude,
+      );
+      if (placemarks.isNotEmpty) {
+        final p = placemarks.first;
+        showPickedAddressOnMap.value =
+            "${p.street ?? ''}, ${p.locality ?? ''}, ${p.administrativeArea ?? ''}, ${p.country ?? ''}";
+      } else {
+        showPickedAddressOnMap.value = "No address found";
+      }
+    } catch (e) {
+      showPickedAddressOnMap.value = "Failed to get address";
+    }
   }
 
   ////////////////////////////////////
@@ -714,21 +737,23 @@ class HomeController extends GetxController {
 
     pickedLocation.value = tempLocation.value;
     try {
-      List<Placemark> placemarks = await placemarkFromCoordinates(
-        tempLocation.value!.latitude,
-        tempLocation.value!.longitude,
-      );
-      if (placemarks.isNotEmpty) {
-        final p = placemarks.first;
-        pickedAddress.value =
-            "${p.street ?? ''}, ${p.locality ?? ''}, ${p.administrativeArea ?? ''}, ${p.country ?? ''}";
-      }
+      pickedAddress.value = showPickedAddressOnMap.value;
+      // List<Placemark> placemarks = await placemarkFromCoordinates(
+      //   tempLocation.value!.latitude,
+      //   tempLocation.value!.longitude,
+      // );
+      // if (placemarks.isNotEmpty) {
+      //   final p = placemarks.first;
+      //   pickedAddress.value =
+      //       "${p.street ?? ''}, ${p.locality ?? ''}, ${p.administrativeArea ?? ''}, ${p.country ?? ''}";
+      // }
     } catch (e) {
       pickedAddress.value = "No address found";
     }
   }
 
   Future<void> navigateToPickLoc() async {
+    tempLocation.value = null;
     isGetLocLoading.value = true;
 
     LocationModel? pos;
@@ -811,7 +836,7 @@ class HomeController extends GetxController {
         reportTowReqModel.latitude = pickedLocation.value?.latitude.toString();
         reportTowReqModel.longitude =
             pickedLocation.value?.longitude.toString();
-        reportTowReqModel.location = "Location";
+        reportTowReqModel.location = pickedAddress.value;
       }
       reportTowReqModel.date = DateFormat("yyyy-MM-dd").format(DateTime.now());
       if (selectedType.value != null) {
@@ -1312,7 +1337,7 @@ class HeatZone {
   }
 
   String get colorCategory {
-    if (score >= 15) return 'red';
+    if (score >= 10) return 'red';
     if (score >= 5) return 'yellow';
     return 'green';
   }

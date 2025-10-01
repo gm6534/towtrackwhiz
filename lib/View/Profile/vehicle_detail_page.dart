@@ -85,7 +85,7 @@ class VehicleDetailPage extends GetView<ProfileController> {
                 'yyyy/MM/dd',
               ).format(DateTime.parse(vehicle.createdAt!)),
             ),
-            _buildInfoTile("Status", vehicle.status),
+            // _buildInfoTile("Status", vehicle.status),
           ],
         ),
       ),

@@ -10,7 +10,6 @@ import 'package:towtrackwhiz/Core/Common/validation_helper.dart';
 import 'package:towtrackwhiz/Model/Vehicle/vehicle_list_model.dart';
 
 import '../../Core/Constants/app_strings.dart';
-import '../../Core/Utils/app_colors.dart';
 
 class AddEditVehicleScreen extends GetView<ProfileController> {
   AddEditVehicleScreen({super.key});
@@ -100,17 +99,47 @@ class AddEditVehicleScreen extends GetView<ProfileController> {
                       "Vehicle Color",
                     ),
               ),
-              AppHeadingTextField(
-                controller: controller.registerStateController,
-                heading: AppHeadings.registrationState,
-                textInputType: TextInputType.name,
-                hintText: "Enter State",
+
+              // Instead of AppHeadingTextField, use DropdownButtonFormField
+              Text(
+                AppHeadings.registrationState,
+                style: context.textTheme.titleMedium,
+              ),
+              DropdownButtonFormField<String>(
+                value:
+                    controller.registerStateController.text.isEmpty
+                        ? null
+                        : controller.registerStateController.text,
+                decoration: InputDecoration(
+                  // labelText: AppHeadings.registrationState,
+                  border: OutlineInputBorder(),
+                ),
+                hint: const Text("Select State"),
+                items:
+                    ["TX", "CA", "NY"].map((state) {
+                      return DropdownMenuItem(value: state, child: Text(state));
+                    }).toList(),
+                onChanged: (value) {
+                  controller.registerStateController.text = value ?? "";
+                },
                 validator:
                     (value) => ValidationHelper.validateNonEmpty(
                       value,
                       "Registration State",
                     ),
               ),
+              30.verticalSpace,
+              // AppHeadingTextField(
+              //   controller: controller.registerStateController,
+              //   heading: AppHeadings.registrationState,
+              //   textInputType: TextInputType.name,
+              //   hintText: "Enter State",
+              //   validator:
+              //       (value) => ValidationHelper.validateNonEmpty(
+              //         value,
+              //         "Registration State",
+              //       ),
+              // ),
             ],
           ),
         ),

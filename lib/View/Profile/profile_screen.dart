@@ -25,32 +25,35 @@ class ProfileScreen extends GetView<ProfileController> {
           child: Column(
             children: [
               20.verticalSpace,
-              Container(
-                height: 120.w,
-                width: 120.w,
-                decoration: BoxDecoration(
-                  color: AppColors.secondary,
-                  shape: BoxShape.circle,
-                  image:
-                      controller.currentUser.value.avatar == null
-                          ? null
-                          : DecorationImage(
-                            fit: BoxFit.fitWidth,
-                            image: NetworkImage(
-                              controller.currentUser.value.avatar!,
+              GestureDetector(
+                onTap: () => Get.toNamed(AppRoute.accountSettingsScreen),
+                child: Container(
+                  height: 120.w,
+                  width: 120.w,
+                  decoration: BoxDecoration(
+                    color: AppColors.secondary,
+                    shape: BoxShape.circle,
+                    image:
+                        controller.currentUser.value.avatar == null
+                            ? null
+                            : DecorationImage(
+                              fit: BoxFit.fitWidth,
+                              image: NetworkImage(
+                                controller.currentUser.value.avatar!,
+                              ),
                             ),
-                          ),
+                  ),
+                  child:
+                      controller.currentUser.value.avatar == null
+                          ? Center(
+                            child: Icon(
+                              Icons.person,
+                              size: 100.w,
+                              color: AppColors.white,
+                            ),
+                          )
+                          : null,
                 ),
-                child:
-                    controller.currentUser.value.avatar == null
-                        ? Center(
-                          child: Icon(
-                            Icons.person,
-                            size: 100.w,
-                            color: AppColors.white,
-                          ),
-                        )
-                        : null,
               ),
               10.verticalSpace,
               Text(

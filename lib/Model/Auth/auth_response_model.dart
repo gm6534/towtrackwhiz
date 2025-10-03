@@ -148,6 +148,8 @@ class UserModel {
   String? createdAt;
   String? updatedAt;
   String? level;
+  String? totalVerifiedCount;
+  String? verifiedLevel;
   bool? isNotify;
 
   UserModel({
@@ -172,6 +174,8 @@ class UserModel {
     this.updatedAt,
     this.level,
     this.isNotify,
+    this.totalVerifiedCount,
+    this.verifiedLevel,
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -199,6 +203,8 @@ class UserModel {
         json['is_notify'] != null
             ? (json['is_notify'] == "1" ? true : false)
             : null;
+    totalVerifiedCount = json['total_verified_count'];
+    verifiedLevel = json['verified_level'];
   }
 
   Map<String, dynamic> toJson() {
@@ -224,6 +230,8 @@ class UserModel {
     data['updated_at'] = updatedAt;
     data['level'] = level;
     // data['is_notify'] = isNotify;
+    data['total_verified_count'] = totalVerifiedCount;
+    data['verified_level'] = verifiedLevel;
     return data;
   }
 }

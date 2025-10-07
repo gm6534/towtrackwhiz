@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:geolocator/geolocator.dart';
-import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../core/Constants/app_strings.dart';
@@ -105,25 +104,25 @@ class PermissionManager {
       return false;
     }
 
-    // 🔹 Handle background location separately
-    if (permission == LocationPermission.whileInUse) {
-      // On iOS, you must explicitly request background access
-      if (GetPlatform.isIOS) {
-        LocationPermission bgPermission = await Geolocator.checkPermission();
-        if (bgPermission != LocationPermission.always) {
-          bool userConfirmed = await ToastAndDialog.confirmation(
-            title: "Set Permission to Always",
-            message: "Please set location permission to Always in Settings",
-            okText: "Open Settings",
-            cancelText: "Cancel",
-          );
-          if (userConfirmed) {
-            await Geolocator.openAppSettings();
-          }
-          Log.w("Location", "Background location not granted");
-        }
-      }
-    }
+    // // 🔹 Handle background location separately
+    // if (permission == LocationPermission.whileInUse) {
+    //   // On iOS, you must explicitly request background access
+    //   if (GetPlatform.isIOS) {
+    //     LocationPermission bgPermission = await Geolocator.checkPermission();
+    //     if (bgPermission != LocationPermission.always) {
+    //       bool userConfirmed = await ToastAndDialog.confirmation(
+    //         title: "Set Permission to Always",
+    //         message: "Please set location permission to Always in Settings",
+    //         okText: "Open Settings",
+    //         cancelText: "Cancel",
+    //       );
+    //       if (userConfirmed) {
+    //         await Geolocator.openAppSettings();
+    //       }
+    //       Log.w("Location", "Background location not granted");
+    //     }
+    //   }
+    // }
 
     return true; // ✅ Permission is granted
   }

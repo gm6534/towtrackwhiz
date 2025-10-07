@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:towtrackwhiz/Controller/Auth/auth_controller.dart';
 import 'package:towtrackwhiz/Core/Common/Widgets/toasts.dart';
 import 'package:towtrackwhiz/Core/Routes/app_route.dart';
@@ -20,7 +19,6 @@ import 'package:towtrackwhiz/Model/analytics_res_model.dart';
 import 'package:towtrackwhiz/Repository/auth_repo.dart';
 import 'package:towtrackwhiz/Repository/dashboard_repo.dart';
 
-import '../../Core/Common/helper.dart';
 import '../../Core/Constants/app_strings.dart';
 import '../../Model/Auth/login_req_model.dart';
 import '../../Model/Profile/submit_payout_request_model.dart';
@@ -89,6 +87,7 @@ class ProfileController extends GetxController {
   final bankNameController = TextEditingController();
   final accountNumberController = TextEditingController();
   final routingNumberController = TextEditingController();
+
   // final accountTypeController = TextEditingController();
   final payoutHandleController = TextEditingController();
 
@@ -139,23 +138,6 @@ class ProfileController extends GetxController {
 
   Future<void> pickImageFromSource(ImageSource source) async {
     try {
-      Permission permission;
-      String permissionMessage;
-
-      if (source == ImageSource.camera) {
-        permission = Permission.camera;
-        permissionMessage = ToastMsg.allowCameraAccess;
-      } else {
-        permission = Permission.mediaLibrary;
-        permissionMessage = ToastMsg.allowGalleryAccess;
-      }
-
-      final status = await Helper.requestPermission(
-        permission,
-        message: permissionMessage,
-      );
-      if (!status.isGranted) return;
-
       final picked = await ImagePicker().pickImage(
         source: source,
         imageQuality: 70,

@@ -121,11 +121,12 @@ class ProfileScreen extends GetView<ProfileController> {
                         // spacing: 5.w,
                         children: [
                           Text(
-                            controller.currentUser.value.verifiedLevel ?? "",
+                            controller.currentUser.value.verifiedLevel ??
+                                "New Whiz",
                             style: Get.textTheme.titleMedium,
                           ),
                           Text(
-                            "${Strings.youHaveHelpedVerify} ${int.parse(controller.currentUser.value.totalVerifiedCount!) > 0 ? controller.currentUser.value.totalVerifiedCount : 0} ${Strings.communityAlerts}",
+                            "${Strings.youHaveHelpedVerify} ${int.parse(controller.currentUser.value.totalVerifiedCount ?? "0") > 0 ? controller.currentUser.value.totalVerifiedCount : 0} ${Strings.communityAlerts}",
                             style: Get.textTheme.bodySmall?.copyWith(
                               color: AppColors.hintColor,
                             ),

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:towtrackwhiz/Controller/Dashboard/dashboard_controller.dart';
 import 'package:url_launcher/url_launcher.dart';

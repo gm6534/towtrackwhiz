@@ -144,7 +144,7 @@ class ProfileScreen extends GetView<ProfileController> {
                         borderRadius: BorderRadius.circular(20.r),
                       ),
                       child: Text(
-                        "${Strings.level} ${controller.currentUser.value.level}",
+                        "${Strings.level} ${(controller.currentUser.value.verifiedLevel ?? "New Whiz").levelVerificationCount}",
                         style: Get.textTheme.labelLarge,
                       ),
                     ),
@@ -257,5 +257,24 @@ class SelectionCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+extension BadgeLevelExtension on String {
+  int get levelVerificationCount {
+    switch (toLowerCase()) {
+      case 'community watcher':
+        return 1;
+      case 'community helper':
+        return 2;
+      case 'community advocate':
+        return 3;
+      case 'community guardian':
+        return 4;
+      case 'community hero':
+        return 5;
+      default:
+        return 0;
+    }
   }
 }

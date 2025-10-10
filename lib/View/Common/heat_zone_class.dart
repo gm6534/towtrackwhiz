@@ -30,17 +30,18 @@ class HeatmapWidget extends GetView<HomeController> {
                 controller.heatMapControllerCompleter.complete(c);
               }
             },
-            markers: {
-              if (controller.currentMarker.value != null)
-                Marker(
-                  markerId: const MarkerId("me"),
-                  position: controller.currentMarker.value!,
-                  infoWindow: const InfoWindow(title: "You"),
-                  icon: BitmapDescriptor.defaultMarkerWithHue(
-                    BitmapDescriptor.hueAzure,
-                  ),
-                ),
-            },
+            // markers: {
+            //   if (controller.currentMarker.value != null)
+            //     Marker(
+            //       markerId: const MarkerId("me"),
+            //       position: controller.currentMarker.value!,
+            //       infoWindow: const InfoWindow(title: "You"),
+            //       icon: BitmapDescriptor.defaultMarkerWithHue(
+            //         BitmapDescriptor.hueAzure,
+            //       ),
+            //     ),
+            // },
+            markers: controller.getMarkers(),
             compassEnabled: false,
             zoomControlsEnabled: false,
             myLocationEnabled: true,

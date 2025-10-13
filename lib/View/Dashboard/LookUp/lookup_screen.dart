@@ -93,7 +93,7 @@ class LookupScreen extends StatelessWidget {
 
                         DropdownButtonFormField<LookupResModel>(
                           dropdownColor: AppColors.white,
-                          value: controller.selectedCity.value,
+                          initialValue: controller.selectedCity.value,
                           items:
                               controller.lookupList.map((city) {
                                 return DropdownMenuItem(
@@ -190,15 +190,26 @@ class LookupScreen extends StatelessWidget {
                           AppButton(
                             title:
                                 "⎋ ${controller.selectedCity.value!.buttonText ?? "Open Site"}",
-                            onPressed: () {
-                              final city = controller.selectedCity.value!;
-                              Get.to(
-                                () => AppWebView(
-                                  fileUrl: city.lookupUrl ?? "",
-                                  barTitle: city.cityName ?? "",
-                                ),
-                              );
-                            },
+                            onPressed:
+                                (controller.selectedCity.value?.lookupUrl ==
+                                            null ||
+                                        controller
+                                            .selectedCity
+                                            .value!
+                                            .lookupUrl!
+                                            .isEmpty)
+                                    ? null
+                                    : () {
+                                      final city =
+                                          controller.selectedCity.value!;
+                                      if (city.lookupUrl == null) return;
+                                      Get.to(
+                                        () => AppWebView(
+                                          fileUrl: city.lookupUrl ?? "",
+                                          barTitle: city.cityName ?? "",
+                                        ),
+                                      );
+                                    },
                           ),
                         ],
                       ),

@@ -939,7 +939,9 @@ class HomeController extends GetxController {
   void buildPolygons() {
     final set = <Polygon>{};
     for (final zone in zones) {
-      final color = _colorFromCategory(zone.colorCategory).withValues(alpha: 0.3);
+      final color = _colorFromCategory(
+        zone.colorCategory,
+      ).withValues(alpha: 0.3);
       final strokeColor = _colorFromCategory(zone.colorCategory);
 
       set.add(
@@ -972,7 +974,7 @@ class HomeController extends GetxController {
           icon: BitmapDescriptor.defaultMarkerWithHue(
             BitmapDescriptor.hueAzure,
           ),
-          zIndex: 3,
+          zIndexInt: 3,
         ),
       );
     }
@@ -1001,7 +1003,7 @@ class HomeController extends GetxController {
           markerId: MarkerId('alert_${markerCounter++}'),
           position: LatLng(lat, lng),
           icon: BitmapDescriptor.defaultMarker,
-          zIndex: 1,
+          zIndexInt: 1,
           infoWindow: InfoWindow(
             title:
                 TowEventExtension.fromValue(alert.alertType!)?.label ?? 'Alert',

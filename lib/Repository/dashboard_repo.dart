@@ -115,6 +115,29 @@ class DashboardRepo extends ApiClient {
     }
   }
 
+  Future<CommunityAlertResModel?> getAllAlertListForMap({
+    double? latitude,
+    double? longitude,
+  }) async {
+    try {
+      var response = await get(
+        "tow-reports/all/list/map?latitude=$latitude&longitude=$longitude",
+      );
+
+      CommunityAlertResModel? resModel;
+      if (response.data != null) {
+        resModel = CommunityAlertResModel.fromJson(response.data);
+      } else {
+        throw http.ClientException(response.message!);
+      }
+      return resModel;
+    } catch (e) {
+      Log.e("getCommunityAlertList: DashboardRepo- ", e.toString());
+
+      rethrow;
+    }
+  }
+
   Future<AddVehicleResModel?> addVehicle({
     required AddVehicleReqModel model,
   }) async {

@@ -49,9 +49,13 @@ class CommunityAlertController extends GetxController {
     try {
       isCommunityAlertLoading.value = true;
       communityAlertsList.value = [];
-      await homeController?.refreshZones();
 
-      List<CommunityAlertsModel> alerts = homeController?.allAlertsList ?? [];
+      final result = await dashboardRepo?.getCommunityAlertList(
+        latitude: homeController?.initialLat.value,
+        longitude: homeController?.initialLong.value,
+      );
+
+      List<CommunityAlertsModel> alerts = result?.alerts ?? [];
 
       // ✅ Sort by latest first (descending)
       alerts.sort(
@@ -155,43 +159,4 @@ class CommunityAlertController extends GetxController {
       Log.d("submitAlertVote - CommunityAlertController", e.toString());
     }
   }
-
-  // Future<void> submitAlertVote({String? type, int? id}) async {
-  //   try {
-  //     ToastAndDialog.progressIndicator();
-  //     final result = await dashboardRepo?.submitVote(
-  //       voteType: type!,
-  //       alertId: id!,
-  //     );
-  //     if (result != null) {
-  //       submitVoteModel.value = result;
-  //       // find the alert in list and update its values
-  //       final index = communityAlertsList.indexWhere((a) => a.id == id);
-  //       if (index != -1) {
-  //         communityAlertsList[index].upVoteCount = result.upvotes ?? 0;
-  //         communityAlertsList[index].downVoteCount = result.downvotes ?? 0;
-  //         communityAlertsList.refresh(); // 🔑 notify UI
-  //       }
-  //
-  //       // submitVoteModel.update((model) {
-  //       //   model?.upvotes = result.upvotes;
-  //       //   model?.downvotes = result.downvotes;
-  //       // });
-  //       ToastAndDialog.showCustomSnackBar(result.message!);
-  //     }
-  //     if (Get.isDialogOpen ?? false) {
-  //       Get.back();
-  //     }
-  //   } catch (e) {
-  //     if (Get.isDialogOpen ?? false) {
-  //       Get.back();
-  //     }
-  //     if (e is ClientException) {
-  //       ToastAndDialog.errorDialog(e.message);
-  //     } else {
-  //       ToastAndDialog.showCustomSnackBar(e.toString());
-  //     }
-  //     Log.d("submitAlertVote - CommunityAlertController", e.toString());
-  //   }
-  // }
 }

@@ -980,45 +980,45 @@ class HomeController extends GetxController {
     }
 
     // Individual alert markers
-    int markerCounter = 0;
-    for (final alert in allAlertsList) {
-      final latStr = alert.latitude;
-      final lngStr = alert.longitude;
-
-      if (latStr == null || lngStr == null) continue;
-
-      double? lat;
-      double? lng;
-      try {
-        lat = double.parse(latStr);
-        lng = double.parse(lngStr);
-      } catch (_) {
-        continue;
-      }
-
-      if (lat == 0.0 && lng == 0.0) continue;
-
-      markers.add(
-        Marker(
-          markerId: MarkerId('alert_${markerCounter++}'),
-          position: LatLng(lat, lng),
-          icon: BitmapDescriptor.defaultMarker,
-          zIndexInt: 1,
-          infoWindow: InfoWindow(
-            title:
-                TowEventExtension.fromValue(alert.alertType!)?.label ?? 'Alert',
-            snippet: "${alert.latitude}, ${alert.longitude}",
-          ),
-          // onTap: () => _onAlertTapped(alert),
-        ),
-      );
-    }
+    // int markerCounter = 0;
+    // for (final alert in allAlertsList) {
+    //   final latStr = alert.latitude;
+    //   final lngStr = alert.longitude;
+    //
+    //   if (latStr == null || lngStr == null) continue;
+    //
+    //   double? lat;
+    //   double? lng;
+    //   try {
+    //     lat = double.parse(latStr);
+    //     lng = double.parse(lngStr);
+    //   } catch (_) {
+    //     continue;
+    //   }
+    //
+    //   if (lat == 0.0 && lng == 0.0) continue;
+    //
+    //   markers.add(
+    //     Marker(
+    //       markerId: MarkerId('alert_${markerCounter++}'),
+    //       position: LatLng(lat, lng),
+    //       icon: BitmapDescriptor.defaultMarker,
+    //       zIndexInt: 1,
+    //       infoWindow: InfoWindow(
+    //         title:
+    //             TowEventExtension.fromValue(alert.alertType!)?.label ?? 'Alert',
+    //         snippet: "${alert.latitude}, ${alert.longitude}",
+    //       ),
+    //       // onTap: () => _onAlertTapped(alert),
+    //     ),
+    //   );
+    // }
 
     return markers;
   }
 
   /// ---------------- COMMUNITY ALERTS ----------------
-  Future<void> getCommunityAlertList() async {
+  Future<void> getMapAlertList() async {
     try {
       // Do not clear earlier list until successful fetch to avoid UI flicker
       // But show loading state
@@ -1031,7 +1031,7 @@ class HomeController extends GetxController {
       final lat = initialLat.value;
       final lng = initialLong.value;
 
-      final result = await dashboardRepo?.getCommunityAlertList(
+      final result = await dashboardRepo?.getAllAlertListForMap(
         latitude: lat,
         longitude: lng,
       );
@@ -1437,7 +1437,7 @@ class HomeController extends GetxController {
       _refreshTimer = Timer.periodic(refreshInterval, (_) => refreshZones());
 
       // Always fetch new alerts from API (make sure location is available)
-      await getCommunityAlertList();
+      await getMapAlertList();
 
       // Build clusters & polygons defensively
       zones.assignAll(clusterAlerts(allAlertsList));

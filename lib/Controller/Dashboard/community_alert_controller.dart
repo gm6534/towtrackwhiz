@@ -96,6 +96,14 @@ class CommunityAlertController extends GetxController {
         return;
       }
 
+      final int alertUserId = int.parse(alert.userId ?? "0");
+
+      final bool isOwnAlert = alertUserId == authController?.authInfo?.user?.id;
+      if (isOwnAlert) {
+        ToastAndDialog.showCustomSnackBar("You cannot vote on your own alert.");
+        return;
+      }
+
       // 🔹 check distance before API call
       final isNearby = await isWithinOneMile(
         double.parse(alert.latitude ?? "0.0"),

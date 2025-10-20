@@ -13,7 +13,6 @@ class AppConfig {
     Get.put(ConnectionManagerController());
     await GetStorage.init();
     Get.lazyPut(() => AuthController(), fenix: true);
-    setSystemChromeTheme();
     setDefaultOrientation();
   }
 
@@ -28,21 +27,5 @@ class AppConfig {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-  }
-
-  static Future<void> setSystemChromeTheme() async {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle.light.copyWith(
-        statusBarColor: AppColors.scaffoldBgColor,
-        // systemNavigationBarColor: AppColors.scaffoldBgColor,
-      ),
-      // SystemUiOverlayStyle(
-      //   statusBarColor: AppColors.scaffoldBgColor,
-      //   statusBarBrightness: Brightness.dark,
-      //   statusBarIconBrightness: Brightness.dark,
-      //   systemNavigationBarColor: AppColors.scaffoldBgColor,
-      //   systemNavigationBarIconBrightness: Brightness.dark,
-      // ),
-    );
   }
 }

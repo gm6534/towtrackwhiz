@@ -26,52 +26,6 @@ class HomeScreen extends GetView<HomeController> {
             style: Get.textTheme.headlineLarge,
           ),
         ),
-        // Expanded(
-        //   child: Container(
-        //     decoration: BoxDecoration(
-        //       borderRadius: BorderRadius.circular(12.r),
-        //       color: Colors.grey.shade300,
-        //       // image: DecorationImage(
-        //       //   image: AssetImage(ImgPath.mapImg),
-        //       //   fit: BoxFit.cover,
-        //       // ),
-        //     ),
-        //     child: ClipRRect(
-        //       borderRadius: BorderRadius.circular(12.r),
-        //       child: GoogleMap(
-        //         initialCameraPosition: CameraPosition(
-        //           target: LatLng(
-        //             controller.initialLat.value,
-        //             controller.initialLong.value,
-        //           ),
-        //           zoom: 11.0,
-        //         ),
-        //         liteModeEnabled: true,
-        //         onMapCreated: (GoogleMapController value) {
-        //           if (!controller.mapController.isCompleted) {
-        //             controller.mapController.complete(value);
-        //           }
-        //         },
-        //         mapToolbarEnabled: true,
-        //         markers: {
-        //           Marker(
-        //             markerId: const MarkerId('currentLocation'),
-        //             position: LatLng(
-        //               controller.initialLat.value,
-        //               controller.initialLong.value,
-        //             ),
-        //             // icon: AssetMapBitmap(ImgPath.carIcon, height: 20.w, width: 40.w),
-        //             infoWindow: InfoWindow(
-        //               title: AppHeadings.location,
-        //               snippet:
-        //                   '${controller.initialLat.value}, ${controller.initialLong.value}',
-        //             ),
-        //           ),
-        //         },
-        //       ),
-        //     ),
-        //   ),
-        // ),
         Expanded(
           child: Obx(() {
             if (controller.isHeatMapLoading.value) {

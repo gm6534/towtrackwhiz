@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
             ),
             theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.lightTheme,
             themeMode: ThemeMode.light,
           ),
     );

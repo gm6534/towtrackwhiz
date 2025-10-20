@@ -132,7 +132,7 @@ class DashboardRepo extends ApiClient {
       }
       return resModel;
     } catch (e) {
-      Log.e("getCommunityAlertList: DashboardRepo- ", e.toString());
+      Log.e("getAllAlertListForMap: DashboardRepo- ", e.toString());
 
       rethrow;
     }

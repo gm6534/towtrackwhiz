@@ -24,13 +24,13 @@ class AppTheme {
         fontWeight: FontWeight.w600,
         fontSize: 20.sp,
       ),
-      systemOverlayStyle: SystemUiOverlayStyle(
-        statusBarColor: AppColors.primary,
-        statusBarBrightness: Brightness.light,
-        statusBarIconBrightness: Brightness.light,
-        systemNavigationBarColor: Colors.white,
-        systemNavigationBarIconBrightness: Brightness.dark,
-      ),
+      // systemOverlayStyle: SystemUiOverlayStyle(
+      //   statusBarColor: AppColors.primary,
+      //   statusBarBrightness: Brightness.light,
+      //   statusBarIconBrightness: Brightness.light,
+      //   systemNavigationBarColor: Colors.white,
+      //   systemNavigationBarIconBrightness: Brightness.dark,
+      // ),
       iconTheme: IconThemeData(color: Colors.white),
     ),
 

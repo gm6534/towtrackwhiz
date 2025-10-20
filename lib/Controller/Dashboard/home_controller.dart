@@ -1170,6 +1170,7 @@ class HomeController extends GetxController {
       if (result != null) {
         ToastAndDialog.showCustomSnackBar(result.message!);
       }
+      refreshZones();
     } catch (e) {
       if (Get.isDialogOpen ?? false) {
         Get.back();
@@ -1218,7 +1219,7 @@ class HomeController extends GetxController {
   Timer? _refreshTimer;
   StreamSubscription<Position>? _positionSub;
 
-  static const refreshInterval = Duration(minutes: 30);
+  static const refreshInterval = Duration(minutes: 5);
 
   // these will be assigned from widget (not constructor)
   // Future<List<CommunityAlertsModel>> Function()? onRefreshZones;

@@ -57,7 +57,7 @@
             android:name="flutterEmbedding"
             android:value="2" />
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC8S_GwPjdcWHAg2p8ZyYZui39qJXnW3wg"/>
+            android:value="AIzaSyACK8pAU_lTs9qnMVD7UgH2xVNeS7A2AZs"/>
 
 
         <!-- Notification icon (optional, ensure correct icon path) -->

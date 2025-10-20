@@ -77,7 +77,7 @@
 
 	<!-- Add Google Maps API Key -->
     <key>GMSServicesAPIKey</key>
-    <string>AIzaSyC8S_GwPjdcWHAg2p8ZyYZui39qJXnW3wg</string>
+    <string>AIzaSyACK8pAU_lTs9qnMVD7UgH2xVNeS7A2AZs</string>
 
 	<!-- Notifications -->
 	<key>NSUserTrackingUsageDescription</key>

@@ -32,13 +32,17 @@ class AppConfig {
 
   static Future<void> setSystemChromeTheme() async {
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
+      SystemUiOverlayStyle.light.copyWith(
         statusBarColor: AppColors.scaffoldBgColor,
-        statusBarBrightness: Brightness.dark,
-        statusBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: AppColors.scaffoldBgColor,
-        systemNavigationBarIconBrightness: Brightness.dark,
+        // systemNavigationBarColor: AppColors.scaffoldBgColor,
       ),
+      // SystemUiOverlayStyle(
+      //   statusBarColor: AppColors.scaffoldBgColor,
+      //   statusBarBrightness: Brightness.dark,
+      //   statusBarIconBrightness: Brightness.dark,
+      //   systemNavigationBarColor: AppColors.scaffoldBgColor,
+      //   systemNavigationBarIconBrightness: Brightness.dark,
+      // ),
     );
   }
 }

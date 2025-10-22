@@ -24,7 +24,7 @@ class ProfileScreen extends GetView<ProfileController> {
         return SingleChildScrollView(
           child: Column(
             children: [
-              20.verticalSpace,
+              40.verticalSpace,
               GestureDetector(
                 onTap: () => Get.toNamed(AppRoute.accountSettingsScreen),
                 child: Container(

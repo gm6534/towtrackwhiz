@@ -11,6 +11,7 @@ class SplashScreen extends GetView<InitialController> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      top: false,
       child: Scaffold(
         backgroundColor: AppColors.white,
         body: Center(

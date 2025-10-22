@@ -16,7 +16,7 @@ class AlertScreen extends GetView<CommunityAlertController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 15.w,
       children: [
-        5.verticalSpace,
+        20.verticalSpace,
         Text(
           AppHeadings.communityAlerts,
           style: context.textTheme.displaySmall,

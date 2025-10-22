@@ -42,7 +42,7 @@ class LookupScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 15.w,
                 children: [
-                  5.verticalSpace,
+                  20.verticalSpace,
                   Text(
                     "Who Towed My Car?",
                     style: Get.textTheme.headlineLarge?.copyWith(
